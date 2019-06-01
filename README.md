@@ -17,6 +17,9 @@ Run this code to add data to the folder `data/`
 `x <- sample(1000)`
 `usethis::use_data(x)`
 
+Note: use option 'LazyLoad` to make data available only when user wants it
+always include LazyData: true in your DESCRIPTION. 
+
 ## Adding examples to test package function
 
 
