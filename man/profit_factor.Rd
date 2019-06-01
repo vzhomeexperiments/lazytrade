@@ -2,9 +2,15 @@
 % Please edit documentation in R/profit_factor.R
 \name{profit_factor}
 \alias{profit_factor}
-\title{PROFIT FACTOR FUNCTION}
+\title{Calculate Profit Factor}
 \usage{
-profit_factor(x)
+# sumarizing table
+ DF_Stats <- DF_Stats %>%
+    filter(X3 > as.POSIXct(input$filterDate)) %>%
+    group_by(X1) %>%
+    summarise(PnL = sum(X5),
+              NumTrades = n(),
+              PrFact = profit_factor(X5))
 }
 \arguments{
 \item{x}{column vector with profit or loss of the orders for one system}
@@ -13,7 +19,7 @@ profit_factor(x)
 function should calculate profit factor for this vector and return one value also as vector
 }
 \description{
-PROFIT FACTOR FUNCTION
+Function is capable to calculate profit factor using a vector of the trading results
 }
 \examples{
 
