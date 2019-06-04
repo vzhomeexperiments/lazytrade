@@ -2,6 +2,11 @@
 
 all functions and scripts of the lazy trade project
 
+# quick start
+
+Load this package by running this code:
+`devtools::install_github("vzhomeexperiments/lazytrade")`
+
 # Notes to remind myself how to create R package
 
 taken from http://r-pkgs.had.co.nz
