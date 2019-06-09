@@ -20,7 +20,10 @@
 #'
 #' @export
 #'
+#' @author (C) 2019 Vladimir Zhbanko
+#'
 #' @examples
+#'
 #'
 #' data(profit_factor_data)
 #' profit_factor_data %>%
@@ -29,6 +32,7 @@
 #'              NumTrades = n(),
 #'              PrFact = profit_factor(X5)) %>%
 #'    select(PrFact) %>% head(1) %>% as.vector() %>% round(3)
+#'
 #'
 profit_factor <- function(x){
 

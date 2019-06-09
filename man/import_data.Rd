@@ -2,10 +2,11 @@
 % Please edit documentation in R/import_data.R
 \name{import_data}
 \alias{import_data}
-\title{Import Data file with Trade Logs to R. Function imports file and changes data column types accordingly}
+\title{Import Data file with Trade Logs to R.}
 \usage{
-Create folder in the working directory with the name _TEST_DATA.
-Place the sample file with the name 'OrdersResultsT1.csv'
+#Create folder in the working directory with the name _TEST_DATA.
+#Place the sample file with the name 'OrdersResultsT1.csv'
+DFT1 <- try(import_data(path_T1, "OrdersResultsT1.csv"), silent = TRUE)
 }
 \arguments{
 \item{path_terminal}{- path of the Trading Terminal where the file with data is written}
@@ -23,7 +24,11 @@ Files do not have column headers hence function will take care to name columns a
 }
 \examples{
 
+DFT1 <- import_data(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"),
+                        demo_mode = TRUE)
+
+
 }
 \author{
-(C) 2018 Vladimir Zhbanko
+(C) 2019 Vladimir Zhbanko
 }

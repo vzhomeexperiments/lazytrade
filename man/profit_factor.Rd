@@ -23,12 +23,17 @@ Function is capable to calculate profit factor using a vector of the trading res
 }
 \examples{
 
+
 data(profit_factor_data)
 profit_factor_data \%>\%
-   group_by(X1) \%>\%
+   dplyr::group_by(X1) \%>\%
    summarise(PnL = sum(X5),
              NumTrades = n(),
              PrFact = profit_factor(X5)) \%>\%
    select(PrFact) \%>\% head(1) \%>\% as.vector() \%>\% round(3)
 
+
+}
+\author{
+(C) 2019 Vladimir Zhbanko
 }

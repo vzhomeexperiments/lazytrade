@@ -76,3 +76,7 @@ test_that("test value of the calculation", {
 
 
 ```
+
+# Checking package
+
+`devtools::check()`
