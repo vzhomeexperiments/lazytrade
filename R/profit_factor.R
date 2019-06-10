@@ -24,7 +24,7 @@
 #'
 #' @examples
 #'
-#'
+#' library(tidyverse)
 #' data(profit_factor_data)
 #' profit_factor_data %>%
 #'    group_by(X1) %>%

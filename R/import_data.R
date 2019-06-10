@@ -23,8 +23,10 @@
 #'
 #' @examples
 #'
-#' DFT1 <- import_data(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"),
-#'                         demo_mode = TRUE)
+#' library(lazytrade)
+#' library(tidyverse)
+#' library(lubridate)
+#' DFT1 <- import_data(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"), demo_mode = TRUE)
 #'
 #'
 import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){

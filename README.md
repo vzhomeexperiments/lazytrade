@@ -79,4 +79,10 @@ test_that("test value of the calculation", {
 
 # Checking package
 
+Step 1. `devtools::document()`
+Step 2. `devtools::run_examples()`
+Step 3. Menu 'Build' `Clean and Rebuild`
+Step 4. 'Check'
+
+
 `devtools::check()`
