@@ -36,6 +36,21 @@ This will create a folder with the name `tests`
 
 Inside this folder there will be another folder `testthat`. 
 
+### Examples in Roxygen code
+
+@example ...
+
+code to execute during package checks
+
+@example 
+
+/dontrun{
+
+code to NOT execute during package checks
+ 
+}
+
+
 ### Create a test script
 
 Run this command to create a new script with the test scheleton:

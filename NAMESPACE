@@ -3,3 +3,4 @@
 export(import_data)
 export(import_data_mt)
 export(profit_factor)
+export(write_command_via_csv)
