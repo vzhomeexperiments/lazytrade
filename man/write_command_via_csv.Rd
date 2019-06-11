@@ -36,3 +36,6 @@ writeCommandViaCSV(path_T1)
 
 
 }
+\author{
+(C) 2019 Vladimir Zhbanko
+}

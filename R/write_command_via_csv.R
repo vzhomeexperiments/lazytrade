@@ -14,6 +14,8 @@
 #'
 #' @export
 #'
+#' @author (C) 2019 Vladimir Zhbanko
+#'
 #' @examples
 #'
 #' \dontrun{
