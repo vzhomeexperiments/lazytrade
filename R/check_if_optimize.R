@@ -1,8 +1,10 @@
-#' Function check_if_optimize. Purpose of this function is to verify trading system functionality by analysing
+#' Function check_if_optimize.
+#'
+#' @description Purpose of this function is to verify trading system functionality by analysing
 #' profit factor on the last trades. Whenever trading robot has profit factor value below certain limit
 #' function will write a file log indicating which trading systems need to be maintained.
 #'
-#' Whenever there will be not enough trades then empty file will be written to the destination
+#' @details Whenever there will be not enough trades then empty file will be written to the destination
 #'
 #' @param x - dataframe containing trading results
 #' @param path_trading_robot - path of trading robot repository. must contain folder TEST with file Setup.csv.
@@ -14,13 +16,17 @@
 #'
 #' @return function is writing files
 #'
+#' @author (C) 2019 Vladimir Zhbanko
+#'
 #' @export
 #'
 #' @examples
 #'
 #' \dontrun{
 #'
-#'
+#' DFT1 %>% check_if_optimize(path_trading_robot = path_PRJCT_1,
+#'                            num_trades_to_consider = 10,
+#'                            profit_factor_limit = 1.2)
 #'
 #' }
 #'

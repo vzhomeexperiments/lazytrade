@@ -2,9 +2,7 @@
 % Please edit documentation in R/check_if_optimize.R
 \name{check_if_optimize}
 \alias{check_if_optimize}
-\title{Function check_if_optimize. Purpose of this function is to verify trading system functionality by analysing
-profit factor on the last trades. Whenever trading robot has profit factor value below certain limit
-function will write a file log indicating which trading systems need to be maintained.}
+\title{Function check_if_optimize.}
 \usage{
 check_if_optimize(x, path_trading_robot, num_trades_to_consider = 10,
   profit_factor_limit = 0.7, demo_mode = F)
@@ -25,14 +23,24 @@ File Setup.csv contains a table with magic numbers under test}
 function is writing files
 }
 \description{
+Purpose of this function is to verify trading system functionality by analysing
+profit factor on the last trades. Whenever trading robot has profit factor value below certain limit
+function will write a file log indicating which trading systems need to be maintained.
+}
+\details{
 Whenever there will be not enough trades then empty file will be written to the destination
 }
 \examples{
 
 \dontrun{
 
-
+DFT1 \%>\% check_if_optimize(path_trading_robot = path_PRJCT_1,
+                           num_trades_to_consider = 10,
+                           profit_factor_limit = 1.2)
 
 }
 
+}
+\author{
+(C) 2019 Vladimir Zhbanko
 }
