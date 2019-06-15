@@ -21,8 +21,9 @@
 #'
 #'
 decrypt_mykeys <- function(path_encrypted_content, path_private_key) {
-  require(openssl)
-  require(tidyverse)
+
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("openssl", quietly = TRUE)
   # get back our encrypted API key
   out <- read_rds(path_encrypted_content)
   # path to our key

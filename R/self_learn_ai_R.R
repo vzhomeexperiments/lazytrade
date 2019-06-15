@@ -26,7 +26,7 @@
 #' @param write_log           Writes results of the newly trained model and previously used model to the file
 #' @param setup_mode          When TRUE function will attempt to write model to the disk without checking it
 #'
-#' @return
+#' @return Function is writing files into Decision Support System folder
 #' @export
 #'
 #' @examples

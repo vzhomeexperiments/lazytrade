@@ -32,7 +32,7 @@
 #'
 check_if_optimize <- function(x, path_trading_robot, num_trades_to_consider = 10, profit_factor_limit = 0.7,
                               demo_mode = F){
-  require(tidyverse)
+  requireNamespace("tidyverse", quietly = TRUE)
   # commented code for debugging
   # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_tradecontrol/get_profit_factorDF.R")
   # x <- read_rds("_TEST_DATA/test_data_profit_factorDF.rds")

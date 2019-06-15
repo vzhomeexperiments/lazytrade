@@ -31,6 +31,8 @@
 #'
 #'
 evaluate_market_type <- function(x, model_path, num_cols){
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("h2o", quietly = TRUE)
   # x is a 1 column dataframe containing 32 or 64 observations
   # x <- read_rds("macd_df.rds")
   # x <- df

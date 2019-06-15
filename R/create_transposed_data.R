@@ -33,7 +33,7 @@
 #'
 #'
 create_transposed_data <- function(x, n = 50){
-  require(tidyverse)
+  requireNamespace("tidyverse", quietly = TRUE)
   #source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/load_data.R")
   #n <- 100
   #x <- load_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/", trade_log_file = "AI_Macd", time_period = 1, data_deepth = "50000")

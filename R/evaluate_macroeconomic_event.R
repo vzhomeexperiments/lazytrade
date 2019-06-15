@@ -27,7 +27,7 @@
 #'
 #'
 evaluate_macroeconomic_event <- function(setup_path, file_name, path_t1, path_t3){
-
+  requireNamespace("tidyverse", quietly = TRUE)
   # setup_path <- "C:/Users/fxtrams/Documents/000_TradingRepo/FALCON_F2/TEST/Setup.csv"
   # file_name <- "01_MacroeconomicEvent.csv"
   # path_t1 <- path_T1

@@ -36,7 +36,8 @@
 #' }
 #'
 create_labelled_data <- function(x, n = 50, type = "regression"){
-  require(tidyverse)
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("lubridate", quietly = TRUE)
   #source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/load_data.R")
   #x <- load_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/", trade_log_file = "AI_CP", time_period = 1, data_deepth = "50000")
   #x <- read_rds("_TEST_DATA/price_dataset.rds")

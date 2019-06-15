@@ -25,6 +25,9 @@ self_learn_ai_R(price_dataset, indicator_dataset, num_bars, timeframe,
 
 \item{write_log}{Writes results of the newly trained model and previously used model to the file}
 }
+\value{
+Function is writing files into Decision Support System folder
+}
 \description{
 'Self-learning' function.
 

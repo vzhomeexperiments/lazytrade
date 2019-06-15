@@ -1,14 +1,14 @@
 Package: lazytrade
 Type: Package
 Title: Lazy Trading as sets of R functions to facilitate algorithmic trading
-Version: 0.2.0
+Version: 0.2.1
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
-Description: Package provides sets of functions and methods for algorithmic traders
-    Main goal is to process information within Decision Support System to come up with predictions
+Description: Package provides sets of functions and methods for algorithmic traders.
+    Main goal is to process information within Decision Support System to come up with predictions.
     There are several other utilities such as Dynamic and Adaptive Risk Management using Reinforcement Learning
-    and even functions generating predictions of price change using Pattern Recognition with Deep Regression Learning
-    Main focus is to Learn Computer and Data Science using Algorithmic Trading
+    and even functions to generate predictions of price changes using Pattern Recognition with Deep Regression Learning.
+    Main focus is to Learn Computer and Data Science using Algorithmic Trading.
 License: MIT License
 Encoding: UTF-8
 LazyData: true
@@ -18,6 +18,8 @@ Imports:
     lubridate,
     tidyverse,
     h2o,
-    ReinforcementLearning
+    ReinforcementLearning,
+    openssl,
+    magrittr
 Suggests: 
     testthat (>= 2.11)
