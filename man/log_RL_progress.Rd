@@ -26,6 +26,14 @@ Function will record Q values during updating of the model. These values will be
 \dontrun{
 
 # retrieve RL model Q values progress
+library(ReinforcementLearning)
+library(tidyverse)
+library(magrittr)
+data(data_trades)
+x <- data_trades
+states <- c("tradewin", "tradeloss")
+actions <- c("ON", "OFF")
+control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 DF_RESEARCH <- log_RL_progress(x = x,states = states, actions = actions, control = control)
 
 }

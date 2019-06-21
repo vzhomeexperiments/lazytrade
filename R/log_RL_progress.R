@@ -16,6 +16,14 @@
 #' \dontrun{
 #'
 #' # retrieve RL model Q values progress
+#' library(ReinforcementLearning)
+#' library(tidyverse)
+#' library(magrittr)
+#' data(data_trades)
+#' x <- data_trades
+#' states <- c("tradewin", "tradeloss")
+#' actions <- c("ON", "OFF")
+#' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 #' DF_RESEARCH <- log_RL_progress(x = x,states = states, actions = actions, control = control)
 #'
 #' }
@@ -51,7 +59,7 @@ log_RL_progress <- function(x, states, actions, control){
     State <- x[i-1,] %>% mutate(State = ifelse(Profit>0, "tradewin", ifelse(Profit<0, "tradeloss", NA))) %$% State
 
     # predict on i
-    Action <- policy(model)[State]
+    Action <- computePolicy(model)[State]
 
     # reward
     Reward <- x[i,]$Profit

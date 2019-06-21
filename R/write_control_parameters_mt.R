@@ -4,8 +4,6 @@
 #' trading simulation and find out the best possible control parameters for the RL function.
 #'
 #' @param x - dataset containing the trading results for one trading robot
-#' @param record_actual - if TRUE function will record actual results to the rds file;
-#'                        if FALSE function will directly return best control parameters (very slow execution)
 #' @param path_control_files - path where control parameters will be saved
 #'
 #' @details Function is used by the R script Adapt_RL_MT_control.R
