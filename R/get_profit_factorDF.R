@@ -1,4 +1,3 @@
-#
 #' Function that returns the profit factors of the systems in a form of a DataFrame
 #'
 #'
@@ -11,13 +10,15 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#'
+#' library(tidyverse)
+#' data(profit_factorDF)
+#' get_profit_factorDF(profit_factorDF, 10)
 #'
 #'
-#'
-#' }
 #'
 get_profit_factorDF <- function(x, num_orders){
+  requireNamespace("tidyverse", quietly = TRUE)
   # generate DF with only MagicNumbers when > 10 trades and all trades are losers
   # x <- read_rds("_TEST_DATA/test_data_profit_factorDF.rds")
   # num_orders <- 10
