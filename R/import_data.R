@@ -5,11 +5,6 @@
 #' Function is capable to import file with executed trades log.
 #' Files do not have column headers hence function will take care to name columns as well as to perform relevant cleansing
 #'
-#' @usage
-#'
-#' #Create folder in the working directory with the name _TEST_DATA.
-#' #Place the sample file with the name 'OrdersResultsT1.csv'
-#' DFT1 <- try(import_data(path_T1, "OrdersResultsT1.csv"), silent = TRUE)
 #'
 #' @param path_terminal - path of the Trading Terminal where the file with data is written
 #' @param trade_log_file - File name where the order results are written
@@ -27,6 +22,14 @@
 #' library(tidyverse)
 #' library(lubridate)
 #' DFT1 <- import_data(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"), demo_mode = TRUE)
+#'
+#' \dontrun{
+#'
+#' #Create folder in the working directory with the name _TEST_DATA.
+#' #Place the sample file with the name 'OrdersResultsT1.csv'
+#' DFT1 <- try(import_data(path_T1, "OrdersResultsT1.csv"), silent = TRUE)
+#'
+#' }
 #'
 #'
 import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){

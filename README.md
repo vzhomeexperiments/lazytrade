@@ -24,6 +24,7 @@ Run this code to add data to the folder `data/`
 
 Note: use option 'LazyLoad` to make data available only when user wants it
 always include LazyData: true in your DESCRIPTION. 
+Note: to documente dataset see https://stackoverflow.com/questions/2310409/how-can-i-document-data-sets-with-roxygen
 
 ## Adding examples to test package function
 
