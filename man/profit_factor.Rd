@@ -4,13 +4,7 @@
 \alias{profit_factor}
 \title{Calculate Profit Factor}
 \usage{
-# sumarizing table
- DF_Stats <- DF_Stats %>%
-    filter(X3 > as.POSIXct(input$filterDate)) %>%
-    group_by(X1) %>%
-    summarise(PnL = sum(X5),
-              NumTrades = n(),
-              PrFact = profit_factor(X5))
+profit_factor(x)
 }
 \arguments{
 \item{x}{column vector with profit or loss of the orders for one system}

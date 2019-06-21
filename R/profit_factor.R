@@ -5,16 +5,6 @@
 #' Function is capable to calculate profit factor using a vector of the trading results
 #'
 #' @param x column vector with profit or loss of the orders for one system
-#
-#' @usage
-#'
-#' # sumarizing table
-#'  DF_Stats <- DF_Stats %>%
-#'     filter(X3 > as.POSIXct(input$filterDate)) %>%
-#'     group_by(X1) %>%
-#'     summarise(PnL = sum(X5),
-#'               NumTrades = n(),
-#'               PrFact = profit_factor(X5))
 #'
 #' @return function should calculate profit factor for this vector and return one value also as vector
 #'
