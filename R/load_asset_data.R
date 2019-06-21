@@ -31,8 +31,8 @@ load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data
   # trade_log_file <- "AI_Macd"
   # time_period <- 1
   # data_deepth <- "100000"
-  require(tidyverse)
-  require(lubridate)
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("lubridate", quietly = TRUE)
   DFT1 <- try(read_csv(file = file.path(path_terminal, paste0(trade_log_file, time_period, "-", data_deepth, ".csv")),
                        col_names = F),
               silent = TRUE)

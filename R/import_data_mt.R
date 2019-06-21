@@ -27,7 +27,7 @@
 import_data_mt <- function(path_terminal, trade_log_file, system_number, demo_mode = FALSE){
   # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal1/MQL4/Files/"
   # system_number <- 8139124
-  require(tidyverse)
+  requireNamespace("tidyverse", quietly = TRUE)
 
   if(!demo_mode){
 

@@ -26,9 +26,9 @@
 #'
 write_control_parameters <- function(x, path_control_files){
 
-require(tidyverse) #install.packages("tidyverse")
-require(ReinforcementLearning) #install.packages("ReinforcementLearning")
-require(magrittr)
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("ReinforcementLearning", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
 
 # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_tradecontrol/_RL/log_RL_progress.R")
 

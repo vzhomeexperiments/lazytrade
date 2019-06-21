@@ -20,6 +20,7 @@
 #'
 #'
 to_m <- function(x, n_cols) {
+  requireNamespace("tidyverse", quietly = TRUE)
   ### PURPOSE: Transform Time Series Column of the dataframe to the matrix
   #            with specified number of columns. Number of rows will be automatically
   #            found and remaining data points discarded

@@ -25,8 +25,8 @@
 #'
 #'
 record_policy <- function(x, last_result, trading_system, path_terminal){
-  require(tidyverse)
-  require(magrittr)
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
   # debugging
   # trading_system <- 8118101
   # last_result <- "tradeloss"

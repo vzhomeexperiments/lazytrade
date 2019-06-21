@@ -35,7 +35,7 @@
 #'
 #'
 profit_factor <- function(x){
-
+  requireNamespace("tidyverse", quietly = TRUE)
   # calculate profit factor
   res <- sum(x[x>0])/(0.0001+sum(abs(x[x<0])))
 

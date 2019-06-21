@@ -31,7 +31,7 @@
 #'
 #'
 test_model <- function(test_dataset, predictor_dataset, test_type){
-  require(tidyverse)
+  requireNamespace("tidyverse", quietly = TRUE)
   # arguments for debugging for regression
   # test_dataset <- read_rds("test_data/dat21.rds")
   # test_dataset <- dat21

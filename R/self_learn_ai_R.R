@@ -55,8 +55,9 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
                             setup_mode = FALSE,
                             research_mode = FALSE,
                             write_log = TRUE){
-  require(h2o)
-  require(tidyverse)
+
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("h2o", quietly = TRUE)
   ### use commented code below to test this function
   # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/create_labelled_data.R")
   # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/create_transposed_data.R")

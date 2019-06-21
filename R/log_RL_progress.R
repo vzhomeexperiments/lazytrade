@@ -22,9 +22,10 @@
 #'
 #'
 log_RL_progress <- function(x, states, actions, control){
-  require(tidyverse)
-  require(ReinforcementLearning)
-  require(magrittr)
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("ReinforcementLearning", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
+
   # uncomment to debug code inside the function
   # x <- read_rds("_TEST_DATA/data_trades.rds")
   # x <- trading_systemDF

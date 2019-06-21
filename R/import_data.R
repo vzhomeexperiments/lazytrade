@@ -30,6 +30,8 @@
 #'
 #'
 import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("lubridate", quietly = TRUE)
   ### uncomment for debugging of this function
   # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal1/MQL4/Files/"
   # trade_log_file <- "_TEST_DATA/OrdersResultsT1.csv"
