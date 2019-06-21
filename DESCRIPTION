@@ -1,7 +1,7 @@
 Package: lazytrade
 Type: Package
 Title: Lazy Trading as sets of R functions to facilitate algorithmic trading
-Version: 0.2.2
+Version: 0.2.3
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
 Description: Package provides sets of functions and methods for algorithmic traders.
@@ -24,3 +24,4 @@ Imports:
     magrittr
 Suggests: 
     testthat (>= 2.11)
+Depends: R (>= 2.10)
