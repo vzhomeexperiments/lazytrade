@@ -59,7 +59,7 @@ generate_RL_policy <- function(x, states, actions, control){
     State <- x[i-1,] %>% mutate(State = ifelse(Profit>0, "tradewin", ifelse(Profit<0, "tradeloss", NA))) %$% State
 
     # predict on i
-    Action <- policy(model)[State]
+    Action <- computePolicy(model)[State]
 
     # reward
     Reward <- x[i,]$Profit
