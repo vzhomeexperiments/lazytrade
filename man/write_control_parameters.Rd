@@ -10,9 +10,6 @@ write_control_parameters(x, path_control_files)
 \item{x}{- dataset containing the trading results for one trading robot}
 
 \item{path_control_files}{- path where control parameters will be saved}
-
-\item{record_actual}{- if TRUE function will record actual results to the rds file;
-if FALSE function will directly return best control parameters (very slow execution)}
 }
 \value{
 Function writes best control parameters to be used by the Reinforcement Learning Function
