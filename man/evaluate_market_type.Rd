@@ -30,9 +30,15 @@ also to shut it down with h2o.shutdown(prompt = F)
 \dontrun{
 
 # Use function to score the data to the model
+  # x is a 1 column dataframe containing 32 or 64 observations
+x <- read_rds("macd_df.rds")
+x <- df
+num_cols <- 64
+models_path <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_markettype/models"
+remain_path <- "/regression.bin/DL_Classification"
+model_path <- file.path(models_path, remain_path)
 my_market_prediction <- evaluate_market_type(x = df,
-                                             #model_path = "C:/Users/fxtrams/Documents/000_TradingRepo/R_markettype/models/regression.bin/DL_Regression",
-                                             model_path = "C:/Users/fxtrams/Documents/000_TradingRepo/R_markettype/models/classification.bin/DL_Classification",
+                                             model_path = model_path,
                                              num_cols = 64)
 
 }

@@ -26,7 +26,8 @@ Alternatively possible to use 'openssl' R package
 \dontrun{
 
 # Consumer API keys
-ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys, "ConsumerAPIkeys.enc.rds"),
+ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,
+                                  "ConsumerAPIkeys.enc.rds"),
                                   path_private_key = path_private_key)
 
 }

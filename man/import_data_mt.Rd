@@ -2,7 +2,7 @@
 % Please edit documentation in R/import_data_mt.R
 \name{import_data_mt}
 \alias{import_data_mt}
-\title{Import Market Type related Data to R}
+\title{Import Market Type related Data to R from the Sandbox}
 \usage{
 import_data_mt(path_terminal, trade_log_file, system_number,
   demo_mode = FALSE)
@@ -25,7 +25,15 @@ Function imports file from the MetaTrader sandbox. Function performs necessary c
 \examples{
 
 library(tidyverse)
-DFT1 <- import_data_mt(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"), demo_mode = TRUE)
+import_data_mt(trade_log_file = system.file("extdata", "OrdersResultsT1.csv",
+                                            package = "lazytrade"),
+               demo_mode = TRUE)
+
+\dontrun{
+# path_terminal <- "C:/Program Files (x86)/FxPro - Terminal1/MQL4/Files/"
+# system_number <- 8139124
+
+}
 
 
 }

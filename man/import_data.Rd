@@ -25,7 +25,10 @@ Files do not have column headers hence function will take care to name columns a
 library(lazytrade)
 library(tidyverse)
 library(lubridate)
-DFT1 <- import_data(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"), demo_mode = TRUE)
+DFT1 <- import_data(trade_log_file = system.file("extdata",
+                                                 "OrdersResultsT1.csv",
+                                                 package = "lazytrade"),
+                    demo_mode = TRUE)
 
 \dontrun{
 

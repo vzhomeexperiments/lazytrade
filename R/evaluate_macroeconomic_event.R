@@ -19,7 +19,10 @@
 #' \dontrun{
 #'
 #' # evaluate data on macroeconomic event (required to start trading)
-#' evaluate_macroeconomic_event(setup_path = "C:/Users/fxtrams/Documents/000_TradingRepo/FALCON_F2/TEST/Setup.csv",
+#' repo_path <- "C:/Users/fxtrams/Documents/000_TradingRepo"
+#' file_path <- "/FALCON_F2/TEST/Setup.csv"
+#' setup_path <- file.path(repo_path, file_path)
+#' evaluate_macroeconomic_event(setup_path = setup_path,
 #'                              file_name = "01_MacroeconomicEvent.csv",
 #'                              path_t1 = path_T1,path_t3 = path_T3)
 #'
