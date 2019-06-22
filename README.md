@@ -105,3 +105,7 @@ Step 4. 'Check'
 
 
 `devtools::check()`
+
+# Cran Note Avoidance
+see https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+see https://github.com/HughParsonage/grattan/blob/master/R/zzz.R
