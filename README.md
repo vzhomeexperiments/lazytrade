@@ -16,6 +16,9 @@ taken from http://r-pkgs.had.co.nz
 Run this code to re-generate documentation
 `devtools::document()`
 
+Run this code to fix license:
+`usethis::use_mit_license(name = "Vladimir Zhbanko")`
+
 ## Adding data to the package for internal tests
 
 Run this code to add data to the folder `data/`

@@ -9,7 +9,7 @@ Description: Package provides sets of functions and methods for algorithmic trad
     There are several other utilities such as Dynamic and Adaptive Risk Management using Reinforcement Learning
     and even functions to generate predictions of price changes using Pattern Recognition with Deep Regression Learning.
     Main focus is to Learn Computer and Data Science using Algorithmic Trading.
-License: MIT License
+License: MIT + file LICENSE
 URL: https://github.com/vzhomeexperiments/lazytrade
 Encoding: UTF-8
 LazyData: true
