@@ -4,9 +4,8 @@
 \name{profit_factor_data}
 \alias{profit_factor_data}
 \title{Table with Trade results samples}
-\format{A dataframe with several columns:
+\format{A dataframe with several columns
 \describe{
-\itemize{
   \item{X1}{Unique identifiers of the Trading Robots}
   \item{X2}{Ticket Number of closed position}
   \item{X3}{Date and Time when order started}
@@ -14,7 +13,6 @@
   \item{X5}{Monetary result of the trade}
   \item{X6}{Symbol of the Asset e.g. EURUSD}
   \item{X7}{Order Type 0 - buy, 1 - sell}
-}
 }}
 \usage{
 profit_factor_data

@@ -202,6 +202,8 @@ spelling `devtools::spell_check()`
 
 checking on R hub `devtools::check_rhub()`
 
+checking win devel `check_win_devel()`
+
 releasing the package (questions) devtools::release()
 
 ### uploading the packge archive to CRAN

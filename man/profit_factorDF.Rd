@@ -4,9 +4,8 @@
 \name{profit_factorDF}
 \alias{profit_factorDF}
 \title{Table with Trade results samples}
-\format{A dataframe with several columns:
+\format{A dataframe with several columns
 \describe{
-\itemize{
   \item{MagicNumber}{Unique identifiers of the Trading Robots}
   \item{TicketNumber}{Ticket Number of closed position}
   \item{OrderStartTime}{Date and Time when order started}
@@ -14,7 +13,6 @@
   \item{Profit}{Monetary result of the trade}
   \item{Symbol}{Symbol of the Asset e.g. EURUSD}
   \item{OrderType}{Order Type 0 - buy, 1 - sell}
-}
 }}
 \usage{
 profit_factorDF
