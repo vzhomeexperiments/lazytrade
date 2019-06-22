@@ -5,7 +5,7 @@
 \title{Load Asset Data Function}
 \usage{
 load_asset_data(path_terminal, trade_log_file, time_period = 1,
-  data_deepth = 14200)
+  data_deepth = 50000)
 }
 \arguments{
 \item{path_terminal}{- path to the MT4 terminal, string}
@@ -30,16 +30,18 @@ https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
 
 \dontrun{
 
-# path_terminal <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/"
+# path_terminal <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files"
 # path_terminal <- file.path(getwd(), "test_data")
 # trade_log_file <- "AI_CP"
 # trade_log_file <- "AI_Macd"
 # time_period <- 1
-# data_deepth <- "100000"
-prices <- load_asset_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/",
+# data_deepth <- "50000"
+library(tidyverse)
+library(lubridate)
+prices <- load_asset_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files",
                     trade_log_file = "AI_CP",
                     time_period = 1,
-                    data_deepth = "14200")
+                    data_deepth = "50000")
 
 }
 

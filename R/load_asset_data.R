@@ -17,20 +17,22 @@
 #'
 #' \dontrun{
 #'
-#' # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/"
+#' # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files"
 #' # path_terminal <- file.path(getwd(), "test_data")
 #' # trade_log_file <- "AI_CP"
 #' # trade_log_file <- "AI_Macd"
 #' # time_period <- 1
-#' # data_deepth <- "100000"
-#' prices <- load_asset_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/",
+#' # data_deepth <- "50000"
+#' library(tidyverse)
+#' library(lubridate)
+#' prices <- load_asset_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files",
 #'                     trade_log_file = "AI_CP",
 #'                     time_period = 1,
-#'                     data_deepth = "14200")
+#'                     data_deepth = "50000")
 #'
 #' }
 #'
-load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data_deepth = 14200){
+load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data_deepth = 50000){
 
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)

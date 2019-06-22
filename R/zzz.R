@@ -6,28 +6,31 @@
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")
     utils::globalVariables(
-      # sample variable names from
+      # sample variable names from custom functions
       c("path_trading_robot", "num_trades_to_consider", "profit_factor_limit",
         "MagicNumber", "OrderCloseTime", "row_number", "PrFact",
         "AchievedGain", "AchievedPnL", "ExpectedGain", "ExpectedPnL",
         "FinalQuality", "Gain", "IsEnabled", "LABEL", "Loss", "Magic",
         "MagicNumber.x", "NetGain", "OFF", "ON", "Policy",
-        "Prev_result", "Profit", "ReinforcementLearning", "Risk", "RiskEstim", "RiskKnown",
+        "Prev_result", "Profit", "Risk", "RiskEstim", "RiskKnown",
         "Spread", "T3_PnL", "T3_trigger", "TPSL_Level", "Tot_pnlT3", "TotalTrades", "TradeState",
         "X1", "X10", "X11", "X12", "X13", "X14", "X15", "X16", "X17", "X18", "X19",
         "X2", "X20", "X21", "X22", "X23", "X24", "X25", "X26", "X27", "X28", "X29",
-        "X3", "X4", "X5", "X6", "X7", "X8", "X9", "alpha", "any_vars", "as.h2o", "bind_cols",
-        "bind_rows", "computePolicy", "decrypt_envelope", "epsilon", "filter_all", "full_join",
-        "funs", "h2o.deeplearning", "h2o.loadModel", "h2o.predict", "h2o.saveModel", "head",
-        "if_else", "lag", "mutate_all", "mutate_if", "n", "nOrders", "na.omit", "path_T1", "path_T3",
-        "predict", "read_rds", "rewardseq.OFF", "rewardseq.ON", "slice", "str_detect",
-        "summarise", "totreward", "trstate", "write.csv", "write_rds", "ymd_hms",
+        "X3", "X4", "X5", "X6", "X7", "X8", "X9", "alpha", "any_vars",
+        "computePolicy", "decrypt_envelope", "epsilon",
+        "funs", "n", "nOrders",  "path_T1", "path_T3",
+        "rewardseq.OFF", "rewardseq.ON",
+        "totreward", "trstate",
 
 
-        # sample functions
+        # sample function names
         ".", "%>%", "%$%", "group_by",  "arrange", "desc",
         "filter", "ungroup", "select", "mutate", "inner_join",
-        "read_csv", "write_csv", "as_tibble"
+        "read_csv", "write_csv", "as_tibble", "ReinforcementLearning", "na.omit",
+        "h2o.deeplearning", "h2o.loadModel", "h2o.predict", "h2o.saveModel", "head",
+        "if_else", "lag", "mutate_all", "mutate_if", "slice", "str_detect",
+        "predict", "read_rds", "summarise", "write.csv", "write_rds", "ymd_hms",
+        "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols"
       )
     )
 
