@@ -20,7 +20,7 @@
         "computePolicy", "decrypt_envelope", "epsilon",
         "funs", "n", "nOrders",  "path_T1", "path_T3",
         "rewardseq.OFF", "rewardseq.ON",
-        "totreward", "trstate",
+        "totreward", "trstate", "MarketType",
 
 
         # sample function names
