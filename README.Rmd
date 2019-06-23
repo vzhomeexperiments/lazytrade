@@ -193,6 +193,8 @@ checking on R hub
 checking win devel
 `check_win_devel()`
 
+Update news.md file
+
 releasing the package (questions)
 devtools::release()
 
