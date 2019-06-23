@@ -68,7 +68,7 @@ for (ALF in Alpha) {
       # EPS <- 0.1
       control <- list(alpha = ALF, gamma = GAM, epsilon = EPS)
       # retrieve RL model Q values progress
-      DF_RESEARCH <- log_RL_progress(x = x,states = states, actions = actions, control = control)
+      DF_RESEARCH <- log_RL_progress_mt(x = x,states = states, actions = actions, control = control)
       # create object where all data can be aggregated
       if(!exists("DF_RES")){DF_RES <- DF_RESEARCH} else {
         DF_RES <- bind_rows(DF_RES, DF_RESEARCH) }
@@ -86,7 +86,7 @@ DF_RES1 <- DF_RES %>%
   # create column with policy decision (1 - command on to trade in T3, 0 - no trade)
   mutate(T3_trigger = ifelse(rewardseq.ON > rewardseq.OFF & rewardseq.ON > 0, 1, 0)) %>%
   # create shifted column with reward. This is to simulate future trades decisions of RL model
-  mutate(Prev_result = lag(totreward, 2)) %>%
+  mutate(Prev_result = lag(totreward, 6)) %>%
   # TDL generate column with PNL in T3, this is based on trades executed by RL trigger
   mutate(T3_PnL = ifelse(T3_trigger == 1, totreward, 0)) %>%
   # group by all parameters and generate sum of column T3_PnL
