@@ -28,17 +28,14 @@ see more explanation here https://www.udemy.com/self-learning-trading-robot/?cou
 }
 \examples{
 
-\dontrun{
 
-## TEST:
 library(tidyverse)
-library(lubridate)
-pathT2 <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/"
-macd <- read_csv(file.path(pathT2, "AI_Macd1.csv"), col_names = F)
-macd$X1 <- ymd_hms(macd$X1)
-write_rds(macd, "test_data/macd.rds")
 
-}
+# usind a sample data
+data(indicator_dataset)
+
+create_transposed_data(indicator_dataset, n = 75)
+
 
 
 }

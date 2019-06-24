@@ -11,7 +11,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' # Consumer API keys
 #' ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,
@@ -28,7 +28,6 @@ decrypt_mykeys <- function(path_encrypted_content, path_private_key) {
   # get back our encrypted API key
   out <- read_rds(path_encrypted_content)
   # path to our key
-  # path_private_key <- file.path("C:/Users/fxtrams/.ssh", "id_api")
   api_key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") %>%
     unserialize()
   return(api_key)

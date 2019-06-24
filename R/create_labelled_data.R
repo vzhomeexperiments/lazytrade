@@ -23,28 +23,24 @@
 #'
 #' @examples
 #'
-#' \dontrun{
 #'
-#' ## TEST:
 #' library(tidyverse)
-#' library(lubridate)
-#' pathT2 <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/"
-#' prices <- read_csv(file.path(pathT2, "AI_CP1.csv"), col_names = F)
-#' prices$X1 <- ymd_hms(prices$X1)
-#' write_rds(prices, "test_data/prices.rds")
 #'
-#' }
+#' # usind a sample data
+#' data(price_dataset)
+#'
+#' # price change as a label
+#' create_labelled_data(price_dataset, n = 75, type = "regression")
+#'
+#' # factors 'BU'/'BE' as a label
+#' create_labelled_data(price_dataset, n = 75, type = "classification")
+#'
 #'
 create_labelled_data <- function(x, n = 50, type = "regression"){
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
-  #source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/load_data.R")
-  #x <- load_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/", trade_log_file = "AI_CP", time_period = 1, data_deepth = "50000")
-  #x <- read_rds("_TEST_DATA/price_dataset.rds")
-  #n <- 100
-  #type <- "classification"
-  #type <- "regression"
-  #
+  # x <- price_dataset
+  # n <- 50
   nr <- nrow(x)
   dat11 <- x %>%
     # remove column 1 with data and time information

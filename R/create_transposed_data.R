@@ -19,25 +19,22 @@
 #'
 #' @examples
 #'
-#' \dontrun{
 #'
-#' ## TEST:
 #' library(tidyverse)
-#' library(lubridate)
-#' pathT2 <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/"
-#' macd <- read_csv(file.path(pathT2, "AI_Macd1.csv"), col_names = F)
-#' macd$X1 <- ymd_hms(macd$X1)
-#' write_rds(macd, "test_data/macd.rds")
 #'
-#' }
+#' # usind a sample data
+#' data(indicator_dataset)
+#'
+#' create_transposed_data(indicator_dataset, n = 75)
+#'
 #'
 #'
 create_transposed_data <- function(x, n = 50){
   requireNamespace("tidyverse", quietly = TRUE)
-  #source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/load_data.R")
+  #
   #n <- 100
-  #x <- load_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/", trade_log_file = "AI_Macd", time_period = 1, data_deepth = "50000")
-  #x <- read_rds("_TEST_DATA/indicator_dataset.rds")
+  #x <- indicator_dataset
+
   nr <- nrow(x)
   dat11 <- x %>% select(-1) %>% split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
   dat11[length(dat11)] <- NULL

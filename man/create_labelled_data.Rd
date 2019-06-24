@@ -33,16 +33,17 @@ https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
 }
 \examples{
 
-\dontrun{
 
-## TEST:
 library(tidyverse)
-library(lubridate)
-pathT2 <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/"
-prices <- read_csv(file.path(pathT2, "AI_CP1.csv"), col_names = F)
-prices$X1 <- ymd_hms(prices$X1)
-write_rds(prices, "test_data/prices.rds")
 
-}
+# usind a sample data
+data(price_dataset)
+
+# price change as a label
+create_labelled_data(price_dataset, n = 75, type = "regression")
+
+# factors 'BU'/'BE' as a label
+create_labelled_data(price_dataset, n = 75, type = "classification")
+
 
 }

@@ -60,3 +60,27 @@
 #'   \item{OrderType}{Order Type 0 - buy, 1 - sell}
 #' }
 "data_trades"
+
+#' Table with price dataset
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{Date and time of the price sample}
+#'   \item{X2-X29}{Values of the assets}
+#' }
+"price_dataset"
+
+#' Table with indicator dataset
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{Date and time of the indicator sample}
+#'   \item{X2-X29}{Values of the assets}
+#' }
+"indicator_dataset"

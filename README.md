@@ -90,13 +90,13 @@ Inside this folder there will be another folder `testthat`.
 
 ### Examples in Roxygen code
 
-@example …
+@examples …
 
 code to execute during package checks
 
-@example
+@examples
 
-/dontrun{
+/donttest{
 
 code to NOT execute during package checks
 
