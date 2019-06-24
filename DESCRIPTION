@@ -1,16 +1,16 @@
 Package: lazytrade
 Type: Package
-Title: Lazy Trading as Sets of R Functions to Facilitate Algorithmic Trading
+Title: Learn Computer and Data Science using Algorithmic Trading
 Version: 0.3.1
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
-Description: Package provides sets of functions and methods for algorithmic traders.
-    Main goal is to process information within Decision Support System to come up with predictions.
-    There are several other utilities such as Dynamic and Adaptive Risk Management using Reinforcement Learning
-    and even functions to generate predictions of price changes using Pattern Recognition with Deep Regression Learning.
-    Main focus is to Learn Computer and Data Science using Algorithmic Trading.
+Description: Provide sets of functions and methods to learn and practice data science using idea of algorithmic trading.
+    Main goal is to process information within "Decision Support System" to come up with analysis or predictions.
+    There are several utilities such as dynamic and adaptive risk management using reinforcement learning
+    and even functions to generate predictions of price changes using pattern recognition deep regression learning.
 License: MIT + file LICENSE
-URL: https://github.com/vzhomeexperiments/lazytrade
+URL: https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/, https://github.com/vzhomeexperiments/lazytrade
+BugReports: https://github.com/vzhomeexperiments/lazytrade/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1

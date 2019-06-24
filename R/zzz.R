@@ -30,7 +30,7 @@
         "h2o.deeplearning", "h2o.loadModel", "h2o.predict", "h2o.saveModel", "head",
         "if_else", "lag", "mutate_all", "mutate_if", "slice", "str_detect",
         "predict", "read_rds", "summarise", "write.csv", "write_rds", "ymd_hms",
-        "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols"
+        "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols", "testdir"
       )
     )
 
