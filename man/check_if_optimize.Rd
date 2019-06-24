@@ -5,7 +5,7 @@
 \title{Function check_if_optimize.}
 \usage{
 check_if_optimize(x, path_trading_robot, num_trades_to_consider = 10,
-  profit_factor_limit = 0.7, demo_mode = F)
+  profit_factor_limit = 0.7, demo_mode = FALSE, write_mode = FALSE)
 }
 \arguments{
 \item{x}{- dataframe containing trading results}
@@ -17,10 +17,12 @@ File Setup.csv contains a table with magic numbers under test}
 
 \item{profit_factor_limit}{- Limit below which trading robot considered not working properly}
 
-\item{demo_mode}{- When true function uses data stored in the _TEST_DATA folder}
+\item{demo_mode}{- When true function uses package test dataset}
+
+\item{write_mode}{- When true function will write result to the file located in the temporary directory}
 }
 \value{
-function is writing files
+function returns a dataframe with systems that should be optimized
 }
 \description{
 Purpose of this function is to verify trading system functionality by analysing
@@ -32,21 +34,27 @@ Whenever there will be not enough trades then empty file will be written to the 
 }
 \examples{
 
-\dontrun{
+library(lazytrade)
+library(tidyverse)
+library(lubridate)
+DFT1 <- import_data(trade_log_file = system.file("extdata",
+                                                 "OrdersResultsT1.csv",
+                                                 package = "lazytrade"),
+                    demo_mode = TRUE)
 
-# commented code for debugging
-source("C:/Users/fxtrams/Documents/000_TradingRepo/R_tradecontrol/get_profit_factorDF.R")
-x <- read_rds("_TEST_DATA/test_data_profit_factorDF.rds")
-path_trading_robot <- "C:/Users/fxtrams/Documents/000_TradingRepo/FALCON_B/"
-num_trades_to_consider <- 10
-profit_factor_limit <- 0.7
-demo_mode <- T
 
-DFT1 \%>\% check_if_optimize(path_trading_robot = path_PRJCT_1,
-                           num_trades_to_consider = 10,
-                           profit_factor_limit = 1.2)
+# without writing to the file
+DFT1 \%>\% check_if_optimize(num_trades_to_consider = 10,
+                           profit_factor_limit = 1.2,
+                           demo_mode = TRUE,
+                           write_mode = FALSE)
 
-}
+# function will write to the temporary file
+DFT1 \%>\% check_if_optimize(num_trades_to_consider = 10,
+                           profit_factor_limit = 1.2,
+                           demo_mode = TRUE,
+                           write_mode = TRUE)
+
 
 }
 \author{
