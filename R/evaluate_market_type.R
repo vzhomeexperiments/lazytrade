@@ -8,7 +8,8 @@
 #' @details it is mandatory to switch on the virtual h2o machine with h2o.init()
 #' also to shut it down with h2o.shutdown(prompt = F)
 #'
-#' @param x - dataframe with one column containing asset indicator in descending order
+#' @param x - dataframe with one column containing asset indicator in the time descending order,
+#' typically 64 or more values
 #' @param model_path - path to the model
 #' @param num_cols - number of columns (features) in the final vector input to the model
 #'
@@ -18,23 +19,27 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
+#' library(h2o)
+#'
+#' # start h2o - don't start/stop within for loop
+#' h2o.init()
 #' # Use function to score the data to the model
-#'   # x is a 1 column dataframe containing 32 or 64 observations
-#' x <- read_rds("macd_df.rds")
-#' x <- df
+#' #' data(macd_df)
+#' x <- macd_df
 #' num_cols <- 64
 #' models_path <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_markettype/models"
 #' remain_path <- "/regression.bin/DL_Classification"
 #' model_path <- file.path(models_path, remain_path)
+#'
 #' my_market_prediction <- evaluate_market_type(x = df,
 #'                                              model_path = model_path,
 #'                                              num_cols = 64)
 #'
+#' h2o.shutdown(prompt = FALSE)
+#'
 #' }
-#'
-#'
 #'
 evaluate_market_type <- function(x, model_path, num_cols){
   requireNamespace("tidyverse", quietly = TRUE)

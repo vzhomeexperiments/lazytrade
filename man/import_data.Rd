@@ -30,13 +30,6 @@ DFT1 <- import_data(trade_log_file = system.file("extdata",
                                                  package = "lazytrade"),
                     demo_mode = TRUE)
 
-\dontrun{
-
-#Create folder in the working directory with the name _TEST_DATA.
-#Place the sample file with the name 'OrdersResultsT1.csv'
-DFT1 <- try(import_data(path_T1, "OrdersResultsT1.csv"), silent = TRUE)
-
-}
 
 
 }

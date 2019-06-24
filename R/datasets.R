@@ -84,3 +84,34 @@
 #'   \item{X2-X29}{Values of the assets}
 #' }
 "indicator_dataset"
+
+
+#' Table with one column indicator dataset
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with one column
+#' \describe{
+#'   \item{CADCHF}{Indicator values of the asset}
+#' }
+"macd_df"
+
+#' Table with trade data and joined market type info
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{"MagicNumber.x}{Unique identifiers of the Trading Robots from Trade Log}
+#'   \item{TicketNumber}{Ticket Number of closed position}
+#'   \item{OrderStartTime}{Date and Time when order started}
+#'   \item{OrderCloseTime}{Date and Time when order closed}
+#'   \item{Profit}{Monetary result of the trade}
+#'   \item{Symbol}{Symbol of the Asset e.g. EURUSD}
+#'   \item{OrderType}{Order Type 0 - buy, 1 - sell}
+#'   \item{"MagicNumber.y}{Unique identifiers of the Trading Robots from Ticket Opening Log}
+#'   \item{"MarketType}{Logged Market Type of the asset at the moment of Ticket Opening}
+#' }
+"trading_systemDF"

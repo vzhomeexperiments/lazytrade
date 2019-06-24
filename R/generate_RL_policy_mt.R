@@ -18,17 +18,19 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' library(tidyverse)
+#' library(ReinforcementLearning)
+#' data(trading_systemDF)
+#' states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
+#' actions <- c("ON", "OFF")
+#' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
+#' generate_RL_policy_mt(trading_systemDF, states, actions, control)
 #'
-#' generate_RL_policy_mt(data_trades, states, actions, control)
-#'
-#' }
 #'
 generate_RL_policy_mt <- function(x, states, actions, control){
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
   # uncomment to debug code inside the function
-  # x <- read_rds("test_data/data_trades_markettype.rds")
   # x <- trading_systemDF
   # rm(model, df_tupple)
   # Define state and action sets for Reinforcement Learning

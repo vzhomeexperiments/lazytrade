@@ -26,23 +26,13 @@
 #'                                                  package = "lazytrade"),
 #'                     demo_mode = TRUE)
 #'
-#' \dontrun{
-#'
-#' #Create folder in the working directory with the name _TEST_DATA.
-#' #Place the sample file with the name 'OrdersResultsT1.csv'
-#' DFT1 <- try(import_data(path_T1, "OrdersResultsT1.csv"), silent = TRUE)
-#'
-#' }
 #'
 #'
 import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
-  ### uncomment for debugging of this function
-  # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal1/MQL4/Files/"
-  # trade_log_file <- "_TEST_DATA/OrdersResultsT1.csv"
-  # demo_mode <- T
 
+  # use in production to read file
   if(!demo_mode){
 
   DFT1 <- try(read_csv(file = file.path(path_terminal, trade_log_file),
@@ -51,6 +41,7 @@ import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){
                        col_types = "iiccdci"),
               silent = TRUE)
 
+  # this is used for demo only
   } else {
 
 
@@ -61,14 +52,16 @@ import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){
                 silent = TRUE)
   }
 
+  # evaluate content of the table, stop function if there was an error to read file
   if(class(DFT1)[1] == "try-error") {stop("Error reading file. File with trades may not exist yet!",
                                        call. = FALSE)}
+  # clean data if table is not empty
   if(!nrow(DFT1)==0){
     # data frame preparation
     DFT1$OrderStartTime <- ymd_hms(DFT1$OrderStartTime)
     DFT1$OrderCloseTime <- ymd_hms(DFT1$OrderCloseTime)
     DFT1$OrderType      <- as.factor(DFT1$OrderType)
-    # removes duplicates
+    # code below removes duplicates
     DFT1 <- unique(DFT1)
 
     return(DFT1)

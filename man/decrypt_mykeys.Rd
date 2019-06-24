@@ -23,7 +23,7 @@ Alternatively possible to use 'openssl' R package
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 # Consumer API keys
 ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,

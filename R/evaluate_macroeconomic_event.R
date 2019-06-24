@@ -1,12 +1,12 @@
 #' Function used to evaluate market type situation by reading the file with Macroeconomic Events
 #'
 #' @description Function is reading the content of the file 01_MacroeconomicEvent.csv.
-#' Should the content of the file is 1 then Macro Economic event is present.
-#' All trading robots will not be able to open new orders
+#' Should the content of the file is 1 then Macro Economic event is present,
+#' all trading robots will not be able to open new orders
 #'
 #' @details This function is used exclusively with Market Type recognition system
 #'
-#' @param setup_path Path with trading robots magic numbers setup
+#' @param setup_path Path with trading robots magic numbers setup, typically file 'Setup.csv'
 #' @param file_name Name of the file
 #' @param path_t1 Path of the Terminal 1
 #' @param path_t3 Path of the Terminal 3
@@ -16,12 +16,9 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' # evaluate data on macroeconomic event (required to start trading)
-#' repo_path <- "C:/Users/fxtrams/Documents/000_TradingRepo"
-#' file_path <- "/FALCON_F2/TEST/Setup.csv"
-#' setup_path <- file.path(repo_path, file_path)
 #' evaluate_macroeconomic_event(setup_path = setup_path,
 #'                              file_name = "01_MacroeconomicEvent.csv",
 #'                              path_t1 = path_T1,path_t3 = path_T3)
@@ -31,7 +28,7 @@
 #'
 evaluate_macroeconomic_event <- function(setup_path, file_name, path_t1, path_t3){
   requireNamespace("tidyverse", quietly = TRUE)
-  # setup_path <- "C:/Users/fxtrams/Documents/000_TradingRepo/FALCON_F2/TEST/Setup.csv"
+
   # file_name <- "01_MacroeconomicEvent.csv"
   # path_t1 <- path_T1
   # path_t3 <- path_T3
