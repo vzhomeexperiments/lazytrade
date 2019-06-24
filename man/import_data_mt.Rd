@@ -17,7 +17,7 @@ import_data_mt(path_terminal, trade_log_file, system_number,
 \item{demo_mode}{- when true, uses sample datafile stored in the package}
 }
 \value{
-function return the data frame with 3 columns including market type code
+function returns the data frame with 3 columns including market type code
 }
 \description{
 Function imports file from the MetaTrader sandbox. Function performs necessary cleansing of the data column types
@@ -25,15 +25,10 @@ Function imports file from the MetaTrader sandbox. Function performs necessary c
 \examples{
 
 library(tidyverse)
-import_data_mt(trade_log_file = system.file("extdata", "OrdersResultsT1.csv",
+import_data_mt(trade_log_file = system.file("extdata", "MarketTypeLog8132101.csv",
                                             package = "lazytrade"),
                demo_mode = TRUE)
 
-\dontrun{
-# path_terminal <- "C:/Program Files (x86)/FxPro - Terminal1/MQL4/Files/"
-# system_number <- 8139124
-
-}
 
 
 }

@@ -7,7 +7,7 @@
 #' @param trade_log_file - direct path to the log file (used for demo purposes)
 #' @param demo_mode - when true, uses sample datafile stored in the package
 #'
-#' @return function return the data frame with 3 columns including market type code
+#' @return function returns the data frame with 3 columns including market type code
 #' @export
 #'
 #' @author (C) 2019 Vladimir Zhbanko
@@ -15,15 +15,10 @@
 #' @examples
 #'
 #' library(tidyverse)
-#' import_data_mt(trade_log_file = system.file("extdata", "OrdersResultsT1.csv",
+#' import_data_mt(trade_log_file = system.file("extdata", "MarketTypeLog8132101.csv",
 #'                                             package = "lazytrade"),
 #'                demo_mode = TRUE)
 #'
-#' \dontrun{
-#' # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal1/MQL4/Files/"
-#' # system_number <- 8139124
-#'
-#' }
 #'
 #'
 import_data_mt <- function(path_terminal, trade_log_file, system_number, demo_mode = FALSE){
