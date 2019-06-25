@@ -14,12 +14,12 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' data(TradeStatePolicy)
 #' trading_system <- 8118101
 #' path_terminal <- "C:/Program Files (x86)/FxPro - Terminal3/MQL4/Files/"
-#' record_policy(x = policy_tr_systDF, trading_system = trading_system, path_terminal = path_T4)
+#' record_policy(x = TradeStatePolicy, trading_system = trading_system, path_terminal = path_T4)
 #'
 #' }
 #'

@@ -1,9 +1,11 @@
-#' Load Asset Data Function
+#' Load and Prepare Asset Data
 #'
-#' @description Function imports file and changes date column type. Function return the dataframe with trade data.
-#' -> update: data_deepth argument was added to optimize code and separate data needed to train and score the model
+#' @description Function imports file with financial asset data. Each column represent one asset, rows represent observations.
+#' Values in specific columns will be normalized by dividing them by 100. This is specifically done for pairs with JPY.
+#' In addition, X1 column will be converted to the ymd_hms format
 #'
-#' @details https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
+#' @details Works for both price and indicator values, function parameters allowing to import different files.
+#' File names are selected to account different time periodicity and amount of the data
 #'
 #' @param path_terminal - path to the MT4 terminal, string
 #' @param trade_log_file - csv file name where the data is stored, without ".csv"
@@ -15,22 +17,22 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
-#' # path_terminal <- "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files"
-#' # path_terminal <- file.path(getwd(), "test_data")
-#' # trade_log_file <- "AI_CP"
-#' # trade_log_file <- "AI_Macd"
-#' # time_period <- 1
-#' # data_deepth <- "50000"
 #' library(tidyverse)
 #' library(lubridate)
-#' prices <- load_asset_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files",
-#'                     trade_log_file = "AI_CP",
-#'                     time_period = 1,
-#'                     data_deepth = "50000")
+#' path_terminal <- system.file("extdata", package = "lazytrade")
 #'
-#' }
+#' # load and prepare prices data
+#' prices <- load_asset_data(path_terminal = path_terminal,
+#'                           trade_log_file = "AI_CP",
+#'                           time_period = 60,
+#'                           data_deepth = "300")
+#'
+#' # load and prepare indicator data
+#' macd <- load_asset_data(path_terminal = path_terminal,
+#'                         trade_log_file = "AI_Macd",
+#'                         time_period = 60,
+#'                         data_deepth = "300")
+#'
 #'
 load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data_deepth = 50000){
 

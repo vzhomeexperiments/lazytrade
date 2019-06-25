@@ -1,8 +1,6 @@
 #' Calculate Profit Factor
 #'
-#' @description
-#'
-#' Function is capable to calculate profit factor using a vector of the trading results
+#' @description Calculate profit factor using a data vector with the trading results
 #'
 #' @param x column vector with profit or loss of the orders for one system
 #'

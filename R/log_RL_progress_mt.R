@@ -13,11 +13,17 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' # retrieve RL model Q values progress
+#' library(ReinforcementLearning)
+#' library(tidyverse)
+#' library(magrittr)
+#' data(trading_systemDF)
+#' x <- trading_systemDF
+#' states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
+#' actions <- c("ON", "OFF") # 'ON' and 'OFF' are referring to decision to trade with Slave system
+#' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 #'
-#' DF_RESEARCH <- log_RL_progress(x = x,states = states, actions = actions, control = control)
-#'
-#' }
+#' log_RL_progress_mt(x = x,states = states, actions = actions, control = control)
 #'
 #'
 log_RL_progress_mt <- function(x, states, actions, control){
@@ -29,7 +35,6 @@ log_RL_progress_mt <- function(x, states, actions, control){
   # x <- trading_systemDF
   # rm(model, df_tupple)
   # Define state and action sets for Reinforcement Learning
-  # states <- c("tradewin", "tradeloss")
   # states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
   # actions <- c("ON", "OFF") # 'ON' and 'OFF' are referring to decision to trade with Slave system
   # control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)

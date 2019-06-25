@@ -13,7 +13,7 @@ profit_factor(x)
 function should calculate profit factor for this vector and return one value also as vector
 }
 \description{
-Function is capable to calculate profit factor using a vector of the trading results
+Calculate profit factor using a data vector with the trading results
 }
 \examples{
 
