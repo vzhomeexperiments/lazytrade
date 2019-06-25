@@ -2,7 +2,7 @@
 % Please edit documentation in R/test_model.R
 \name{test_model}
 \alias{test_model}
-\title{Test model function.}
+\title{Test model using independent price data.}
 \usage{
 test_model(test_dataset, predictor_dataset, test_type)
 }
@@ -31,13 +31,15 @@ all 28 major forex pairs
 }
 \examples{
 
-\dontrun{
+library(tidyverse)
+data(result_prev)
+data(test_data_pattern)
 
-#implementation inside function self_learn_ai_R(...)
 ## evaluate hypothetical results of trading using the model
-dat31_prev <- test_model(dat21, result_prev, test_type = "regression")
+test_model(test_dataset = test_data_pattern,
+           predictor_dataset = result_prev,
+           test_type = "regression")
 
-}
 
 
 }

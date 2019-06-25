@@ -10,6 +10,18 @@
 #' }
 "TradeStatePolicy"
 
+#' Table with Market Types and sample of actual policy for those states
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with 2 columns:
+#' \describe{
+#'   \item{MarketType}{Current Market Type status}
+#'   \item{Policy}{Policy choice}
+#' }
+"policy_tr_systDF"
+
 #' Table with Trade results samples
 #'
 #' @docType data
@@ -115,3 +127,26 @@
 #'   \item{"MarketType}{Logged Market Type of the asset at the moment of Ticket Opening}
 #' }
 "trading_systemDF"
+
+#' Table with several columns containing indicator values and Label values
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{LABEL}{Asset values as were recorded in the future}
+#'   \item{V1-V49}{Transposed values of the indicator}
+#' }
+"test_data_pattern"
+
+#' Table with one column as result from the model prediction
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with one column
+#' \describe{
+#'   \item{predict}{Predicted values from the model}
+#' }
+"result_prev"

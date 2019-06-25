@@ -25,14 +25,19 @@ Function is capable to read the data and  writing multiple files e.g. 'SystemCon
 }
 \examples{
 
-\dontrun{
+library(tidyverse)
+library(lubridate)
+DFT1 <- import_data(trade_log_file = system.file("extdata",
+                                                 "OrdersResultsT1.csv",
+                                                 package = "lazytrade"),
+                    demo_mode = TRUE)
 
 DFT1 \%>\%
 group_by(MagicNumber) \%>\% select(MagicNumber) \%>\% mutate(IsEnabled = 0) \%>\%
 # write commands to disable systems
-writeCommandViaCSV(path_T1)
+write_command_via_csv(tempdir())
 
-}
+
 
 
 }

@@ -23,9 +23,9 @@ Function is used by the R script Adapt_RL_control.R
 }
 \examples{
 
-\dontrun{
+\donttest{
 
-write_control_parameters(trading_systemDF, path_control_files = path_control_files)
+write_control_parameters(trading_systemDF, path_control_files = tempdir())
 
 }
 

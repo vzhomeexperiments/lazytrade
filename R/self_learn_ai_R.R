@@ -1,21 +1,18 @@
-#' Function to handle deep learning regression problem
+#' Function to train Deep Learning regression model
 #'
-#' @description  'Self-learning' function.
+#' @description  Function is training h2o deep learning model to match future prices of the asset to the indicator pattern.
+#' Main idea is to be able to predict future prices by solely relying on the most recent indicator pattern.
 #'
-#' Function will use shifted price and indicator datasets. Goal of the function is to create deep learning
-#' model trained to predict future state of the label based on the indicator pattern.
+#' @details Performs data manipulation and training of the model. Function is handling shift of the price and indicator datasets.
 #' Function will also check how the model predict by using trading objective.
-#'
-#' @details NOTE: Always run parameter research_mode = TRUE for the first time
+#' NOTE: Always run parameter research_mode = TRUE for the first time
 #'
 #' Because of the function is intended to periodically re-train the model it would always check how the previous model was working.
 #' In case new model is better, the better model will be used.
 #'
 #' Function can also write a log files with a results of the strategy test
 #'
-#' more explanations and motivation is explained in this udemy course
-#' https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
-#'
+#' @author (C) 2019 Vladimir Zhbanko
 #'
 #' @param price_dataset       Dataset containing assets prices. It will be used as a label
 #' @param indicator_dataset   Dataset containing assets indicator which pattern will be used as predictor
@@ -31,7 +28,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
@@ -58,27 +55,6 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
 
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
-  ### use commented code below to test this function
-  # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/create_labelled_data.R")
-  # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/create_transposed_data.R")
-  # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/load_data.R")
-  # source("C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_FUN/test_model.R")
-  # # load prices of 28 currencies
-  # price_dataset <- load_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/", trade_log_file = "AI_CP", time_period = 1, data_deepth = "50000")
-  # # load macd indicator of 28 currencies
-  # indicator_dataset <- load_data(path_terminal = "C:/Program Files (x86)/FxPro - Terminal2/MQL4/Files/", trade_log_file = "AI_Macd", time_period = 1, data_deepth = "50000")
-  ## --- use *.rds files provided in the repository as an example
-  # price_dataset <- read_rds("_TEST_DATA/price_dataset.rds")
-  # indicator_dataset <- read_rds("_TEST_DATA/indicator_dataset.rds")
-  ## ---
-  # num_bars <- 75
-  # timeframe <- 1 # indicates the timeframe used for training (e.g. 1 minute, 15 minutes, 60 minutes, etc)
-  # path_model <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_MODELS"
-  # write_log = TRUE
-  # setup_mode <- TRUE
-  # setup_mode <- FALSE
-  # research_mode = TRUE
-  # research_mode = FALSE
 
   # transform data and get the labels shift rows down Note: the oldest data in the first row!!
   dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression") %>% mutate_all(funs(lag), n=28)
@@ -95,10 +71,6 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
   test_ind  <- 1:round(0.3*(nrow(dat16))) #train indices 1:xxx
   dat21 <- dat16[test_ind, ]    #dataset to test the model using 30% of data
   dat22 <- dat16[-test_ind, ]   #dataset to train the model
-
-  #library(plotly)
-  ## Visualize new matrix in 3D
-  #plot_ly(z = as.matrix(dat16[,2:76]), type = "surface")
 
   ## ---------- Data Modelling  ---------------
   #h2o.init()

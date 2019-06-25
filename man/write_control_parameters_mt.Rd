@@ -23,10 +23,10 @@ Function is used by the R script Adapt_RL_MT_control.R
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 # or to use optimal control parameters found by auxiliary function
-write_control_parameters_mt(trading_systemDF, path_control_files = path_control_files)
+write_control_parameters_mt(trading_systemDF, path_control_files = tempdir())
 
 }
 

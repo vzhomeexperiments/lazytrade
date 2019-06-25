@@ -2,7 +2,7 @@
 % Please edit documentation in R/to_m.R
 \name{to_m}
 \alias{to_m}
-\title{Function converting time series data to matrix}
+\title{Convert time series data to matrix with defined number of columns}
 \usage{
 to_m(x, n_cols)
 }
@@ -15,17 +15,13 @@ to_m(x, n_cols)
 - matrix with specified amount of rows
 }
 \description{
-PURPOSE: Transform Time Series Column of the dataframe to the matrix with specified number of columns.
-Number of rows will be automatically found. Eventually remaining data points of the last row will be discarded
+Transforms Time Series Column of the dataframe to the matrix with specified number of columns.
+Number of rows will be automatically found. Eventually not complete last row will be discarded
 }
 \examples{
 
-\dontrun{
-
-macd_m <- macd_df \%>\% select(X5.x) \%>\% to_m(64)
-
-}
-
+library(tidyverse)
+macd_m <- seq(1:1000) \%>\% as.data.frame() \%>\% to_m(64)
 
 
 }

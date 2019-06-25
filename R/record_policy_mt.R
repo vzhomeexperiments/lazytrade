@@ -11,24 +11,23 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' library(tidyverse)
+#' library(magrittr)
+#' data(policy_tr_systDF)
 #'
-#' record_policy_mt(x = policy_tr_systDF, trading_system = trading_system, path_sandbox = path_T4)
+#' record_policy_mt(x = policy_tr_systDF,
+#'                  trading_system = 8118101,
+#'                  path_sandbox = tempdir())
 #'
-#' }
 #'
 record_policy_mt <- function(x, trading_system, path_sandbox){
   requireNamespace("tidyverse", quietly = TRUE)
-  # debugging
-  # trading_system <- 8132125
-  # x <- policy_tr_systDF
-  # x <- read_rds("_TEST_DATA/policy_tr_systDF.rds")
-  # path_sandbox <- "C:/Program Files (x86)/FxPro - Terminal3/MQL4/Files/"
+
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
   is_T3 <- str_detect(path_sandbox, "Terminal3")
   if(is_T3 == TRUE) { addition <- 200 }
   is_T4 <- str_detect(path_sandbox, "Terminal4")
-  if(is_T4 == TRUE) { addition <- 300 }
+  if(is_T4 == TRUE) { addition <- 300 } else {addition <- 0}
 
   # -------------------------
   # Write Decision/Update Policy

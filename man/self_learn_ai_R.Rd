@@ -2,7 +2,7 @@
 % Please edit documentation in R/self_learn_ai_R.R
 \name{self_learn_ai_R}
 \alias{self_learn_ai_R}
-\title{Function to handle deep learning regression problem}
+\title{Function to train Deep Learning regression model}
 \usage{
 self_learn_ai_R(price_dataset, indicator_dataset, num_bars, timeframe,
   path_model, setup_mode = FALSE, research_mode = FALSE,
@@ -29,26 +29,22 @@ self_learn_ai_R(price_dataset, indicator_dataset, num_bars, timeframe,
 Function is writing files into Decision Support System folder
 }
 \description{
-'Self-learning' function.
-
-Function will use shifted price and indicator datasets. Goal of the function is to create deep learning
-model trained to predict future state of the label based on the indicator pattern.
-Function will also check how the model predict by using trading objective.
+Function is training h2o deep learning model to match future prices of the asset to the indicator pattern.
+Main idea is to be able to predict future prices by solely relying on the most recent indicator pattern.
 }
 \details{
+Performs data manipulation and training of the model. Function is handling shift of the price and indicator datasets.
+Function will also check how the model predict by using trading objective.
 NOTE: Always run parameter research_mode = TRUE for the first time
 
 Because of the function is intended to periodically re-train the model it would always check how the previous model was working.
 In case new model is better, the better model will be used.
 
 Function can also write a log files with a results of the strategy test
-
-more explanations and motivation is explained in this udemy course
-https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 # start h2o engine (using all CPU's by default)
 h2o.init()
@@ -68,4 +64,7 @@ h2o.shutdown(prompt = F)
 
 
 
+}
+\author{
+(C) 2019 Vladimir Zhbanko
 }

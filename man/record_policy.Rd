@@ -23,14 +23,15 @@ Function will write a policy 'decision' to the csv file specific for each Expert
 }
 \examples{
 
-\donttest{
-
+library(tidyverse)
+library(magrittr)
 data(TradeStatePolicy)
-trading_system <- 8118101
-path_terminal <- "C:/Program Files (x86)/FxPro - Terminal3/MQL4/Files/"
-record_policy(x = TradeStatePolicy, trading_system = trading_system, path_terminal = path_T4)
 
-}
+record_policy(x = TradeStatePolicy,
+              last_result = "tradewin",
+              trading_system = 8118101,
+              path_terminal = tempdir())
+
 
 
 }

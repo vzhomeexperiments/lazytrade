@@ -1,4 +1,4 @@
-#' Test model function.
+#' Test model using independent price data.
 #'
 #' @description Goal of the function is to verify how good predicted results are.
 #'
@@ -21,13 +21,15 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' library(tidyverse)
+#' data(result_prev)
+#' data(test_data_pattern)
 #'
-#' #implementation inside function self_learn_ai_R(...)
 #' ## evaluate hypothetical results of trading using the model
-#' dat31_prev <- test_model(dat21, result_prev, test_type = "regression")
+#' test_model(test_dataset = test_data_pattern,
+#'            predictor_dataset = result_prev,
+#'            test_type = "regression")
 #'
-#' }
 #'
 #'
 test_model <- function(test_dataset, predictor_dataset, test_type){

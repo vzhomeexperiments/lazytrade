@@ -1,7 +1,7 @@
-#' Function converting time series data to matrix
+#' Convert time series data to matrix with defined number of columns
 #'
-#' @description PURPOSE: Transform Time Series Column of the dataframe to the matrix with specified number of columns.
-#' Number of rows will be automatically found. Eventually remaining data points of the last row will be discarded
+#' @description Transforms Time Series Column of the dataframe to the matrix with specified number of columns.
+#' Number of rows will be automatically found. Eventually not complete last row will be discarded
 #'
 #' @param x - dataframe with one column
 #' @param n_cols - number of columns in the matrix
@@ -11,24 +11,12 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
-#' macd_m <- macd_df %>% select(X5.x) %>% to_m(64)
-#'
-#' }
-#'
+#' library(tidyverse)
+#' macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(64)
 #'
 #'
 to_m <- function(x, n_cols) {
   requireNamespace("tidyverse", quietly = TRUE)
-  ### PURPOSE: Transform Time Series Column of the dataframe to the matrix
-  #            with specified number of columns. Number of rows will be automatically
-  #            found and remaining data points discarded
-  # # Uncomment variable to debug function
-  # x -< dataframe with one column that is
-
-  # x <- DF_TEMP
-  # n_cols <- 150
 
   # get intermediate object and dimension
   Step1 <- x
