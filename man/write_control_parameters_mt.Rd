@@ -24,12 +24,16 @@ Function is used by the R script Adapt_RL_MT_control.R
 \examples{
 
 \donttest{
+# test lasts 15 sec:
+library(tidyverse)
+library(ReinforcementLearning)
+library(magrittr)
+data(trading_systemDF)
 
-# or to use optimal control parameters found by auxiliary function
+# use optimal control parameters found by auxiliary function
 write_control_parameters_mt(trading_systemDF, path_control_files = tempdir())
 
 }
-
 
 }
 \author{

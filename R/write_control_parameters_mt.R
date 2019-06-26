@@ -17,12 +17,16 @@
 #' @examples
 #'
 #' \donttest{
+#' # test lasts 15 sec:
+#' library(tidyverse)
+#' library(ReinforcementLearning)
+#' library(magrittr)
+#' data(trading_systemDF)
 #'
-#' # or to use optimal control parameters found by auxiliary function
+#' # use optimal control parameters found by auxiliary function
 #' write_control_parameters_mt(trading_systemDF, path_control_files = tempdir())
 #'
 #' }
-#'
 #'
 write_control_parameters_mt <- function(x, path_control_files){
 
@@ -30,15 +34,6 @@ write_control_parameters_mt <- function(x, path_control_files){
   requireNamespace("ReinforcementLearning", quietly = TRUE)
   requireNamespace("magrittr", quietly = TRUE)
 
-# source("C:/Users/fxtrams/Documents/000_TradingRepo/R_tradecontrol/_RL_MT/log_RL_progress.R")
-
-  # # test dataset x with winning trades
-  # x <- read_rds("_TEST_DATA/trading_systemsDF_wins.rds")
-  # # test dataset x with loosing trades
-  # x <- read_rds("_TEST_DATA/trading_systemsDF_losers.rds")
-  # # test dataset x including MT
-  # x <- trading_systemDF
-  # path_control_files <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_tradecontrol/_RL_MT/control"
 
 # delete DF_RES if it is exist
 if(exists("DF_RES")){rm(DF_RES)}

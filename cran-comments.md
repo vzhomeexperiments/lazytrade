@@ -5,7 +5,8 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTES
 
-  * utils global variables was used to avoid Notes
+  * utils global variables in R/zzz.R was used to avoid Notes
+  * corrected according to the CRAN team comments
 
 ## Downstream dependencies
 Checked with R CMD check
