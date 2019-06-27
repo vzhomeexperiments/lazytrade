@@ -173,13 +173,3 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
 
 }
 
-
-
-
-
-
-
-
-
-
-#### End

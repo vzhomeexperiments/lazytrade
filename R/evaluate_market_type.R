@@ -29,7 +29,7 @@
 #' #' data(macd_df)
 #' x <- macd_df
 #' num_cols <- 64
-#' models_path <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_markettype/models"
+#' models_path <- tempdir()
 #' remain_path <- "/regression.bin/DL_Classification"
 #' model_path <- file.path(models_path, remain_path)
 #'

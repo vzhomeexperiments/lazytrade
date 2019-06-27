@@ -30,13 +30,7 @@
 generate_RL_policy_mt <- function(x, states, actions, control){
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
-  # uncomment to debug code inside the function
-  # x <- trading_systemDF
-  # rm(model, df_tupple)
-  # Define state and action sets for Reinforcement Learning
-  # states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
-  # actions <- c("ON", "OFF") # 'ON' and 'OFF' are referring to decision to trade with Slave system
-  # control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
+
   # add dummy tupples with states and actions with minimal reward
   d_tupple <- data.frame(State = states,
                          Action = rep(actions,length(states)),

@@ -23,8 +23,6 @@ each column contains records of the indicator value of the assets
 every column will be splitted into chunks of n observations and transposed into rows
 this repeated for all the columns coming up with a matrix.
 Function works in combination with a function create_labelled_data
-
-see more explanation here https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
 }
 \examples{
 

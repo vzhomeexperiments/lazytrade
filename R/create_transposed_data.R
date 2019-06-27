@@ -8,7 +8,6 @@
 #' this repeated for all the columns coming up with a matrix.
 #' Function works in combination with a function create_labelled_data
 #'
-#' see more explanation here https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
 #'
 #' @param x - data set containing a table where 1st column is a Time index and other columns containing financial asset indicator values
 #' @param n - number of rows we intend to split and transpose the data

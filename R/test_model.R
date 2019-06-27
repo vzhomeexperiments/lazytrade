@@ -35,18 +35,6 @@
 test_model <- function(test_dataset, predictor_dataset, test_type){
   requireNamespace("tidyverse", quietly = TRUE)
   # arguments for debugging for regression
-  # test_dataset <- read_rds("test_data/dat21.rds")
-  # test_dataset <- dat21
-  # test_dataset <- dat20
-  # predictor_dataset <- read_rds("test_data/result_prev.rds")
-  # predictor_dataset <- result
-  # predictor_dataset <- result_10
-  # test_type <- "regression"
-
-  # arguments for debugging for classification
-  # test_dataset <- read_rds("test_data/test_dataset_c.rds")
-  # predictor_dataset <- read_rds("test_data/pred_dataset_c.rds")
-  # test_type <- "classification"
 
   if(test_type == "regression"){
 ## evaluate hypothetical results of trading using the model

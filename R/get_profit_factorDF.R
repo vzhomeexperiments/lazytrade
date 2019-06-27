@@ -20,8 +20,6 @@
 get_profit_factorDF <- function(x, num_orders){
   requireNamespace("tidyverse", quietly = TRUE)
   # generate DF with only MagicNumbers when > 10 trades and all trades are losers
-  # x <- profit_factorDF
-  # num_orders <- 10
   DF_L <- x %>%
     group_by(MagicNumber) %>%
     summarise(nOrders = n())%>%
