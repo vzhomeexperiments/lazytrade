@@ -6,7 +6,7 @@
 There were no ERRORs or WARNINGs or NOTES
 
   * utils global variables in R/zzz.R was used to avoid Notes
-  * corrected according to the CRAN team comments
+  * corrected file writing in examples
 
 ## Downstream dependencies
 Checked with R CMD check

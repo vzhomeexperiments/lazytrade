@@ -18,6 +18,8 @@
 #'
 #' @examples
 #'
+#' \donttest{
+#'
 #' library(tidyverse)
 #' library(lubridate)
 #' DFT1 <- import_data(trade_log_file = system.file("extdata",
@@ -30,8 +32,7 @@
 #' # write commands to disable systems
 #' writeCommandViaCSV(tempdir())
 #'
-#'
-#'
+#' }
 #'
 writeCommandViaCSV <- function(x, path_terminal, fileName = "SystemControl"){
   # check if the provided object 'x' exists and that it's not empty
