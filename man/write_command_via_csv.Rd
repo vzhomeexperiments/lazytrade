@@ -25,6 +25,7 @@ Function is capable to read the data and  writing multiple files e.g. 'SystemCon
 }
 \examples{
 
+\donttest{
 library(tidyverse)
 library(lubridate)
 DFT1 <- import_data(trade_log_file = system.file("extdata",
@@ -38,7 +39,7 @@ group_by(MagicNumber) \%>\% select(MagicNumber) \%>\% mutate(IsEnabled = 0) \%>\
 write_command_via_csv(tempdir())
 
 
-
+}
 
 }
 \author{
