@@ -39,13 +39,13 @@
 #'                            profit_factor_limit = 1.2,
 #'                            demo_mode = TRUE,
 #'                            write_mode = FALSE)
-#'
+#' \donttest{
 #' # function will write to the temporary file
 #' DFT1 %>% check_if_optimize(num_trades_to_consider = 10,
 #'                            profit_factor_limit = 1.2,
 #'                            demo_mode = TRUE,
 #'                            write_mode = TRUE)
-#'
+#' }
 #'
 check_if_optimize <- function(x, path_trading_robot = "",
                               num_trades_to_consider = 10,
