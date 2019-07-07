@@ -4,6 +4,8 @@
 #' profit factor on the last trades. Whenever trading robot has profit factor value below certain limit
 #' function will write a file log indicating which trading systems need to be maintained.
 #'
+#' Learn by example how to manipulate data
+#'
 #' @details Whenever there will be not enough trades then empty file will be written to the destination
 #'
 #' @param x - dataframe containing trading results
@@ -45,7 +47,7 @@
 #'                            write_mode = TRUE)
 #'
 #'
-check_if_optimize <- function(x, path_trading_robot,
+check_if_optimize <- function(x, path_trading_robot = "",
                               num_trades_to_consider = 10,
                               profit_factor_limit = 0.7,
                               demo_mode = FALSE,
@@ -67,7 +69,7 @@ check_if_optimize <- function(x, path_trading_robot,
         inner_join(y = read_csv(file = file.path(path_trading_robot,"TEST", "Setup.csv"),
                                 col_types = "cci"),
                    by = c("MagicNumber" = "Magic"))
-  if(write_mode){write_csv(path = paste0(y, path_trading_robot, "TEST/", Sys.Date(), "-Re-Train", ".csv"))} else {return(y)}
+  if(write_mode){write_csv(y, path = file.path(paste0(path_trading_robot, "TEST/", Sys.Date(), "-Re-Train", ".csv")))} else {return(y)}
 
   } else {
 

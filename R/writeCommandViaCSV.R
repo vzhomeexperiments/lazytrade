@@ -30,19 +30,19 @@
 #' DFT1 %>%
 #' group_by(MagicNumber) %>% select(MagicNumber) %>% mutate(IsEnabled = 0) %>%
 #' # write commands to disable systems
-#' writeCommandViaCSV(tempdir())
+#' writeCommandViaCSV(path_terminal = tempdir())
 #'
 #' }
 #'
-writeCommandViaCSV <- function(x, path_terminal, fileName = "SystemControl"){
+writeCommandViaCSV <- function(x, path_terminal = "", fileName = "SystemControl"){
   # check if the provided object 'x' exists and that it's not empty
   if(exists("x") == TRUE && nrow(x) != 0) {
     # for loop to go through the object x
     for(i in 1:nrow(x))
     {
       # write the file for MQL4 usage
-      write.csv(x[i, ], file = paste0(path_terminal, fileName, as.character(x[i, 1]), ".csv"),
-                row.names = FALSE)
+      f_name <- file.path(paste0(path_terminal, fileName, as.character(x[i, 1]), ".csv"))
+      write.csv(x[i, ], file = f_name, row.names = FALSE)
     }
   }
 }

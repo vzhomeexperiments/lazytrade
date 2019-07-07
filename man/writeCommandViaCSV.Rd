@@ -4,7 +4,7 @@
 \alias{writeCommandViaCSV}
 \title{Write csv files with indicated commands to the external system}
 \usage{
-writeCommandViaCSV(x, path_terminal, fileName = "SystemControl")
+writeCommandViaCSV(x, path_terminal = "", fileName = "SystemControl")
 }
 \arguments{
 \item{x}{- dataframe object with resulting command e.g. 1 - enable; 0 - disable}
@@ -37,7 +37,7 @@ DFT1 <- import_data(trade_log_file = system.file("extdata",
 DFT1 \%>\%
 group_by(MagicNumber) \%>\% select(MagicNumber) \%>\% mutate(IsEnabled = 0) \%>\%
 # write commands to disable systems
-writeCommandViaCSV(tempdir())
+writeCommandViaCSV(path_terminal = tempdir())
 
 }
 

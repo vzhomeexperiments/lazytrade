@@ -11,6 +11,7 @@
 #'
 #' @examples
 #'
+#' \donttest{
 #' library(tidyverse)
 #' library(magrittr)
 #' data(policy_tr_systDF)
@@ -18,7 +19,7 @@
 #' record_policy_mt(x = policy_tr_systDF,
 #'                  trading_system = 8118101,
 #'                  path_sandbox = tempdir())
-#'
+#' }
 #'
 record_policy_mt <- function(x, trading_system, path_sandbox){
   requireNamespace("tidyverse", quietly = TRUE)

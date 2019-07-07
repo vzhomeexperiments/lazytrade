@@ -4,8 +4,9 @@
 \alias{check_if_optimize}
 \title{Function check_if_optimize.}
 \usage{
-check_if_optimize(x, path_trading_robot, num_trades_to_consider = 10,
-  profit_factor_limit = 0.7, demo_mode = FALSE, write_mode = FALSE)
+check_if_optimize(x, path_trading_robot = "",
+  num_trades_to_consider = 10, profit_factor_limit = 0.7,
+  demo_mode = FALSE, write_mode = FALSE)
 }
 \arguments{
 \item{x}{- dataframe containing trading results}
@@ -28,6 +29,8 @@ function returns a dataframe with systems that should be optimized
 Purpose of this function is to verify trading system functionality by analysing
 profit factor on the last trades. Whenever trading robot has profit factor value below certain limit
 function will write a file log indicating which trading systems need to be maintained.
+
+Learn by example how to manipulate data
 }
 \details{
 Whenever there will be not enough trades then empty file will be written to the destination

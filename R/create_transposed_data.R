@@ -3,8 +3,10 @@
 #' @description PURPOSE: function gets indicator data in each column.
 #' Goal is to splitting this data into periods and transpose the data.
 #'
+#' Learn by example how to manipulate data
+#'
 #' @details each column contains records of the indicator value of the assets
-#' every column will be splitted into chunks of n observations and transposed into rows
+#' every column will be split into chunks of n observations and transposed into rows
 #' this repeated for all the columns coming up with a matrix.
 #' Function works in combination with a function create_labelled_data
 #'

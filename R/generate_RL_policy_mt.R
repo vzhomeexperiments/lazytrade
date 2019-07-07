@@ -2,7 +2,7 @@
 #'
 #' @description  This function will perform Reinforcement Learning using Trading Data.
 #' It will suggest whether or not it is better to keep using trading systems or not.
-#' Function is just using results of the past perfrormance to generate the recommendation (not a holy grail).
+#' Function is just using results of the past performance to generate the recommendation (not a holy grail).
 #'
 #' @details Initial policy is generated using a dummy zero values.
 #' This way function starts working directly from the first observation.
