@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
 <!-- badges: end -->
 
 The goal of lazytrade is to keep all functions and scripts of the lazy
@@ -54,7 +56,7 @@ up-to-date.
 
 # Notes to remind myself how to create R package
 
-taken from <http://r-pkgs.had.co.nz>
+taken from <http://r-pkgs.had.co.nz> and <https://r-pkgs.org/intro.html>
 
 ## Generating Documentation
 
@@ -122,13 +124,8 @@ Details:
 ``` r
 library(testthat)
 library(tidyverse)
-#> Registered S3 methods overwritten by 'ggplot2':
-#>   method         from 
-#>   [.quosures     rlang
-#>   c.quosures     rlang
-#>   print.quosures rlang
 #> -- Attaching packages ------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
-#> v ggplot2 3.1.1     v purrr   0.3.2
+#> v ggplot2 3.2.0     v purrr   0.3.2
 #> v tibble  2.1.3     v dplyr   0.8.1
 #> v tidyr   0.8.3     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.4.0
@@ -193,6 +190,10 @@ Clone package from GitHub and test check it in Docker Container
 ## Adding Readme Rmd
 
 `usethis::use_readme_rmd()`
+
+## Automatic check with Travis
+
+`usethis::use_travis()`
 
 ## Upload package to CRAN
 

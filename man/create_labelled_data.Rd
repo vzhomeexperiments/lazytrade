@@ -26,10 +26,11 @@ It is splitting this data by periods and transposes the data.
 Additionally function is capable to label the data based on the simple logic.
 Each row will be assigned into 2 categories based on the difference between beginning and end of the row elements
 Finally all data will be stacked on top and joined into the table
+
+Learn by example how to manipulate data
 }
 \details{
-see more info in the udemy course
-https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
+see more info in the udemy course self-learning-trading-robot
 }
 \examples{
 

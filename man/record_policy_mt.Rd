@@ -21,6 +21,7 @@ Function will write a policy 'decision' to the csv file specific for each Expert
 }
 \examples{
 
+\donttest{
 library(tidyverse)
 library(magrittr)
 data(policy_tr_systDF)
@@ -28,6 +29,6 @@ data(policy_tr_systDF)
 record_policy_mt(x = policy_tr_systDF,
                  trading_system = 8118101,
                  path_sandbox = tempdir())
-
+}
 
 }

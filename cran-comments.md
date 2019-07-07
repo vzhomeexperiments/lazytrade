@@ -6,7 +6,7 @@
 There were no ERRORs or WARNINGs or NOTES
 
   * utils global variables in R/zzz.R was used to avoid Notes
-  * corrected file writing in examples
+  * donttest examples of the functions that would be writing to the files
 
 ## Downstream dependencies
 Checked with R CMD check

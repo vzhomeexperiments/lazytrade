@@ -17,6 +17,8 @@ function returns transposed data. Transposed values from every column are stacke
 \description{
 PURPOSE: function gets indicator data in each column.
 Goal is to splitting this data into periods and transpose the data.
+
+Learn by example how to manipulate data
 }
 \details{
 each column contains records of the indicator value of the assets

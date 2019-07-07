@@ -4,6 +4,8 @@
 #' profit factor on the last trades. Whenever trading robot has profit factor value below certain limit
 #' function will write a file log indicating which trading systems need to be maintained.
 #'
+#' Learn by example how to manipulate data
+#'
 #' @details Whenever there will be not enough trades then empty file will be written to the destination
 #'
 #' @param x - dataframe containing trading results
@@ -37,13 +39,13 @@
 #'                            profit_factor_limit = 1.2,
 #'                            demo_mode = TRUE,
 #'                            write_mode = FALSE)
-#'
+#' \donttest{
 #' # function will write to the temporary file
 #' DFT1 %>% check_if_optimize(num_trades_to_consider = 10,
 #'                            profit_factor_limit = 1.2,
 #'                            demo_mode = TRUE,
 #'                            write_mode = TRUE)
-#'
+#' }
 #'
 check_if_optimize <- function(x, path_trading_robot,
                               num_trades_to_consider = 10,

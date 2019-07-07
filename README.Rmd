@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 # lazytrade
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
 <!-- badges: end -->
 
 The goal of lazytrade is to keep all functions and scripts of the lazy trade project
@@ -53,7 +54,7 @@ You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-da
 
 # Notes to remind myself how to create R package
 
-taken from http://r-pkgs.had.co.nz
+taken from http://r-pkgs.had.co.nz and https://r-pkgs.org/intro.html
 
 ## Generating Documentation
 
@@ -180,6 +181,10 @@ Clone package from GitHub and test check it in Docker Container
 ## Adding Readme Rmd
 
 `usethis::use_readme_rmd()`
+
+## Automatic check with Travis
+
+`usethis::use_travis()`
 
 ## Upload package to CRAN
 

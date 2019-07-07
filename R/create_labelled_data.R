@@ -7,8 +7,9 @@
 #' Each row will be assigned into 2 categories based on the difference between beginning and end of the row elements
 #' Finally all data will be stacked on top and joined into the table
 #'
-#' @details see more info in the udemy course
-#' https://www.udemy.com/self-learning-trading-robot/?couponCode=LAZYTRADE7-10
+#' Learn by example how to manipulate data
+#'
+#' @details see more info in the udemy course self-learning-trading-robot
 #'
 #' @param x - data set containing a table where 1st column is a Time index and other columns containing financial asset price values
 #' @param n - number of rows we intend to split and transpose the data to
