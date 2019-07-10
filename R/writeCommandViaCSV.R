@@ -18,7 +18,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#'
 #'
 #' library(tidyverse)
 #' library(lubridate)
@@ -30,9 +30,9 @@
 #' DFT1 %>%
 #' group_by(MagicNumber) %>% select(MagicNumber) %>% mutate(IsEnabled = 0) %>%
 #' # write commands to disable systems
-#' writeCommandViaCSV(path_terminal = tempdir())
+#' writeCommandViaCSV(path_terminal = tempfile())
 #'
-#' }
+#'
 #'
 writeCommandViaCSV <- function(x, path_terminal = "", fileName = "SystemControl"){
   # check if the provided object 'x' exists and that it's not empty

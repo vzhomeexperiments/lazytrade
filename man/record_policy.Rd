@@ -23,7 +23,7 @@ Function will write a policy 'decision' to the csv file specific for each Expert
 }
 \examples{
 
-\donttest{
+
 library(tidyverse)
 library(magrittr)
 data(TradeStatePolicy)
@@ -31,8 +31,8 @@ data(TradeStatePolicy)
 record_policy(x = TradeStatePolicy,
               last_result = "tradewin",
               trading_system = 8118101,
-              path_terminal = tempdir())
-}
+              path_terminal = tempfile())
+
 
 
 }

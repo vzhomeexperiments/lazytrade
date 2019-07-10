@@ -24,9 +24,9 @@
 #' data(trading_systemDF)
 #'
 #' # use optimal control parameters found by auxiliary function
-#' write_control_parameters_mt(trading_systemDF, path_control_files = tempdir())
-#'
+#' write_control_parameters_mt(trading_systemDF, path_control_files = tempfile())
 #' }
+#'
 #'
 write_control_parameters_mt <- function(x, path_control_files){
 

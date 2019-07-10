@@ -24,8 +24,12 @@ Function is used by the R script Adapt_RL_control.R
 \examples{
 
 \donttest{
-
-write_control_parameters(trading_systemDF, path_control_files = tempdir())
+#test lasts 15 sec:
+library(tidyverse)
+library(ReinforcementLearning)
+library(magrittr)
+data(data_trades)
+write_control_parameters(data_trades, path_control_files = tempfile())
 
 }
 

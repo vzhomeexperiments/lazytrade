@@ -18,7 +18,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#'
 #' library(tidyverse)
 #' library(lubridate)
 #' library(lazytrade)
@@ -30,10 +30,10 @@
 #' DFT1 %>%
 #' group_by(MagicNumber) %>% select(MagicNumber) %>% mutate(IsEnabled = 0) %>%
 #' # write commands to disable systems
-#' write_command_via_csv(path_terminal = tempdir())
+#' write_command_via_csv(path_terminal = tempfile())
 #'
 #'
-#' }
+#'
 #'
 write_command_via_csv <- function(x, path_terminal = "", fileName = "SystemControl"){
   # check if the provided object 'x' exists and that it's not empty

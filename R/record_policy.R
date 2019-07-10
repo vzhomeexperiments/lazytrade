@@ -14,7 +14,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#'
 #' library(tidyverse)
 #' library(magrittr)
 #' data(TradeStatePolicy)
@@ -22,8 +22,8 @@
 #' record_policy(x = TradeStatePolicy,
 #'               last_result = "tradewin",
 #'               trading_system = 8118101,
-#'               path_terminal = tempdir())
-#' }
+#'               path_terminal = tempfile())
+#'
 #'
 #'
 record_policy <- function(x, last_result, trading_system, path_terminal){

@@ -28,14 +28,19 @@ This function is used exclusively with Market Type recognition system
 }
 \examples{
 
-\donttest{
+
 
 # evaluate data on macroeconomic event (required to start trading)
-evaluate_macroeconomic_event(setup_path = setup_path,
-                             file_name = "01_MacroeconomicEvent.csv",
-                             path_t1 = path_T1,path_t3 = path_T3)
+library(tidyverse)
+evaluate_macroeconomic_event(setup_path = system.file("extdata",
+                                                 "Setup.csv",
+                                                 package = "lazytrade"),
+                             file_name = system.file("extdata",
+                                                 "01_MacroeconomicEvent.csv",
+                                                 package = "lazytrade"),
+                             path_t1 = "extdata",path_t3 = tempfile())
 
-}
+
 
 
 }
