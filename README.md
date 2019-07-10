@@ -166,6 +166,13 @@ test_that("test value of the calculation", {
 })
 ```
 
+### Test of the coverage for the script
+
+Test coverage shows you what you’ve tested
+devtools::test\_coverage\_file()
+
+`devtools::test_coverage_file()`
+
 ### Automated checks
 
 This will add automatic test coverage badge to the readme file on github
