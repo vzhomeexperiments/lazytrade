@@ -6,3 +6,4 @@ cran-comments.md
 ^NEWS$
 ^CRAN-RELEASE$
 ^\.travis\.yml$
+RunRStudio

@@ -4,16 +4,16 @@
 \alias{evaluate_macroeconomic_event}
 \title{Function used to evaluate market type situation by reading the file with Macroeconomic Events}
 \usage{
-evaluate_macroeconomic_event(setup_path, file_name, path_t1, path_t3)
+evaluate_macroeconomic_event(setup_path, file_name, path_T1, path_T3)
 }
 \arguments{
 \item{setup_path}{Path with trading robots magic numbers setup, typically file 'Setup.csv'}
 
 \item{file_name}{Name of the file}
 
-\item{path_t1}{Path of the Terminal 1}
+\item{path_T1}{Path of the Terminal 1}
 
-\item{path_t3}{Path of the Terminal 3}
+\item{path_T3}{Path of the Terminal 3}
 }
 \value{
 Function will write files indicating to enable or disable trading systems to open new orders
@@ -32,13 +32,17 @@ This function is used exclusively with Market Type recognition system
 
 # evaluate data on macroeconomic event (required to start trading)
 library(tidyverse)
+#setup_path <- "/usr/local/lib/R/site-library/lazytrade/extdata/Setup.csv"
+#file_name <- "/usr/local/lib/R/site-library/lazytrade/extdata/01_MacroeconomicEvent.csv"
+#path_T1 <- ""
+#path_T3 <- "/tmp/Rtmpav7Npc/file5bd8123bd8"
 evaluate_macroeconomic_event(setup_path = system.file("extdata",
                                                  "Setup.csv",
                                                  package = "lazytrade"),
                              file_name = system.file("extdata",
                                                  "01_MacroeconomicEvent.csv",
                                                  package = "lazytrade"),
-                             path_t1 = "extdata",path_t3 = tempfile())
+                             path_T1 = "",path_T3 = tempfile())
 
 
 
