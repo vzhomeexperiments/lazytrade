@@ -26,7 +26,7 @@
 #' # start h2o - don't start/stop within for loop
 #' h2o.init()
 #' # Use function to score the data to the model
-#' #' data(macd_df)
+#' data(macd_df)
 #' x <- macd_df
 #' num_cols <- 64
 #' models_path <- tempdir()

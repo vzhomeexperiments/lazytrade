@@ -1,6 +1,15 @@
 # lazytrade (development version)
 
 
+# lazytrade 0.3.3
+
+# Version 0.3.3
+
+## Changes
+
+* corrected file writing example to be aligned with CRAN Policy
+* added test coverage integration
+
 # lazytrade 0.3.2
 
 # Version 0.3.2

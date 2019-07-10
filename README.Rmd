@@ -16,9 +16,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
+[![Codecov test coverage](https://codecov.io/gh/vladdsm/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vladdsm/lazytrade?branch=master)
 <!-- badges: end -->
 
-The goal of lazytrade is to keep all functions and scripts of the lazy trade project
+The goal of lazytrade is to keep all functions and scripts of the lazy trade educational project. Provided functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading
 
 ## Installation
 
@@ -103,6 +104,7 @@ code to NOT execute during package checks
  
 }
 
+## Testing a package
 
 ### Create a test script
 
@@ -144,6 +146,18 @@ test_that("test value of the calculation", {
 
 
 ```
+
+### Test of the coverage for the script
+
+Test coverage shows you what you’ve tested
+devtools::test_coverage_file()
+
+`devtools::test_coverage_file()`
+
+### Automated checks 
+
+This will add automatic test coverage badge to the readme file on github
+`usethis::use_coverage()`
 
 ## Checking package
 
@@ -202,6 +216,7 @@ Update news.md file
 
 releasing the package (questions)
 devtools::release()
+usethis::use_release_issue()
 
 ### uploading the package archive to CRAN
 https://cran.r-project.org/submit.html
