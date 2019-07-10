@@ -216,6 +216,7 @@ Update news.md file
 
 releasing the package (questions)
 devtools::release()
+usethis::use_release_issue()
 
 ### uploading the package archive to CRAN
 https://cran.r-project.org/submit.html
