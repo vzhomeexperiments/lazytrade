@@ -26,11 +26,12 @@
 #'                                                  "OrdersResultsT1.csv",
 #'                                                  package = "lazytrade"),
 #'                     demo_mode = TRUE)
-#'
+#'                     
+#' dir <- tempfile()
 #' DFT1 %>%
 #' group_by(MagicNumber) %>% select(MagicNumber) %>% mutate(IsEnabled = 0) %>%
 #' # write commands to disable systems
-#' writeCommandViaCSV(path_terminal = tempfile())
+#' writeCommandViaCSV(path_terminal = file.path(dir))
 #'
 #'
 #'
