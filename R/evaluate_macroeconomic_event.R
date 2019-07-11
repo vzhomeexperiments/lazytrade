@@ -20,17 +20,16 @@
 #'
 #' # evaluate data on macroeconomic event (required to start trading)
 #' library(tidyverse)
-#' #setup_path <- "/usr/local/lib/R/site-library/lazytrade/extdata/Setup.csv"
-#' #file_name <- "/usr/local/lib/R/site-library/lazytrade/extdata/01_MacroeconomicEvent.csv"
-#' #path_T1 <- ""
-#' #path_T3 <- "/tmp/Rtmpav7Npc/file5bd8123bd8"
+#' 
+#' dir <- tempfile()
+#' 
 #' evaluate_macroeconomic_event(setup_path = system.file("extdata",
 #'                                                  "Setup.csv",
 #'                                                  package = "lazytrade"),
 #'                              file_name = system.file("extdata",
 #'                                                  "01_MacroeconomicEvent.csv",
 #'                                                  package = "lazytrade"),
-#'                              path_T1 = "",path_T3 = tempfile())
+#'                              path_T1 = "",path_T3 = dir)
 #'
 #'
 #'
