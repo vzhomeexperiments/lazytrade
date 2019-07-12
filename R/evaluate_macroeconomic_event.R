@@ -21,7 +21,7 @@
 #' # evaluate data on macroeconomic event (required to start trading)
 #' library(tidyverse)
 #' 
-#' dir <- tempdir()
+#' dir <- tempfile()
 #' 
 #' evaluate_macroeconomic_event(setup_path = system.file("extdata",
 #'                                                  "Setup.csv",
@@ -31,8 +31,7 @@
 #'                                                  package = "lazytrade"),
 #'                              path_T1 = "",path_T3 = dir)
 #'
-#' unlink(dir, recursive = TRUE)
-#'
+#' #unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
 #'
 evaluate_macroeconomic_event <- function(setup_path, file_name, path_T1, path_T3){
   requireNamespace("tidyverse", quietly = TRUE)

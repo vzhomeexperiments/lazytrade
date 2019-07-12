@@ -1,7 +1,7 @@
 .onLoad <- function(libname = find.package("lazytrade"), pkgname = "lazytrade") {
 
-  op <- options()
-  the_tempdir <- tempdir()
+  #op <- options()
+  #the_tempdir <- tempdir()
 
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")

@@ -41,6 +41,7 @@ group_by(MagicNumber) \%>\% select(MagicNumber) \%>\% mutate(IsEnabled = 0) \%>\
 # write commands to disable systems
 write_command_via_csv(path_terminal = file.path(dir))
 
+# unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
 
 
 

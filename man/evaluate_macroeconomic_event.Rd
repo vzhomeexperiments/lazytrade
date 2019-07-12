@@ -33,7 +33,7 @@ This function is used exclusively with Market Type recognition system
 # evaluate data on macroeconomic event (required to start trading)
 library(tidyverse)
 
-dir <- tempdir()
+dir <- tempfile()
 
 evaluate_macroeconomic_event(setup_path = system.file("extdata",
                                                  "Setup.csv",
@@ -43,7 +43,6 @@ evaluate_macroeconomic_event(setup_path = system.file("extdata",
                                                  package = "lazytrade"),
                              path_T1 = "",path_T3 = dir)
 
-
-
+#unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
 
 }

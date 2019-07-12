@@ -180,19 +180,19 @@ In case functions are writing files there are few considerations to take into ac
 ### Considerations
 
 File names defined by function `tempdir()` would look like this:
-```{r}
+```{r eval=FALSE, include=TRUE}
 # > tempdir()
 # [1] "/tmp/RtmpkaFStZ"
 ```
 
 File names defined by function `tempfile()` would look like this:
-```{r}
+```{r eval=FALSE, include=TRUE}
 # > tempfile()
 # [1] "/tmp/RtmpkaFStZ/file7a33be992b4"
 ```
 
 This is example of how function `write_csv` example works:
-```{r}
+```{r eval=FALSE, include=TRUE}
 tmp <- tempfile()
 write_csv(mtcars, tmp)
 ```
@@ -200,7 +200,7 @@ results of this code are correctly stored to the temporary file
 
 however this example from `readr` package function `write_csv`
 is showing that file will be written to the '/tmp/' directory
-```{r}
+```{r eval=FALSE, include=TRUE}
 dir <- tempdir()
 write_tsv(mtcars, file.path(dir, "mtcars.tsv.gz"))
 ```
@@ -208,14 +208,14 @@ write_tsv(mtcars, file.path(dir, "mtcars.tsv.gz"))
 ### Deleting files after running examples:
 We use function `unlink()` to do this:
 
-```{r}
-unlink(x = tempdir(), recursive = TRUE,force = TRUE)
+```{r eval=FALSE, include=TRUE}
+unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
 ```
 
 and we check that there is nothing more remained:
 
-```{r}
-dir(tempdir())
+```{r eval=FALSE, include=TRUE}
+dir("/tmp/*.csv")
 ```
 
 ## CRAN Note Avoidance
