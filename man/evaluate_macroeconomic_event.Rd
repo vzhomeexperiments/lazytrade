@@ -33,7 +33,7 @@ This function is used exclusively with Market Type recognition system
 # evaluate data on macroeconomic event (required to start trading)
 library(tidyverse)
 
-dir <- tempfile()
+dir <- tempdir()
 
 evaluate_macroeconomic_event(setup_path = system.file("extdata",
                                                  "Setup.csv",

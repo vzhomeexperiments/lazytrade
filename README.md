@@ -129,16 +129,16 @@ Details:
 ``` r
 library(testthat)
 library(tidyverse)
-#> -- Attaching packages ------------------------------------------------------------------------------------------------ tidyverse 1.2.1 --
-#> v ggplot2 3.2.0     v purrr   0.3.2
-#> v tibble  2.1.3     v dplyr   0.8.1
-#> v tidyr   0.8.3     v stringr 1.4.0
-#> v readr   1.3.1     v forcats 0.4.0
-#> -- Conflicts --------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
-#> x dplyr::filter()  masks stats::filter()
-#> x purrr::is_null() masks testthat::is_null()
-#> x dplyr::lag()     masks stats::lag()
-#> x dplyr::matches() masks testthat::matches()
+#> ── Attaching packages ─────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+#> ✔ ggplot2 3.2.0     ✔ purrr   0.3.2
+#> ✔ tibble  2.1.3     ✔ dplyr   0.8.3
+#> ✔ tidyr   0.8.3     ✔ stringr 1.4.0
+#> ✔ readr   1.3.1     ✔ forcats 0.4.0
+#> ── Conflicts ────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter()  masks stats::filter()
+#> ✖ purrr::is_null() masks testthat::is_null()
+#> ✖ dplyr::lag()     masks stats::lag()
+#> ✖ dplyr::matches() masks testthat::matches()
 context("profit_factor")
 
 test_that("test value of the calculation", {
@@ -178,6 +178,53 @@ Step 1. `devtools::document()` Step 2. `devtools::run_examples()` Step
 3. Menu ‘Build’ `Clean and Rebuild` Step 4. ‘Check’
 
 `devtools::check()`
+
+## Handling functions that write files
+
+In case functions are writing files there are few considerations to take
+into account:
+
+  - examples section must contain working example of code that writes
+    files
+  - example code must write to the temporary directory defined by
+    `tempdir()` function
+  - after package check performed with `devtools::check()` there should
+    nothing remain in the ‘tmp/’ directory
+
+### Considerations
+
+File names defined by function `tempdir()` would look like this:
+
+``` r
+# > tempdir()
+# [1] "/tmp/RtmpkaFStZ"
+```
+
+File names defined by function `tempfile()` would look like this:
+
+``` r
+# > tempfile()
+# [1] "/tmp/RtmpkaFStZ/file7a33be992b4"
+```
+
+This is example of how function `write_csv` example works:
+
+``` r
+tmp <- tempfile()
+write_csv(mtcars, tmp)
+```
+
+results of this code are correctly stored to the temporary file
+
+however this example from readr showing that file will be written to the
+‘/tmp/’ directory
+
+``` r
+dir <- tempdir()
+write_tsv(mtcars, file.path(dir, "mtcars.tsv.gz"))
+```
+
+However executing example from the function `write_csv()`
 
 ## CRAN Note Avoidance
 

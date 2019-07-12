@@ -169,9 +169,60 @@ Step 4. 'Check'
 
 `devtools::check()`
 
+## Handling functions that write files
+
+In case functions are writing files there are few considerations to take into account:
+
+* examples section must contain working example of code that writes files
+* example code must write to the temporary directory defined by `tempdir()` function
+* after package check performed with `devtools::check()` there should nothing remain in the 'tmp/' directory
+
+### Considerations
+
+File names defined by function `tempdir()` would look like this:
+```{r}
+# > tempdir()
+# [1] "/tmp/RtmpkaFStZ"
+```
+
+File names defined by function `tempfile()` would look like this:
+```{r}
+# > tempfile()
+# [1] "/tmp/RtmpkaFStZ/file7a33be992b4"
+```
+
+This is example of how function `write_csv` example works:
+```{r}
+tmp <- tempfile()
+write_csv(mtcars, tmp)
+```
+results of this code are correctly stored to the temporary file
+
+however this example from `readr` package function `write_csv`
+is showing that file will be written to the '/tmp/' directory
+```{r}
+dir <- tempdir()
+write_tsv(mtcars, file.path(dir, "mtcars.tsv.gz"))
+```
+
+### Deleting files after running examples:
+We use function `unlink()` to do this:
+
+```{r}
+unlink(x = tempdir(), recursive = TRUE,force = TRUE)
+```
+
+and we check that there is nothing more remained:
+
+```{r}
+dir(tempdir())
+```
+
 ## CRAN Note Avoidance
 see https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 see https://github.com/HughParsonage/grattan/blob/master/R/zzz.R
+
+
 
 ## Versioning of the package
 
