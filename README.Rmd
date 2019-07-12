@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
-[![Codecov test coverage](https://codecov.io/gh/vladdsm/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vladdsm/lazytrade?branch=master)
+[![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
 <!-- badges: end -->
 
 The goal of lazytrade is to keep all functions and scripts of the lazy trade educational project. Provided functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading
