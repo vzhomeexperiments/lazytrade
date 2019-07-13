@@ -1,4 +1,5 @@
 ## Test environments
+* windows, R 3.6.0
 * ubuntu 18.04 (on docker container), R 3.6.1
 * ubuntu (on travis-ci), R 3.6.1
 * win-builder (devel and release), R 3.6.1
@@ -7,16 +8,7 @@
 There were no ERRORs or WARNINGs or NOTES
 
   * utils global variables in R/zzz.R was used to avoid Notes
-  * used function `testfile()` instead of `testdir()` to make sure no files remained
+  * used function `tempfile()` instead of `tempdir()` to make sure no files remained in '/tmp/' directory
 
 ## Downstream dependencies
-Checked with R CMD check
-
-## File writing examples
-
-Figured out that having indicated function `tempdir()` in the examples would result in having files in the '/tmp/' directory. To avoid that similar function `tempfile()` was used with good results. No more files are generated in '/tmp/'
-
-Note: see example from function `write_delim` from package `readr`:
---> this would write to the '/tmp/' directory:
-dir <- tempdir()
-write_tsv(mtcars, file.path(dir, "mtcars.tsv.gz"))
+Checked with R version 3.5.3 (2019-03-11)
