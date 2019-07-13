@@ -1,5 +1,5 @@
 ## Test environments
-* windows, R 3.6.0
+* windows, R 3.6.1
 * ubuntu 18.04 (on docker container), R 3.6.1
 * ubuntu (on travis-ci), R 3.6.1
 * win-builder (devel and release), R 3.6.1
