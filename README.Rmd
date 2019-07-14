@@ -59,13 +59,18 @@ taken from http://r-pkgs.had.co.nz and https://r-pkgs.org/intro.html
 
 ## Generating Documentation
 
+### Title of the package
 Create right title case for the title of the package
+By running this command...
+`tools::toTitleCase("Learn computer and data science using algorithmic trading")`
+the Title will become:
+"Learn Computer and Data Science using Algorithmic Trading"
 
-tools::toTitleCase("Lazy Trading as sets of R functions to facilitate algorithmic trading")
-
+### Re-generating documentation
 Run this code to re-generate documentation
 `devtools::document()`
 
+### Fixing Licencse
 Run this code to fix license:
 `usethis::use_mit_license(name = "Vladimir Zhbanko")`
 
