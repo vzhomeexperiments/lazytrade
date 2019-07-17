@@ -9,7 +9,8 @@ evaluate_macroeconomic_event(setup_path, file_name, path_T1, path_T3)
 \arguments{
 \item{setup_path}{Path with trading robots magic numbers setup, typically file 'Setup.csv'}
 
-\item{file_name}{Name of the file}
+\item{file_name}{String indicating name of the file where Macroeconomic event is written, typically
+"01_MacroeconomicEvent.csv"}
 
 \item{path_T1}{Path of the Terminal 1}
 
@@ -20,15 +21,29 @@ Function will write files indicating to enable or disable trading systems to ope
 }
 \description{
 Function is reading the content of the file 01_MacroeconomicEvent.csv.
-Should the content of the file is 1 then Macro Economic event is present,
-all trading robots will not be able to open new orders
+Content of the file can be either 1 or 0.
+1 - when Macro Economic event is present, 0 - when it's not.
+Function will also read magic number of the trading robots. This is indicated in the file 'Setup.csv'.
+Final outcome of the function is the series of files written to the destination directories.
+These files will either enable or disable opening of new positions in the trading robots
+#'
 }
 \details{
-This function is used exclusively with Market Type recognition system
+This function is used exclusively with Market Type recognition system.
+
+Final evaluation will consist in writing a dedicated file with a simple information:
+
+When Macro economic even is not present:
+
+"Magic","IsEnabled"
+8139125,1
+
+or, when Macro economic event is present:
+
+"Magic","IsEnabled"
+8139125,0
 }
 \examples{
-
-
 
 # evaluate data on macroeconomic event (required to start trading)
 library(tidyverse)
@@ -41,7 +56,7 @@ evaluate_macroeconomic_event(setup_path = system.file("extdata",
                              file_name = system.file("extdata",
                                                  "01_MacroeconomicEvent.csv",
                                                  package = "lazytrade"),
-                             path_T1 = "",path_T3 = dir)
+                             path_T1 = "", path_T3 = dir)
 
 #unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
 
