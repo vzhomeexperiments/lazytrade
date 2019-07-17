@@ -11,7 +11,7 @@ import_data(path_terminal, trade_log_file, demo_mode = FALSE)
 
 \item{trade_log_file}{- File name where the order results are written}
 
-\item{demo_mode}{- When true function uses data stored in the _TEST_DATA folder}
+\item{demo_mode}{- When true function uses data stored in the package data folder}
 }
 \value{
 Function will return the dataframe with trade data and automatically set proper column types

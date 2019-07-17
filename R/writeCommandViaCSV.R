@@ -26,23 +26,25 @@
 #'                                                  "OrdersResultsT1.csv",
 #'                                                  package = "lazytrade"),
 #'                     demo_mode = TRUE)
-#'                     
-#' dir <- tempfile()
+#'
+#' dir <- normalizePath(tempdir(),winslash = "/")
 #' DFT1 %>%
 #' group_by(MagicNumber) %>% select(MagicNumber) %>% mutate(IsEnabled = 0) %>%
 #' # write commands to disable systems
 #' writeCommandViaCSV(path_terminal = file.path(dir))
-#' 
-#' # unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
+#'
+#'
 #'
 writeCommandViaCSV <- function(x, path_terminal = "", fileName = "SystemControl"){
+  .Deprecated("write_command_via_csv",msg = "using new function naming conventions")
   # check if the provided object 'x' exists and that it's not empty
   if(exists("x") == TRUE && nrow(x) != 0) {
     # for loop to go through the object x
     for(i in 1:nrow(x))
     {
       # write the file for MQL4 usage
-      f_name <- file.path(paste0(path_terminal, fileName, as.character(x[i, 1]), ".csv"))
+      composed_name <- paste0(fileName, as.character(x[i, 1]), ".csv")
+      f_name <- file.path(path_terminal, composed_name)
       write.csv(x[i, ], file = f_name, row.names = FALSE)
     }
   }

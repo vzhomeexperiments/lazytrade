@@ -33,14 +33,14 @@ DFT1 <- import_data(trade_log_file = system.file("extdata",
                                                  "OrdersResultsT1.csv",
                                                  package = "lazytrade"),
                     demo_mode = TRUE)
-                    
-dir <- tempfile()
+
+dir <- normalizePath(tempdir(),winslash = "/")
 DFT1 \%>\%
 group_by(MagicNumber) \%>\% select(MagicNumber) \%>\% mutate(IsEnabled = 0) \%>\%
 # write commands to disable systems
 writeCommandViaCSV(path_terminal = file.path(dir))
 
-# unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
+
 
 }
 \author{
