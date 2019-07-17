@@ -2,15 +2,21 @@
 % Please edit documentation in R/evaluate_macroeconomic_event.R
 \name{evaluate_macroeconomic_event}
 \alias{evaluate_macroeconomic_event}
-\title{Function used to evaluate market type situation by reading the file with Macroeconomic Events}
+\title{Function used to evaluate market type situation by reading the file with Macroeconomic Events
+and writing a trigger to the trading robot}
 \usage{
-evaluate_macroeconomic_event(setup_path, file_name, path_T1, path_T3)
+evaluate_macroeconomic_event(setup_file_path,
+  setup_file_name = "Setup.csv", macro_event_path,
+  macro_file_name = "01_MacroeconomicEvent.csv", path_T1, path_T3)
 }
 \arguments{
-\item{setup_path}{Path with trading robots magic numbers setup, typically file 'Setup.csv'}
+\item{setup_file_path}{string, path to the folder with Setup.csv file}
 
-\item{file_name}{String indicating name of the file where Macroeconomic event is written, typically
-"01_MacroeconomicEvent.csv"}
+\item{setup_file_name}{string, name of the file 'Setup.csv'}
+
+\item{macro_event_path}{string, path to the folder with a file '01_MacroeconomicEvent.csv'}
+
+\item{macro_file_name}{string, name of the file '01_MacroeconomicEvent.csv'}
 
 \item{path_T1}{Path of the Terminal 1}
 
@@ -48,16 +54,14 @@ or, when Macro economic event is present:
 # evaluate data on macroeconomic event (required to start trading)
 library(tidyverse)
 
-dir <- tempfile()
+dir <- normalizePath(tempdir(),winslash = "/")
 
-evaluate_macroeconomic_event(setup_path = system.file("extdata",
-                                                 "Setup.csv",
-                                                 package = "lazytrade"),
-                             file_name = system.file("extdata",
-                                                 "01_MacroeconomicEvent.csv",
-                                                 package = "lazytrade"),
-                             path_T1 = "", path_T3 = dir)
+evaluate_macroeconomic_event(setup_file_path = system.file('extdata', package = "lazytrade"),
+                             setup_file_name = "Setup.csv",
+                             macro_event_path = system.file('extdata', package = "lazytrade"),
+                             macro_file_name = "01_MacroeconomicEvent.csv",
+                             path_T1 = dir, path_T3 = dir)
 
-#unlink("/tmp/*.csv", recursive = TRUE, force = TRUE)
+
 
 }

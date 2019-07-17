@@ -8,8 +8,7 @@
 There were no ERRORs or WARNINGs or NOTES
 
   * utils global variables in R/zzz.R was used to avoid Notes
-  * used function `tempfile()` instead of `tempdir()` to make sure no files remained in '/tmp/' directory
-  * most of examples are enabled in any case these would not write to the tmp anyway
+  * used normalizePath() and file.path() to make sure examples are working and not writing to the tmp/ folder
 
 ## Downstream dependencies
 Checked with R version 3.5.3 (2019-03-11)
