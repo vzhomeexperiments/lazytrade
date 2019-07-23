@@ -4,17 +4,20 @@
 \alias{record_policy_mt}
 \title{Record Reinforcement Learning Policy for Market Types}
 \usage{
-record_policy_mt(x, trading_system, path_sandbox)
+record_policy_mt(x, trading_system, path_terminal,
+  fileName = "SystemControlMT")
 }
 \arguments{
 \item{x}{- Dataframe containing columns MarketType and Policy}
 
-\item{trading_system}{- character vector of lenght 1 with Trading System Magic Number information}
+\item{trading_system}{- numeric vector of lenght 1 with Trading System Magic Number information}
 
-\item{path_sandbox}{- path to the sandbox where this Policy/Decision must be written}
+\item{path_terminal}{- string, path to the terminal where this Policy/Decision must be written}
+
+\item{fileName}{- string, desired control file prefix e.g. 'SystemControlMT'}
 }
 \value{
-nothing is returned but function will write csv file
+nothing is returned but function will write csv file to the supplied directory
 }
 \description{
 Function will write a policy 'decision' to the csv file specific for each Expert Advisor
@@ -23,12 +26,14 @@ Function will write a policy 'decision' to the csv file specific for each Expert
 
 
 library(tidyverse)
-library(magrittr)
 data(policy_tr_systDF)
+
+dir <- normalizePath(tempdir(),winslash = "/")
 
 record_policy_mt(x = policy_tr_systDF,
                  trading_system = 8118101,
-                 path_sandbox = tempfile())
+                 path_terminal = dir,
+                 fileName = "SystemControlMT")
 
 
 }
