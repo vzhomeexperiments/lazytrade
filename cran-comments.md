@@ -9,6 +9,7 @@ There were no ERRORs or WARNINGs or NOTES
 
   * utils global variables in R/zzz.R was used to avoid Notes
   * used normalizePath() and file.path() to make sure examples are working and not writing to the tmp/ folder
+  * bug fixing and improvements
 
 ## Downstream dependencies
 Checked with R version 3.5.3 (2019-03-11)

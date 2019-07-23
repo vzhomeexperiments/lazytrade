@@ -4,7 +4,8 @@
 \alias{record_policy}
 \title{Record Reinforcement Learning Policy.}
 \usage{
-record_policy(x, last_result, trading_system, path_terminal)
+record_policy(x, last_result, trading_system, path_terminal,
+  fileName = "SystemControl")
 }
 \arguments{
 \item{x}{- Dataframe containing columns MarketType and Policy}
@@ -14,9 +15,11 @@ record_policy(x, last_result, trading_system, path_terminal)
 \item{trading_system}{- character vector of lenght 1 with Trading System Magic Number information}
 
 \item{path_terminal}{- path to the sandbox where this Policy/Decision must be written}
+
+\item{fileName}{- string, desired control file prefix e.g. 'SystemControl'}
 }
 \value{
-function creates csv file
+nothing is returned but function will write csv file to the supplied directory
 }
 \description{
 Function will write a policy 'decision' to the csv file specific for each Expert Advisor
@@ -28,10 +31,13 @@ library(tidyverse)
 library(magrittr)
 data(TradeStatePolicy)
 
+dir <- normalizePath(tempdir(),winslash = "/")
+
 record_policy(x = TradeStatePolicy,
               last_result = "tradewin",
               trading_system = 8118101,
-              path_terminal = tempfile())
+              path_terminal = dir,
+              fileName = "SystemControlRL")
 
 
 
