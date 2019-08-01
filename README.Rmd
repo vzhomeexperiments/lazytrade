@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
 <!-- badges: end -->
 
-The goal of lazytrade is to keep all functions and scripts of the lazy trade educational project. Provided functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading
+The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading
 
 ## Installation
 
@@ -41,8 +41,18 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(lazytrade)
+library(tidyverse, warn.conflicts = FALSE)
 ## basic example code
+# Convert a time series vector to matrix with 64 columns
+macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(20)
+
+head(macd_m, 2)
 ```
+
+
+# Notes to remind myself how to create R package
+
+## This readme file
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
@@ -51,9 +61,6 @@ summary(cars)
 ```
 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-
-# Notes to remind myself how to create R package
 
 taken from http://r-pkgs.had.co.nz and https://r-pkgs.org/intro.html
 
@@ -223,10 +230,89 @@ and we check that there is nothing more remained:
 dir("/tmp/*.csv")
 ```
 
-## CRAN Note Avoidance
+## CRAN Submission Tips and Tricks
+
+### Many notes while using global variables:
+
 see https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 see https://github.com/HughParsonage/grattan/blob/master/R/zzz.R
 
+### Unfortunate note on specific flavors
+
+After first submission there are some notes on specific R flavors
+
+This question was addressed here but yet it's not answered: 
+https://stackoverflow.com/questions/48487541/r-cmd-check-note-namespace-in-imports-field-not-imported
+
+### Define min R version
+
+https://stackoverflow.com/questions/38686427/determine-minimum-r-version-for-all-package-dependencies
+
+```{r eval=FALSE, include=FALSE}
+min_r_version <- function(package="lazytrade", exclude_main_pkg=TRUE) {
+
+  purrr::walk(c("tools", "purrr", "devtools", "stringi", "tidyr", "dplyr"), 
+              require, character.only=TRUE)
+
+  deps <- package_dependencies(package, recursive=TRUE)
+
+  if (exclude_main_pkg) {
+    pkgs <- deps[[1]]
+  } else {
+    pkgs <- c(package, deps[[1]])
+  }
+
+  available.packages() %>% 
+    as_data_frame() %>% 
+    filter(Package %in% pkgs) %>% 
+    select(Depends)  %>% 
+    unlist() -> pkg_list
+
+  # if main pkg only relied on core R packages (i.e. pkgs that aren't in CRAN) and we 
+  # excluded the pkg itself from the min version calculation, this is an edge case we need
+  # to handle.
+
+  if (length(pkg_list) == 0) return("Unspecified")
+
+  stri_split_regex(pkg_list, "[,]") %>%
+    unlist() %>%
+    trimws() %>%
+    stri_match_all_regex(c("^R$|^R \\(.*\\)$")) %>%
+    unlist() %>%
+    discard(is.na(.)) %>%
+    unique() %>%
+    stri_replace_all_regex("[R >=\\(\\)]", "") %>%
+    data_frame(vs=.) %>%
+    separate(vs, c("a", "b", "c"), fill="right") %>%
+    mutate(c=ifelse(is.na(c), 0, c)) %>%
+    arrange(a, b, c) %>%
+    tail(1) %>%
+    unite(min, a:c, sep=".") -> vs
+
+  return(vs$min)
+
+}
+
+
+# See what the min version of R shld be used
+min_r_version("lazytrade") # I claim R (>= 3.0.0) in DESCRIPTION
+## [1] "3.4.0"
+
+
+```
+
+
+### When functions are writing to the file
+
+It's important to avoid that function write to the directory other then `tempdir()`
+Construct file name must be done using `file.name()` function as follow:
+
+```{r}
+dir_name <- normalizePath(tempdir(),winslash = "/")
+file_name <- paste0('my_file', 1, '.csv')
+# this needs to be used in the function
+full_path <- file.path(dir_name, file_name)
+```
 
 
 ## Versioning of the package

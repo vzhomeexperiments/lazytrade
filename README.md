@@ -10,10 +10,11 @@ status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](ht
 [![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
 <!-- badges: end -->
 
-The goal of lazytrade is to keep all functions and scripts of the lazy
-trade educational project. Provided functions are providing an
-opportunity to learn Computer and Data Science using example of
-Algorithmic Trading
+The goal of lazytrade is to keep all functions and scripts of the
+lazytrade educational project on
+[UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/).
+Functions are providing an opportunity to learn Computer and Data
+Science using example of Algorithmic Trading
 
 ## Installation
 
@@ -37,8 +38,31 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(lazytrade)
+library(tidyverse, warn.conflicts = FALSE)
+#> -- Attaching packages ------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
+#> v ggplot2 3.2.0     v purrr   0.3.2
+#> v tibble  2.1.3     v dplyr   0.8.3
+#> v tidyr   0.8.3     v stringr 1.4.0
+#> v readr   1.3.1     v forcats 0.4.0
+#> -- Conflicts ---------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+#> x dplyr::filter() masks stats::filter()
+#> x dplyr::lag()    masks stats::lag()
 ## basic example code
+# Convert a time series vector to matrix with 64 columns
+macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(20)
+
+head(macd_m, 2)
+#>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+#> [1,]    1    2    3    4    5    6    7    8    9    10    11    12    13
+#> [2,]   21   22   23   24   25   26   27   28   29    30    31    32    33
+#>      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+#> [1,]    14    15    16    17    18    19    20
+#> [2,]    34    35    36    37    38    39    40
 ```
+
+# Notes to remind myself how to create R package
+
+## This readme file
 
 What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
@@ -56,8 +80,6 @@ summary(cars)
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date.
-
-# Notes to remind myself how to create R package
 
 taken from <http://r-pkgs.had.co.nz> and <https://r-pkgs.org/intro.html>
 
@@ -134,17 +156,15 @@ Details:
 
 ``` r
 library(testthat)
+#> 
+#> Attaching package: 'testthat'
+#> The following object is masked from 'package:dplyr':
+#> 
+#>     matches
+#> The following object is masked from 'package:purrr':
+#> 
+#>     is_null
 library(tidyverse)
-#> -- Attaching packages ------------------------------------------------------------------------------------------------ tidyverse 1.2.1 --
-#> v ggplot2 3.2.0     v purrr   0.3.2
-#> v tibble  2.1.3     v dplyr   0.8.3
-#> v tidyr   0.8.3     v stringr 1.4.0
-#> v readr   1.3.1     v forcats 0.4.0
-#> -- Conflicts --------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
-#> x dplyr::filter()  masks stats::filter()
-#> x purrr::is_null() masks testthat::is_null()
-#> x dplyr::lag()     masks stats::lag()
-#> x dplyr::matches() masks testthat::matches()
 context("profit_factor")
 
 test_that("test value of the calculation", {
@@ -244,11 +264,37 @@ and we check that there is nothing more remained:
 dir("/tmp/*.csv")
 ```
 
-## CRAN Note Avoidance
+## CRAN Submission Tips and Tricks
+
+### Many notes while using global variables:
 
 see
 <https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when>
 see <https://github.com/HughParsonage/grattan/blob/master/R/zzz.R>
+
+### Unfortunate note on specific flavors
+
+After first submission there are some notes on specific R flavors
+
+This question was addressed here but yet it’s not answered:
+<https://stackoverflow.com/questions/48487541/r-cmd-check-note-namespace-in-imports-field-not-imported>
+
+### Define min R version
+
+<https://stackoverflow.com/questions/38686427/determine-minimum-r-version-for-all-package-dependencies>
+
+### When functions are writing to the file
+
+It’s important to avoid that function write to the directory other then
+`tempdir()` Construct file name must be done using `file.name()`
+function as follow:
+
+``` r
+dir_name <- normalizePath(tempdir(),winslash = "/")
+file_name <- paste0('my_file', 1, '.csv')
+# this needs to be used in the function
+full_path <- file.path(dir_name, file_name)
+```
 
 ## Versioning of the package
 
