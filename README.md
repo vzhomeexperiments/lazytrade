@@ -92,11 +92,15 @@ command… `tools::toTitleCase("Learn computer and data science using
 algorithmic trading")` the Title will become: “Learn Computer and Data
 Science using Algorithmic Trading”
 
+### Create a file for the function
+
+`usethis::use_r("function_name")`
+
 ### Re-generating documentation
 
 Run this code to re-generate documentation `devtools::document()`
 
-### Fixing Licencse
+### Fixing License
 
 Run this code to fix license: `usethis::use_mit_license(name = "Vladimir
 Zhbanko")`
@@ -105,6 +109,10 @@ Zhbanko")`
 
 Run this code to add data to the folder `data/` `x <- sample(1000)`
 `usethis::use_data(x)`
+
+For external to R data put files to the folder /inst/extdata/mtcars.csv
+Refer to this data in the examples with:
+`system.file("extdata", "mtcars.csv", package = "lazytrade")`
 
 Note: use option ’LazyLoad\` to make data available only when user wants
 it always include LazyData: true in your DESCRIPTION. Note: to document
