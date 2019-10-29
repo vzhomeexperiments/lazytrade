@@ -1,5 +1,15 @@
 # lazytrade (development version)
 
+
+# lazytrade 0.3.5
+
+# Version 0.3.5
+
+## Changes
+
+* added more datasets (files) to test functionality
+* building a functionality to create separate models for each asset (adding functions with prefix aml_xxx_xxx.R)
+
 # lazytrade 0.3.4
 
 # Version 0.3.4
