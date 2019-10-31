@@ -66,12 +66,29 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
+  ### check if it's actually required to make a model: e.g. if model is tested and results are good...
+  ## recover the file name and path
+  dec_file_name <- paste0("StrTest-", symbol, "M",timeframe,"X",num_bars, ".csv")
+  dec_file_path <- file.path(path_model,  dec_file_name)
+  ## read the file and the status of the model
+  if(file.exists(dec_file_path)){
+    # read the file
+    model_status <- read_csv(dec_file_path) %>% select(FinalQuality)
+  }
+
   #construct the path to the data object see function aml_collect_data.R
   # generate a file name
   f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
   full_path <- file.path(path_data,  f_name)
 
-  x <- read_rds(full_path)
+  x <- try(read_rds(full_path), silent = T)
+
+  # generate a file name for model
+  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
+  m_path <- file.path(path_model, m_name)
+
+  # proceed with further steps only if model status is < 0 and there are enough data in x
+  if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 100)) {
 
   # split data to train and test blocks
   # note: model will be tested on the PAST data and trained on the NEWEST data
@@ -109,7 +126,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   #h2o.performance(ModelC)
   # save model object
   h2o.saveModel(ModelC, path = path_model, force = T)
-
+}
   #h2o.shutdown(prompt = FALSE)
 
 
