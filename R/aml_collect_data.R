@@ -6,7 +6,7 @@
 #' Result would be written to new or aggregated to the existing file
 #'
 #' @details Performs fresh data reading from the file, transposes the data. Function is handling shift of the price and indicator datasets.
-#' Add new data to the previously collected data.
+#' Add new data to the previously collected data. New data will be always on the 'bottom' of the dataset
 #'
 #' @author (C) 2019 Vladimir Zhbanko
 #'

@@ -39,12 +39,12 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
-#> -- Attaching packages ------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
+#> -- Attaching packages ------------------------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
 #> v ggplot2 3.2.0     v purrr   0.3.2
 #> v tibble  2.1.3     v dplyr   0.8.3
 #> v tidyr   0.8.3     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.4.0
-#> -- Conflicts ---------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts ---------------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ## basic example code
@@ -92,15 +92,11 @@ command… `tools::toTitleCase("Learn computer and data science using
 algorithmic trading")` the Title will become: “Learn Computer and Data
 Science using Algorithmic Trading”
 
-### Create a file for the function
-
-`usethis::use_r("function_name")`
-
 ### Re-generating documentation
 
 Run this code to re-generate documentation `devtools::document()`
 
-### Fixing License
+### Fixing Licencse
 
 Run this code to fix license: `usethis::use_mit_license(name = "Vladimir
 Zhbanko")`
@@ -110,14 +106,15 @@ Zhbanko")`
 Run this code to add data to the folder `data/` `x <- sample(1000)`
 `usethis::use_data(x)`
 
-For external to R data put files to the folder /inst/extdata/mtcars.csv
-Refer to this data in the examples with:
-`system.file("extdata", "mtcars.csv", package = "lazytrade")`
+To update this data: `x <- sample(2000)` `usethis::use_data(x, overwrite
+= T)`
 
 Note: use option ’LazyLoad\` to make data available only when user wants
 it always include LazyData: true in your DESCRIPTION. Note: to document
 dataset see
 <https://stackoverflow.com/questions/2310409/how-can-i-document-data-sets-with-roxygen>
+
+Document dataset using the R script `R/datasets.R`
 
 ## Adding examples to test package function
 

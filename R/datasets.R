@@ -150,3 +150,15 @@
 #'   \item{predict}{Predicted values from the model}
 #' }
 "result_prev"
+
+#' Table with indicator and price change dataset
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{future price change}
+#'   \item{X2-X76}{Values of the macd indicator}
+#' }
+"EURUSDM15X75"

@@ -16,48 +16,44 @@ aml_make_model(symbol, num_bars, timeframe, path_model, path_data)
 \item{path_model}{Path where the models are be stored}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
-
-\item{price_dataset}{Dataset containing assets prices. It will be used as a label}
-
-\item{indicator_dataset}{Dataset containing assets indicator which pattern will be used as predictor}
-
-\item{research_mode}{When TRUE model will be saved and model result will be stored as well. To be used at the first run.}
-
-\item{write_log}{Writes results of the newly trained model and previously used model to the file}
-
-\item{setup_mode}{When TRUE function will attempt to write model to the disk without checking it}
 }
 \value{
-Function is writing files into Decision Support System folder, mainly file object with the model
+Function is writing file object with the model
 }
 \description{
 Function is training h2o deep learning model to match future prices of the asset to the indicator pattern.
 Main idea is to be able to predict future prices by solely relying on the most recent indicator pattern.
+This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
 }
 \details{
 Performs data manipulation and training of the model. Function is using the dataset prepared by the function aml_collect_data.R.
-Function will also check how the model predict by using trading objective.
+At first collected data will be read by the function. After that function will split the data into 70:30 manner.
+Secondly, function will attempt to build deep learning model and test it on the remaining 30% of the data.
 
 Function will start to train the model as soon as there are more than 100 rows in the dataset
 
-Because of the function is intended to periodically re-train the model it would always check how the previous model was working.
+Whenever previous model is built function will try to update that model trying to reach the better results.
 In case new model is better, the better model will be used.
 }
 \examples{
 
 \donttest{
 
-# start h2o engine (using all CPU's by default)
+
 library(tidyverse)
 library(h2o)
-
-
-
+library(lazytrade)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
+#path_model <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_MODELS"
 path_data <- normalizePath(tempdir(),winslash = "/")
+#path_data <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_DATA"
+data(EURUSDM15X75)
+write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
 
+# start h2o engine (using all CPU's by default)
 h2o.init()
+
 
 # performing Deep Learning Regression using the custom function
 aml_make_model(symbol = 'EURUSD',

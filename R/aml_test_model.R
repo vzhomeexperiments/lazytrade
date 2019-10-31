@@ -1,31 +1,25 @@
-#' Function to read new data, transform data, predict change, save data for further retraining of regression model for a single currency pair
+#' Function to test the model and conditionally decide to update existing model for a single currency pair
 #'
-#' @description  Function is collecting data from the financial assets and match future prices of the asset to the indicator pattern.
-#' Once the data is collected and transformed it would be written to new or aggregated to the existing file
+#' @description Function is designed to test of the trading decision based on the deep learning regression model.
+#' The outcome of this function will be used to perform update of existing model with a fresh data.
 #'
-#' @details Performs fresh data reading from the file, transposes the data. Function is handling shift of the price and indicator datasets.
-#' Add new data to the previously collected data.
-#' NOTE: Always run parameter research_mode = TRUE for the first time
-#'
-#' Because of the function is intended to periodically re-train the model it would always check how the previous model was working.
-#' In case new model is better, the better model will be used.
-#'
-#' Function can also write a log files with a results of the strategy test
+#' @details  Function is reading shifted price data and corresponding indicator.
+#' Starting from the trained model function will test the trading strategy using simplified trading approach.
+#' Trading approach will entail using the last available indicator data, predict the price change for every row,
+#' verify obtained results on the available data after defined period of time (75 bars).
+#' Obtained virtual win/loss is consolidated to calculate profit factor.
+#' Whenever profit factor value is less than 1.1 function is writing dedicated decision using simple *.csv file
+#' Such file will be used in the production script MakeModelMxx.R see repository R_selflearning
 #'
 #' @author (C) 2019 Vladimir Zhbanko
 #'
-#' @param price_dataset       Dataset containing assets prices. It will be used as a label
-#' @param indicator_dataset   Dataset containing assets indicator which pattern will be used as predictor
 #' @param symbol              Character symbol of the asset for which to train the model
 #' @param num_bars            Number of bars used to detect pattern
 #' @param timeframe           Data timeframe e.g. 1 min
-#' @param research_mode       When TRUE model will be saved and model result will be stored as well. To be used at the first run.
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
-#' @param write_log           Writes results of the newly trained model and previously used model to the file
-#' @param setup_mode          When TRUE function will attempt to write model to the disk without checking it
 #'
-#' @return Function is writing files into Decision Support System folder, mainly file object with the model
+#' @return Function is writing file into Decision Support System folder
 #' @export
 #'
 #' @examples
@@ -36,24 +30,21 @@
 #' library(tidyverse)
 #' library(h2o)
 #'
-#' data(price_dataset)
-#' data(indicator_dataset)
-#'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
+#' #path_model <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_MODELS"
 #' path_data <- normalizePath(tempdir(),winslash = "/")
+#' #path_data <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_DATA"
+#' data(EURUSDM15X75)
+#' write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
 #'
 #' h2o.init()
 #'
 #' # performing Deep Learning Regression using the custom function
-#' generate_regr_model(price_dataset = price_dataset,
-#'                     indicator_dataset = indicator_dataset,
-#'                     symbol = 'EURUSD',
-#'                     num_bars = 75,
-#'                     timeframe = 1,
-#'                     path_model = path_model,
-#'                     path_data = path_data,
-#'                     setup_mode = FALSE,
-#'                     write_log = TRUE)
+#' aml_test_model(symbol = 'EURUSD',
+#'                num_bars = 75,
+#'                timeframe = 15,
+#'                path_model = path_model,
+#'                path_data = path_data)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = F)
@@ -62,136 +53,74 @@
 #'
 #'
 #'
-aml_test_model <- function(price_dataset, indicator_dataset, symbol,
-                                num_bars, timeframe,
-                                path_model, path_data,
-                                setup_mode = FALSE, research_mode = FALSE,
-                                write_log = TRUE){
+aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   requireNamespace("tidyverse", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
-  # add mapping of columns to the symbols
-  # Vector of currency pairs
-  Pairs = c("EURUSD", "GBPUSD", "AUDUSD", "NZDUSD", "USDCAD", "USDCHF", "USDJPY",
-            "EURGBP", "EURJPY", "EURCHF", "EURNZD", "EURCAD", "EURAUD", "GBPAUD",
-            "GBPCAD", "GBPCHF", "GBPJPY", "GBPNZD", "AUDCAD", "AUDCHF", "AUDJPY",
-            "AUDNZD", "CADJPY", "CHFJPY", "NZDJPY", "NZDCAD", "NZDCHF", "CADCHF")
-  # find the index of this pair in the vector of columns
-  cn <- which(symbol %in% Pairs) + 1
+  #construct the path to the data object see function aml_collect_data.R
+  # generate a file name to be able to read the right dataset
+  f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
+  full_path <- file.path(path_data,  f_name)
 
-  # only have data for one symbol
-  price_dataset <- price_dataset[, c(1,cn)]
-  indicator_dataset <- indicator_dataset[, c(1,cn)]
-  # transform data and get the labels shift rows down Note: the oldest data in the first row!!
-  dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression") %>% mutate_all(funs(lag), n=1)
-  # transform data for indicator. Note: the oldest data in the first row!!
-  dat15 <- create_transposed_data(indicator_dataset, num_bars)
-  # dataframe for the DL modelling it contains all the available data.
-  # Note: Zero values in rows will mean that there was no data in the MT4 database.
-  #       These rows will be removed before modelling however it's advisable not to have those as it might give data artefacts!
-  dat16 <- dat14 %>% select(LABEL) %>% bind_cols(dat15) %>% na.omit() %>% filter_all(any_vars(. != 0)) %>% filter(LABEL < 600, LABEL > -600)
-  # checking the data: summary(dat16) # too high values in the LABEL Column are non-sense! hist(dat16$LABEL)
+  x <- read_rds(full_path)
+
+  # generate a file name for model
+  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
+  m_path <- file.path(path_model, m_name)
+  #load model
+  ModelR <- h2o.loadModel(path = m_path)
 
   # split data to train and test blocks
   # note: model will be tested on the PAST data and trained on the NEWEST data
-  test_ind  <- 1:round(0.3*(nrow(dat16))) #train indices 1:xxx
-  dat21 <- dat16[test_ind, ]    #dataset to test the model using 30% of data
-  dat22 <- dat16[-test_ind, ]   #dataset to train the model
-
-  ## ---------- Data Modelling  ---------------
-  #h2o.init()
-
-  # load data into h2o environment
-  macd_ML  <- as.h2o(x = dat22, destination_frame = "macd_ML")
-
-  # fit models from simplest to more complex
-  ModelC <- h2o.deeplearning(
-    model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
-    x = names(macd_ML[,2:num_bars+1]),
-    y = "LABEL",
-    training_frame = macd_ML,
-    activation = "Tanh",
-    overwrite_with_best_model = TRUE,
-    autoencoder = FALSE,
-    hidden = c(50,30,15,5),
-    loss = "Automatic",
-    sparse = TRUE,
-    l1 = 1e-4,
-    distribution = "AUTO",
-    stopping_metric = "MSE",
-    #balance_classes = F,
-    epochs = 100)
-
-  #ModelC
-  #summary(ModelC)
-  #h2o.performance(ModelC)
-  ## save model object if it is not exists yet or when setup_mode == TRUE this is useful when updating h2o!
-  if (setup_mode == TRUE || !file.exists(file.path(path_model, paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe)))) {
-    h2o.saveModel(ModelC, path = path_model, force = T)
-  }
+  test_ind  <- 1:round(0.3*(nrow(x))) #train indices 1:xxx
+  dat21 <- x[test_ind, ]    #dataset to test the model using 30% of data
+  dat22 <- x[-test_ind, ]   #dataset to train the model
 
 
-  ## Checking how the new model predict using the latest dataset
-  # upload recent dataset to predict
-  recent_ML  <- as.h2o(x = dat21[,-1], destination_frame = "recent_ML")
-  # use model to predict
-  result <- h2o.predict(ModelC, recent_ML) %>% as.data.frame() %>% select(predict) %>% round()
-  ## evaluate hypothetical results of trading using the model, do for several take profit and stop loss levels. Bring the best results:
-  dat31 <- test_model(dat21, result, test_type = "regression")
+  # uploading data to h2o
+  recent_ML  <- as.h2o(x = x, destination_frame = "recent_ML")
+  # PREDICT the next period...
+  result_R <- h2o.predict(ModelR, recent_ML) %>% as.data.frame()
+
+  ## Checking the trading strategy assuming we open and hold position for 75 bars!
+  dat31 <- x %>%
+    # select only original value of the price change
+    select(LABEL) %>%
+    # add column with predicted price change
+    bind_cols(result_R) %>%
+    # lag column 'predict' to 75 periods, column P_lag will match corresponding real price in the column 'LABEL'
+    mutate(predict = lag(predict, 75)) %>%
+    # omit na's
+    na.omit() %>%
+    # create a risk column, use 10 pips as a trigger
+    mutate(Risk = if_else(predict > 10, 1, if_else(predict < -10, -1, 0))) %>%
+    # calculate expected outcome of risking the 'Risk': trade according to prediction
+    mutate(ExpectedGain = predict*Risk) %>%
+    # calculate 'real' gain or loss. LABEL is how the price moved (ground truth) so the column will be real outcome
+    mutate(AchievedGain = LABEL*Risk) %>%
+    # to account on spread
+    mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, -5, 0))) %>%
+    # calculate 'net' gain
+    mutate(NetGain = AchievedGain + Spread) %>%
+    # remove zero values to calculate presumed number of trades
+    filter(AchievedGain != 0) %>%
+    # get the sum of both columns
+    # Column Expected PNL would be the result in case all trades would be successful
+    # Column Achieved PNL is the results achieved in reality
+    summarise(ExpectedPnL = sum(ExpectedGain),
+              AchievedPnL = sum(NetGain),
+              TotalTrades = n(),
+              TPSL_Level = 10) %>%
+    # interpret the results
+    mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
+           FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
 
 
-### Test existing model with new data to compare both results and keep the better model for production
-  # check existence of the model trained previously and if exist, load it and test strategy using it
-  ModelC_prev <- try(h2o.loadModel(paste0(path_model, "/DL_Regression",
-                                      num_bars, "-", timeframe)),silent = T)
-  if(!class(ModelC_prev)=='try-error'){
-    # result prev
-    result_prev <- h2o.predict(ModelC_prev, recent_ML) %>% as.data.frame() %>% select(predict) %>% round()
-
-    ## evaluate hypothetical results of trading using the model
-    dat31_prev <- test_model(dat21, result_prev, test_type = "regression")
-
-
-  }
-
-  # write the final object dat31 to the file for debugging or research
-  if(research_mode == TRUE){
-    # In research mode we will write results to the new folder
-    write_rds(dat31, file.path(getwd(), paste0("_SETUP/", Sys.Date(), "-Result-", num_bars, "-", timeframe, ".rds")))
-    h2o.saveModel(ModelC, path = path_model, force = T)
-    }
-
-
-  # save the model in case it's good and Achieved is not much less than Expected!
-  if(research_mode == FALSE && dat31$FinalOutcome == "VeryGood" &&
-     #condition OR will also overwrite the model in case previously made model is performing worse than the new one
-     # NOTE: this condition dat31$FinalQuality > 0.8 can be removed after finding the first model
-     (dat31$FinalQuality > 0.8 || dat31$FinalQuality > dat31_prev$FinalQuality)){
-  h2o.saveModel(ModelC, path = path_model, force = T)
-  }
-
-
-  # write logs if enabled
-  if(write_log == TRUE){
-    # create folder where to save if not exists
-    path_LOG <- paste0(path_model, "/LOG/")
-    if(!dir.exists(path_LOG)){dir.create(path_LOG)}
-    # combine data and join them to one object
-    dat61 <- dat31 %>% mutate(new_or_old = "NEW", num_bars = num_bars, timeframe = timeframe, model_type = "R")
-    dat62 <- dat31_prev %>% mutate(new_or_old = "PREV", num_bars = num_bars, timeframe = timeframe, model_type = "R")
-    bind_rows(dat61, dat62) %>%
-    # write combined data to the file named with current date
-    write_csv(path = paste0(path_LOG, Sys.Date(), "-", num_bars, "-",timeframe, "R", ".csv"))
-    # write the best current TP/SL level
-    bind_rows(dat61, dat62) %>%
-      # take the best quality level
-      slice(which.max(FinalQuality)) %>%
-      # select the TPSL levels
-      select(TPSL_Level) %>%
-      # write best possible trigger to the file
-      write_csv(path = paste0(path_LOG, "AI_T-", timeframe, ".csv"))
-  }
+   ## write condition to the csv file
+  dec_file_name <- paste0("StrTest-", symbol, "M",timeframe,"X",num_bars, ".csv")
+  dec_file_path <- file.path(path_model,  dec_file_name)
+  write_csv(dat31, dec_file_path)
 
   #h2o.shutdown(prompt = FALSE)
 
@@ -199,4 +128,5 @@ aml_test_model <- function(price_dataset, indicator_dataset, symbol,
 
 
 }
+
 

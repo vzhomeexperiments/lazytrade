@@ -2,17 +2,11 @@
 % Please edit documentation in R/aml_test_model.R
 \name{aml_test_model}
 \alias{aml_test_model}
-\title{Function to read new data, transform data, predict change, save data for further retraining of regression model for a single currency pair}
+\title{Function to test the model and conditionally decide to update existing model for a single currency pair}
 \usage{
-aml_test_model(price_dataset, indicator_dataset, symbol, num_bars,
-  timeframe, path_model, path_data, setup_mode = FALSE,
-  research_mode = FALSE, write_log = TRUE)
+aml_test_model(symbol, num_bars, timeframe, path_model, path_data)
 }
 \arguments{
-\item{price_dataset}{Dataset containing assets prices. It will be used as a label}
-
-\item{indicator_dataset}{Dataset containing assets indicator which pattern will be used as predictor}
-
 \item{symbol}{Character symbol of the asset for which to train the model}
 
 \item{num_bars}{Number of bars used to detect pattern}
@@ -22,29 +16,22 @@ aml_test_model(price_dataset, indicator_dataset, symbol, num_bars,
 \item{path_model}{Path where the models are be stored}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
-
-\item{setup_mode}{When TRUE function will attempt to write model to the disk without checking it}
-
-\item{research_mode}{When TRUE model will be saved and model result will be stored as well. To be used at the first run.}
-
-\item{write_log}{Writes results of the newly trained model and previously used model to the file}
 }
 \value{
-Function is writing files into Decision Support System folder, mainly file object with the model
+Function is writing file into Decision Support System folder
 }
 \description{
-Function is collecting data from the financial assets and match future prices of the asset to the indicator pattern.
-Once the data is collected and transformed it would be written to new or aggregated to the existing file
+Function is designed to test of the trading decision based on the deep learning regression model.
+The outcome of this function will be used to perform update of existing model with a fresh data.
 }
 \details{
-Performs fresh data reading from the file, transposes the data. Function is handling shift of the price and indicator datasets.
-Add new data to the previously collected data.
-NOTE: Always run parameter research_mode = TRUE for the first time
-
-Because of the function is intended to periodically re-train the model it would always check how the previous model was working.
-In case new model is better, the better model will be used.
-
-Function can also write a log files with a results of the strategy test
+Function is reading shifted price data and corresponding indicator.
+Starting from the trained model function will test the trading strategy using simplified trading approach.
+Trading approach will entail using the last available indicator data, predict the price change for every row,
+verify obtained results on the available data after defined period of time (75 bars).
+Obtained virtual win/loss is consolidated to calculate profit factor.
+Whenever profit factor value is less than 1.1 function is writing dedicated decision using simple *.csv file
+Such file will be used in the production script MakeModelMxx.R see repository R_selflearning
 }
 \examples{
 
@@ -54,24 +41,21 @@ Function can also write a log files with a results of the strategy test
 library(tidyverse)
 library(h2o)
 
-data(price_dataset)
-data(indicator_dataset)
-
 path_model <- normalizePath(tempdir(),winslash = "/")
+#path_model <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_MODELS"
 path_data <- normalizePath(tempdir(),winslash = "/")
+#path_data <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_DATA"
+data(EURUSDM15X75)
+write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
 
 h2o.init()
 
 # performing Deep Learning Regression using the custom function
-generate_regr_model(price_dataset = price_dataset,
-                    indicator_dataset = indicator_dataset,
-                    symbol = 'EURUSD',
-                    num_bars = 75,
-                    timeframe = 1,
-                    path_model = path_model,
-                    path_data = path_data,
-                    setup_mode = FALSE,
-                    write_log = TRUE)
+aml_test_model(symbol = 'EURUSD',
+               num_bars = 75,
+               timeframe = 15,
+               path_model = path_model,
+               path_data = path_data)
 
 # stop h2o engine
 h2o.shutdown(prompt = F)
