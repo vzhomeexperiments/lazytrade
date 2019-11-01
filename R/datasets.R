@@ -162,3 +162,27 @@
 #'   \item{X2-X76}{Values of the macd indicator}
 #' }
 "EURUSDM15X75"
+
+#' Table with a dataset to test the Model
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{future price change}
+#'   \item{X2-X76}{Values of the macd indicator}
+#' }
+"x_test_model"
+
+#' Table with predicte price change
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with one column
+#' \describe{
+#'   \item{predict}{predicted future price change}
+#'
+#' }
+"result_R"

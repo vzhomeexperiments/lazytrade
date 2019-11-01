@@ -139,6 +139,8 @@ Details:
 3. add function test_that("test description", {test process})
 4. load data using function `data(named_data_object)`
 
+Example:
+
 ```{r}
 library(testthat)
 library(tidyverse)

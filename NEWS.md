@@ -10,6 +10,7 @@
 * added more datasets (files) to test functionality
 * building a functionality to create separate models for each asset (adding functions with prefix aml_xxx_xxx.R)
 * build more simple functions to collect data, build model, score data to predict
+* added tests for functions collect data and test model
 
 # lazytrade 0.3.4
 

@@ -51,7 +51,7 @@ prices <- load_asset_data(path_terminal = path_terminal, trade_log_file = "AI_CP
 path_data <- normalizePath(tempdir(),winslash = "/")
 
 
-# performing Deep Learning Regression using the custom function
+# data transformation using the custom function for one symbol
 aml_collect_data(price_dataset = prices,
                  indicator_dataset = macd,
                  symbol = 'EURUSD',
