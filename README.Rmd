@@ -352,6 +352,14 @@ Clone package from GitHub and test check it in Docker Container
 
 ## Upload package to CRAN
 
+Follow checklist before upload to CRAN:
+
+`devtools::release_checks()`
+
+then:
+
+`devtools::release()`
+
 ### before release checks
 spelling
 `devtools::spell_check()`
