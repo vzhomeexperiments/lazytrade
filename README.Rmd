@@ -87,9 +87,15 @@ Run this code to add data to the folder `data/`
 `x <- sample(1000)`
 `usethis::use_data(x)`
 
+To update this data:
+`x <- sample(2000)`
+`usethis::use_data(x, overwrite = T)`
+
 Note: use option 'LazyLoad` to make data available only when user wants it
 always include LazyData: true in your DESCRIPTION. 
 Note: to document dataset see https://stackoverflow.com/questions/2310409/how-can-i-document-data-sets-with-roxygen
+
+Document dataset using the R script `R/datasets.R` 
 
 ## Adding examples to test package function
 
@@ -132,6 +138,8 @@ Details:
 2. add function `context("profit_factor")`
 3. add function test_that("test description", {test process})
 4. load data using function `data(named_data_object)`
+
+Example:
 
 ```{r}
 library(testthat)
@@ -343,6 +351,14 @@ Clone package from GitHub and test check it in Docker Container
 `usethis::use_travis()`
 
 ## Upload package to CRAN
+
+Follow checklist before upload to CRAN:
+
+`devtools::release_checks()`
+
+then:
+
+`devtools::release()`
 
 ### before release checks
 spelling
