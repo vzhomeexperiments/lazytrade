@@ -40,9 +40,9 @@ This is a basic example which shows you how to solve a common problem:
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
 #> -- Attaching packages -------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
-#> v ggplot2 3.2.0     v purrr   0.3.2
+#> v ggplot2 3.2.1     v purrr   0.3.3
 #> v tibble  2.1.3     v dplyr   0.8.3
-#> v tidyr   0.8.3     v stringr 1.4.0
+#> v tidyr   1.0.0     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.4.0
 #> -- Conflicts ----------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
@@ -169,6 +169,9 @@ library(testthat)
 #> The following object is masked from 'package:purrr':
 #> 
 #>     is_null
+#> The following object is masked from 'package:tidyr':
+#> 
+#>     matches
 library(tidyverse)
 context("profit_factor")
 
@@ -330,6 +333,10 @@ Clone package from GitHub and test check it in Docker Container
 
 ## Upload package to CRAN
 
+Setup the new version of the package:
+
+`usethis::use_release_issue()`
+
 Follow checklist before upload to CRAN:
 
 `devtools::release_checks()`
@@ -347,9 +354,6 @@ checking on R hub `devtools::check_rhub()`
 checking win devel `devtools::check_win_devel()`
 
 Update news.md file
-
-releasing the package (questions) devtools::release()
-usethis::use\_release\_issue()
 
 ### uploading the package archive to CRAN
 

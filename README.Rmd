@@ -352,6 +352,10 @@ Clone package from GitHub and test check it in Docker Container
 
 ## Upload package to CRAN
 
+Setup the new version of the package:
+
+`usethis::use_release_issue()`
+
 Follow checklist before upload to CRAN:
 
 `devtools::release_checks()`
@@ -371,10 +375,6 @@ checking win devel
 `devtools::check_win_devel()`
 
 Update news.md file
-
-releasing the package (questions)
-devtools::release()
-usethis::use_release_issue()
 
 ### uploading the package archive to CRAN
 https://cran.r-project.org/submit.html
