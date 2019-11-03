@@ -5,10 +5,19 @@
 * win-builder (devel and release), R 3.6.1
 
 ## R CMD check results
+Status: OK
+R version 3.6.1 (2019-07-05)
+
 There were no ERRORs or WARNINGs or NOTES
 
   * bug fixing and improvements
-  * determined min R version to use
+  * added more tests and examples
+  * unfortunately there was no reply from win_builder servers
 
 ## Downstream dependencies
-Checked with R version 3.5.3 (2019-03-11)
+Status: 1 WARNING
+R version 3.5.3 (2019-03-11)
+
+  * seems to be internal server exception: can not retrieve HostCannotConnect "codecov.io"
+
+
