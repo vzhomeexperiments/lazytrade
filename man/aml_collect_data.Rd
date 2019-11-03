@@ -2,7 +2,7 @@
 % Please edit documentation in R/aml_collect_data.R
 \name{aml_collect_data}
 \alias{aml_collect_data}
-\title{Function to read new data, transform data, predict change, save data for further retraining of regression model for a single currency pair}
+\title{Function to read new data, transform data, save data for further retraining of regression model for a single currency pair}
 \usage{
 aml_collect_data(price_dataset, indicator_dataset, symbol, num_bars,
   timeframe, path_data)
@@ -25,13 +25,21 @@ Function is writing files into Decision Support System folder, mainly file objec
 }
 \description{
 Function is collecting data from the files using dedicated function load_asset_data.R.
-One file with a prices of the asset and another file with the indicator pattern.
+One file with a prices of the asset and another file with the corresponding indicator pattern.
 Both data objects are transformed to be siutable for Regression Modelling.
+Indicator values will be placed into the column X1-X75 and price change is in the column 'LABEL'
 Result would be written to new or aggregated to the existing file
+
+Function is also checking that generated dataset is not too big.
+Should the dataset is too big (e.g. > 1000000 rows), then only latest 950000 rows will be used.
+Note: the amount 1000000 rows is not verified in practice, further testing is required.
 }
 \details{
-Performs fresh data reading from the file, transposes the data. Function is handling shift of the price and indicator datasets.
-Add new data to the previously collected data. New data will be always on the 'bottom' of the dataset
+Function is handling shift of the price and indicator datasets.
+New data will be always on the 'bottom' of the dataset
+
+The amount of rows is customizable however it must be selected once for the function to start working.
+Other 'aml_*' functions will rely on this selections, use the same number accordingly!
 }
 \examples{
 
@@ -40,6 +48,7 @@ Add new data to the previously collected data. New data will be always on the 'b
 # write examples for the function
 library(tidyverse)
 library(lubridate)
+library(lazytrade)
 
 path_terminal <- system.file("extdata", package = "lazytrade")
 macd <- load_asset_data(path_terminal = path_terminal, trade_log_file = "AI_Macd",
@@ -58,9 +67,6 @@ aml_collect_data(price_dataset = prices,
                  num_bars = 75,
                  timeframe = 15,
                  path_data = path_data)
-
-
-
 
 
 

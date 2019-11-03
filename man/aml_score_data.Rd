@@ -36,23 +36,34 @@ Performs fresh data reading from the rds file
 
 \donttest{
 
-# start h2o engine (using all CPU's by default)
+# test of function aml_make_model is duplicated here
 library(tidyverse)
 library(h2o)
+library(lazytrade)
 
-path_model <- system.file("extdata", package = "lazytrade")
-#path_model <- normalizePath(tempdir(),winslash = "/")
+path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
-data(EURUSDM15X75)
 
+data(EURUSDM15X75)
 write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
+
+# start h2o engine (using all CPU's by default)
+h2o.init()
+
+
+# performing Deep Learning Regression using the custom function
+aml_make_model(symbol = 'EURUSD',
+               num_bars = 75,
+               timeframe = 15,
+               path_model = path_model,
+               path_data = path_data)
+
 
 path_sbxm <- normalizePath(tempdir(),winslash = "/")
 path_sbxs <- normalizePath(tempdir(),winslash = "/")
 
-h2o.init(nthreads = 1)
 
-# performing Deep Learning Regression using the custom function
+# score the latest data to generate predictions for one currency pair
 aml_score_data(symbol = 'EURUSD',
                num_bars = 75,
                timeframe = 15,
