@@ -26,15 +26,16 @@
 #'
 #'
 #' library(tidyverse)
+#' library(lazytrade)
 #'
 #' # usind a sample data
 #' data(price_dataset)
 #'
 #' # price change as a label
-#' create_labelled_data(price_dataset, n = 75, type = "regression")
+#' create_labelled_data(x = price_dataset, n = 75, type = "regression")
 #'
 #' # factors 'BU'/'BE' as a label
-#' create_labelled_data(price_dataset, n = 75, type = "classification")
+#' create_labelled_data(x = price_dataset, n = 75, type = "classification")
 #'
 #'
 create_labelled_data <- function(x, n = 50, type = "regression"){
@@ -43,6 +44,7 @@ create_labelled_data <- function(x, n = 50, type = "regression"){
   # x <- price_dataset
   # n <- 50
   nr <- nrow(x)
+  namesdfr12 <- paste0("X", 1:n) #generated names for dataset useful later in the code
   dat11 <- x %>%
     # remove column 1 with data and time information
     select(-1) %>%
@@ -58,9 +60,13 @@ create_labelled_data <- function(x, n = 50, type = "regression"){
 
         # classify by 2 classes 'BU', 'BE'
         if(!exists("dfr12")){
-          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "universal") %>%
+          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal")
+          names(dfr12) <- namesdfr12
+          dfr12 <- dfr12 %>%
             mutate(LABEL = ifelse(.[[1]]>.[[n]], "BU", "BE"))} else {
-            dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "universal") %>%
+            dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal")
+            names(dfr12) <- namesdfr12
+            dfr12 <- dfr12 %>%
               mutate(LABEL = ifelse(.[[1]]>.[[n]], "BU", "BE")) %>%
               bind_rows(dfr12)
           }
@@ -68,9 +74,13 @@ create_labelled_data <- function(x, n = 50, type = "regression"){
       # add label with numeric difference {in pips}
       # i <- 1
       if(!exists("dfr12")){
-        dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "universal", verbose =F) %>%
+        dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal", verbose =F)
+        names(dfr12) <- namesdfr12
+        dfr12 <- dfr12 %>%
           mutate(LABEL = 10000*(.[[1]]-.[[n]]))} else {
-          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "universal", verbose =F) %>%
+          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal", verbose =F)
+          names(dfr12) <- namesdfr12
+          dfr12 <- dfr12 %>%
             mutate(LABEL = 10000*(.[[1]]-.[[n]])) %>%
             #oldest data will be on top of the dataframe!
             bind_rows(dfr12)

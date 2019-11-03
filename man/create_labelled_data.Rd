@@ -36,15 +36,16 @@ see more info in the udemy course self-learning-trading-robot
 
 
 library(tidyverse)
+library(lazytrade)
 
 # usind a sample data
 data(price_dataset)
 
 # price change as a label
-create_labelled_data(price_dataset, n = 75, type = "regression")
+create_labelled_data(x = price_dataset, n = 75, type = "regression")
 
 # factors 'BU'/'BE' as a label
-create_labelled_data(price_dataset, n = 75, type = "classification")
+create_labelled_data(x = price_dataset, n = 75, type = "classification")
 
 
 }

@@ -56,7 +56,7 @@ test_that("data trimming works", {
   f_name <- "EURUSDM15X75.rds"
   full_path <- file.path(path_data,  f_name)
 
-  sample(1000) %>% matrix(10,byrow = T) %>% as_tibble() %>%
+  sample(1000) %>% matrix(10,byrow = T) %>% as_tibble(.name_repair = "minimal", verbose =F) %>%
     write_rds(full_path)
 
   # check number of rows

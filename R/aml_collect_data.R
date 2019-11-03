@@ -76,7 +76,9 @@ aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars,
   price_dataset <- price_dataset[, c(1,cn)]
   indicator_dataset <- indicator_dataset[, c(1,cn)]
   # transform data and get the labels shift rows down Note: the oldest data in the first row!!
-  dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression") %>% mutate_all(funs(lag), n=1)
+  dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression")
+  dat14 <- rbind(NA, dat14[-nrow(dat14), ])
+
   # transform data for indicator. Note: the oldest data in the first row!!
   dat15 <- create_transposed_data(indicator_dataset, num_bars)
   # dataframe for the DL modelling it contains all the available data.
