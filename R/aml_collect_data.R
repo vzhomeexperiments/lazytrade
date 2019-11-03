@@ -1,12 +1,20 @@
-#' Function to read new data, transform data, predict change, save data for further retraining of regression model for a single currency pair
+#' Function to read new data, transform data, save data for further retraining of regression model for a single currency pair
 #'
 #' @description  Function is collecting data from the files using dedicated function load_asset_data.R.
-#' One file with a prices of the asset and another file with the indicator pattern.
+#' One file with a prices of the asset and another file with the corresponding indicator pattern.
 #' Both data objects are transformed to be siutable for Regression Modelling.
+#' Indicator values will be placed into the column X1-X75 and price change is in the column 'LABEL'
 #' Result would be written to new or aggregated to the existing file
 #'
-#' @details Performs fresh data reading from the file, transposes the data. Function is handling shift of the price and indicator datasets.
-#' Add new data to the previously collected data. New data will be always on the 'bottom' of the dataset
+#' Function is also checking that generated dataset is not too big.
+#' Should the dataset is too big (e.g. > 1000000 rows), then only latest 950000 rows will be used.
+#' Note: the amount 1000000 rows is not verified in practice, further testing is required.
+#'
+#' @details Function is handling shift of the price and indicator datasets.
+#' New data will be always on the 'bottom' of the dataset
+#'
+#' The amount of rows is customizable however it must be selected once for the function to start working.
+#' Other 'aml_*' functions will rely on this selections, use the same number accordingly!
 #'
 #' @author (C) 2019 Vladimir Zhbanko
 #'
@@ -27,6 +35,7 @@
 #' # write examples for the function
 #' library(tidyverse)
 #' library(lubridate)
+#' library(lazytrade)
 #'
 #' path_terminal <- system.file("extdata", package = "lazytrade")
 #' macd <- load_asset_data(path_terminal = path_terminal, trade_log_file = "AI_Macd",
@@ -45,9 +54,6 @@
 #'                  num_bars = 75,
 #'                  timeframe = 15,
 #'                  path_data = path_data)
-#'
-#'
-#'
 #'
 #'
 #'
@@ -91,36 +97,40 @@ aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars,
   f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
   full_path <- file.path(path_data,  f_name)
 
-  # check that old data is not exists
-
-  # write dataframe to the temporary dataframe
-  if(!exists("df_temp")){
-    # join data to predicted class and write to the new object df_temp
-    df_temp <- df_row
-
-  } else if(exists("df_temp")) {
-    # in case df_temp is already exists
-    df_temp <-  df_temp %>% bind_rows(df_row)
-  }
+  # check that old data in the file name is exist or not...
 
   # retrieve already recorded data >> add temporary dataframe >> write to the data_update folder
   # check if there is a rds file in the data_update folder and add the df_temp there
-  if(exists("df_temp") && !file.exists(full_path))
+  if(exists("df_row") && !file.exists(full_path))
   {
     # write file first time
-    write_rds(df_temp, full_path)
-  } else if(exists("df_temp") && file.exists(full_path)) {
+    write_rds(df_row, full_path)
+  } else if(exists("df_row") && file.exists(full_path)) {
     # read previous file
     read_rds(full_path) %>%
-      # join obtained data
-      bind_rows(df_temp) %>%
+      # join obtained data below! existing one
+      bind_rows(df_row) %>%
       # write data back
       write_rds(full_path)
     #verify generated data
     # x1 <- read_rds(full_path)
   }
 
+  # add module of code that limit the data amount (e.g. delete too old data, leave max 1 mln(?) rows)
+  # ---
+  # check number of rows
+  x1_nrows <- read_rds(full_path) %>% nrow()
+  # what to do if too much rows?
+  if(x1_nrows > 1000000){
+    # read all the data
+    read_rds(full_path) %>%
+      # use only last 950000 rows, 950000 is to avoid this code to run so often...
+      tail(950000) %>%
+      # write them back
+      write_rds(full_path)
+  }
 
+  # ---
 
 
 }

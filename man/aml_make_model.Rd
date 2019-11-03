@@ -24,16 +24,16 @@ Function is writing file object with the model
 Function is training h2o deep learning model to match future prices of the asset to the indicator pattern.
 Main idea is to be able to predict future prices by solely relying on the most recent indicator pattern.
 This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
+
+Deep learning model structure is obtained from the 6 random combinations of neurons within 4 layers of the network,
+the most accurate model configuration will be automatically selected
+
+In addition the function will check if there is a need to update the model. To do that function will check
+results of the function aml_test_model.R.
 }
 \details{
-Performs data manipulation and training of the model. Function is using the dataset prepared by the function aml_collect_data.R.
-At first collected data will be read by the function. After that function will split the data into 70:30 manner.
-Secondly, function will attempt to build deep learning model and test it on the remaining 30% of the data.
-
+Function is using the dataset prepared by the function aml_collect_data.R.
 Function will start to train the model as soon as there are more than 100 rows in the dataset
-
-Whenever previous model is built function will try to update that model trying to reach the better results.
-In case new model is better, the better model will be used.
 }
 \examples{
 
@@ -45,9 +45,8 @@ library(h2o)
 library(lazytrade)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
-#path_model <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_MODELS"
 path_data <- normalizePath(tempdir(),winslash = "/")
-#path_data <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_DATA"
+
 data(EURUSDM15X75)
 write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
 

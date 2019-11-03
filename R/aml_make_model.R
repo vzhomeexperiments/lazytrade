@@ -4,14 +4,14 @@
 #' Main idea is to be able to predict future prices by solely relying on the most recent indicator pattern.
 #' This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
 #'
-#' @details Performs data manipulation and training of the model. Function is using the dataset prepared by the function aml_collect_data.R.
-#' At first collected data will be read by the function. After that function will split the data into 70:30 manner.
-#' Secondly, function will attempt to build deep learning model and test it on the remaining 30% of the data.
+#' Deep learning model structure is obtained from the 6 random combinations of neurons within 4 layers of the network,
+#' the most accurate model configuration will be automatically selected
 #'
+#' In addition the function will check if there is a need to update the model. To do that function will check
+#' results of the function aml_test_model.R.
+#'
+#' @details Function is using the dataset prepared by the function aml_collect_data.R.
 #' Function will start to train the model as soon as there are more than 100 rows in the dataset
-#'
-#' Whenever previous model is built function will try to update that model trying to reach the better results.
-#' In case new model is better, the better model will be used.
 #'
 #'
 #'
@@ -37,9 +37,8 @@
 #' library(lazytrade)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
-#' #path_model <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_MODELS"
 #' path_data <- normalizePath(tempdir(),winslash = "/")
-#' #path_data <- "C:/Users/fxtrams/Documents/000_TradingRepo/R_selflearning/_DATA"
+#'
 #' data(EURUSDM15X75)
 #' write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
 #'
@@ -74,7 +73,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   if(file.exists(dec_file_path)){
     # read the file
     model_status <- read_csv(dec_file_path) %>% select(FinalQuality)
-  }
+  } else { model_status <- 0 }
 
   #construct the path to the data object see function aml_collect_data.R
   # generate a file name
@@ -99,11 +98,21 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   ## ---------- Data Modelling  ---------------
   #h2o.init()
 
+  ### random network structure
+  nn_sets <- sample.int(n = 200, 24) %>% matrix(ncol = 4)
+
+  ###
+
   # load data into h2o environment
   #macd_ML  <- as.h2o(x = dat22, destination_frame = "macd_ML")
   macd_ML  <- as.h2o(x = x, destination_frame = "macd_ML")
 
-  # fit models from simplest to more complex
+  # for loop to select the best neural network structure
+
+  for (i in 1:dim(nn_sets)[1]) {
+
+    # i <- 1
+    # fit models from simplest to more complex
   ModelC <- h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
     x = names(macd_ML[,2:num_bars+1]),
@@ -112,7 +121,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
     activation = "Tanh",
     overwrite_with_best_model = TRUE,
     autoencoder = FALSE,
-    hidden = c(50,30,15,5),
+    hidden = nn_sets[i, ],
     loss = "Automatic",
     sparse = TRUE,
     l1 = 1e-4,
@@ -123,7 +132,44 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   #ModelC
   #summary(ModelC)
-  #h2o.performance(ModelC)
+  RMSE <- h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
+  names(RMSE) <- 'RMSE'
+
+  # record results of modelling
+  if(!exists("df_res")){
+    df_res <- nn_sets[i,] %>% t() %>% as.data.frame() %>% bind_cols(RMSE)
+  } else {
+    df_row <- nn_sets[i,] %>% t() %>% as.data.frame() %>% bind_cols(RMSE)
+    df_res <- df_res %>% bind_rows(df_row)
+  }
+
+
+  } # end of for loop
+
+  ## retrain and save the best model
+  #what is the most accurate model?
+  # find which row in the df_res has the smallest RMSE value
+  lowest_RMSE <- df_res %>% arrange(desc(RMSE)) %>% tail(1) %>% row.names() %>% as.integer()
+
+  # train the model again:
+  ModelC <- h2o.deeplearning(
+    model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
+    x = names(macd_ML[,2:num_bars+1]),
+    y = "LABEL",
+    training_frame = macd_ML,
+    activation = "Tanh",
+    overwrite_with_best_model = TRUE,
+    autoencoder = FALSE,
+    hidden = nn_sets[lowest_RMSE, ],
+    loss = "Automatic",
+    sparse = TRUE,
+    l1 = 1e-4,
+    distribution = "AUTO",
+    stopping_metric = "MSE",
+    #balance_classes = F,
+    epochs = 100)
+
+
   # save model object
   h2o.saveModel(ModelC, path = path_model, force = T)
 }

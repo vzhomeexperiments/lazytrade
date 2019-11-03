@@ -50,8 +50,31 @@ test_that("collect data works", {
 
 })
 
+test_that("data trimming works", {
+
+  path_data <- normalizePath(tempdir(),winslash = "/")
+  f_name <- "EURUSDM15X75.rds"
+  full_path <- file.path(path_data,  f_name)
+
+  sample(1000) %>% matrix(10,byrow = T) %>% as_tibble() %>%
+    write_rds(full_path)
+
+  # check number of rows
+  x1_nrows <- read_rds(full_path) %>% nrow()
+  # what to do if too much rows?
+  if(x1_nrows > 9){
+    # read all the data
+    read_rds(full_path) %>%
+      # use only last 5 rows for test
+      tail(5) %>%
+      # write them back
+      write_rds(full_path)
+  }
+
+  EURUSDM15X75 <- read_rds(full_path)
+  # ---
+
+  expect_equal(nrow(EURUSDM15X75), 5)
 
 
-
-
-
+})
