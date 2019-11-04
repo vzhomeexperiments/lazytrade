@@ -1,5 +1,6 @@
 # lazytrade (development version)
 
+* removal of duplicate rows in the collect data function
 
 # lazytrade 0.3.5
 

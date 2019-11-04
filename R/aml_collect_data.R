@@ -112,6 +112,8 @@ aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars,
     read_rds(full_path) %>%
       # join obtained data below! existing one
       bind_rows(df_row) %>%
+      # check that data does not have double rows that are exactly same...
+      distinct() %>%
       # write data back
       write_rds(full_path)
     #verify generated data
