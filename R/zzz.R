@@ -31,7 +31,7 @@
         "if_else", "lag", "mutate_all", "mutate_if", "slice", "str_detect",
         "predict", "read_rds", "summarise", "write.csv", "write_rds", "ymd_hms",
         "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols", "testdir",
-        "h2o.performance"
+        "h2o.performance", "distinct"
       )
     )
 
