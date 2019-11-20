@@ -26,7 +26,8 @@
 #' @examples
 #'
 #' library(lazytrade)
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(lubridate)
 #' DFT1 <- import_data(trade_log_file = system.file("extdata",
 #'                                                  "OrdersResultsT1.csv",
@@ -52,7 +53,9 @@ check_if_optimize <- function(x, path_trading_robot = "",
                               profit_factor_limit = 0.7,
                               demo_mode = FALSE,
                               write_mode = FALSE){
-  requireNamespace("tidyverse", quietly = TRUE)
+
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
 
 
   if(!demo_mode){

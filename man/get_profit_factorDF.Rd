@@ -20,7 +20,7 @@ Function that returns the profit factors of the systems in a form of a DataFrame
 \examples{
 
 
-library(tidyverse)
+library(dplyr)
 data(profit_factorDF)
 get_profit_factorDF(profit_factorDF, 10)
 

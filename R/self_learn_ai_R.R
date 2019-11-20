@@ -30,6 +30,8 @@
 #'
 #' \donttest{
 #'
+#' library(dplyr)
+#' library(readr)
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
@@ -53,7 +55,8 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
                             research_mode = FALSE,
                             write_log = TRUE){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
   # transform data and get the labels shift rows down Note: the oldest data in the first row!!

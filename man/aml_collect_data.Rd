@@ -43,10 +43,9 @@ Other 'aml_*' functions will rely on this selections, use the same number accord
 }
 \examples{
 
-
-
 # write examples for the function
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(lubridate)
 library(lazytrade)
 

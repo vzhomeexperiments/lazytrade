@@ -11,12 +11,12 @@
 #'
 #' @examples
 #'
-#' library(tidyverse)
+#' library(magrittr)
 #' macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(64)
 #'
 #'
 to_m <- function(x, n_cols) {
-  requireNamespace("tidyverse", quietly = TRUE)
+
 
   # get intermediate object and dimension
   Step1 <- x

@@ -17,8 +17,10 @@
 #'
 #' @examples
 #'
-#' library(tidyverse)
+#' library(readr)
+#' library(dplyr)
 #' library(lubridate)
+#' library(magrittr)
 #' path_terminal <- system.file("extdata", package = "lazytrade")
 #'
 #' # load and prepare prices data
@@ -36,7 +38,7 @@
 #'
 load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data_deepth = 50000){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
   DFT1 <- try(read_csv(file = file.path(path_terminal, paste0(trade_log_file, time_period, "-", data_deepth, ".csv")),
                        col_names = F),

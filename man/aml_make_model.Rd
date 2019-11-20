@@ -40,7 +40,8 @@ Function will start to train the model as soon as there are more than 100 rows i
 \donttest{
 
 
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(h2o)
 library(lazytrade)
 

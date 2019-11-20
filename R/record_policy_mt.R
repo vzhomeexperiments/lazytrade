@@ -13,7 +13,7 @@
 #' @examples
 #'
 #'
-#' library(tidyverse)
+#' library(stringr)
 #' data(policy_tr_systDF)
 #'
 #' dir <- normalizePath(tempdir(),winslash = "/")
@@ -25,7 +25,7 @@
 #'
 #'
 record_policy_mt <- function(x, trading_system, path_terminal, fileName = "SystemControlMT"){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("stringr", quietly = TRUE)
 
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
   is_T3 <- str_detect(path_terminal, "Terminal3")

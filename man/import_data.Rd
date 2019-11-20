@@ -23,7 +23,8 @@ Files do not have column headers hence function will take care to name columns a
 \examples{
 
 library(lazytrade)
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(lubridate)
 DFT1 <- import_data(trade_log_file = system.file("extdata",
                                                  "OrdersResultsT1.csv",

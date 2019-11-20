@@ -27,8 +27,9 @@ Function will write a policy 'decision' to the csv file specific for each Expert
 \examples{
 
 
-library(tidyverse)
+library(stringr)
 library(magrittr)
+library(dplyr)
 data(TradeStatePolicy)
 
 dir <- normalizePath(tempdir(),winslash = "/")

@@ -25,7 +25,8 @@ Function is used by the R script Adapt_RL_control.R
 
 \donttest{
 #test lasts 15 sec:
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(ReinforcementLearning)
 library(magrittr)
 data(data_trades)

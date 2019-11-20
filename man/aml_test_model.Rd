@@ -39,7 +39,8 @@ Such file will be used by the function aml_make_model.R to decide whether model 
 
 \donttest{
 
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(h2o)
 library(lazytrade)
 

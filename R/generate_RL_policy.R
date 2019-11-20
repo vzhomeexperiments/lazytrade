@@ -20,7 +20,7 @@
 #'
 #' @examples
 #'
-#'   library(tidyverse)
+#'   library(dplyr)
 #'   library(ReinforcementLearning)
 #'   library(magrittr)
 #'
@@ -32,7 +32,7 @@
 #'
 #'
 generate_RL_policy <- function(x, states, actions, control){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
 
   # add dummy tupples with states and actions with minimal reward

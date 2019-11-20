@@ -25,7 +25,8 @@
 #' @examples
 #'
 #'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(lazytrade)
 #'
 #' # usind a sample data
@@ -39,7 +40,8 @@
 #'
 #'
 create_labelled_data <- function(x, n = 50, type = "regression"){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
   # x <- price_dataset
   # n <- 50

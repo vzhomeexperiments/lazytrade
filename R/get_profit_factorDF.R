@@ -11,14 +11,14 @@
 #' @examples
 #'
 #'
-#' library(tidyverse)
+#' library(dplyr)
 #' data(profit_factorDF)
 #' get_profit_factorDF(profit_factorDF, 10)
 #'
 #'
 #'
 get_profit_factorDF <- function(x, num_orders){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   # generate DF with only MagicNumbers when > 10 trades and all trades are losers
   DF_L <- x %>%
     group_by(MagicNumber) %>%

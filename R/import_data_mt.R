@@ -14,7 +14,8 @@
 #'
 #' @examples
 #'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' import_data_mt(trade_log_file = system.file("extdata", "MarketTypeLog8132101.csv",
 #'                                             package = "lazytrade"),
 #'                demo_mode = TRUE)
@@ -23,7 +24,8 @@
 #'
 import_data_mt <- function(path_terminal, trade_log_file, system_number, demo_mode = FALSE){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
 
   if(!demo_mode){
 

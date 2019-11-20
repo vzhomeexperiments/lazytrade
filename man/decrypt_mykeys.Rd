@@ -25,6 +25,9 @@ Alternatively possible to use 'openssl' R package
 
 \donttest{
 
+library(dplyr)
+library(openssl)
+
 # Consumer API keys
 ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,
                                   "ConsumerAPIkeys.enc.rds"),

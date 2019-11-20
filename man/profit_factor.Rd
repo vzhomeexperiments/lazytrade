@@ -17,7 +17,8 @@ Calculate profit factor using a data vector with the trading results
 }
 \examples{
 
-library(tidyverse)
+library(magrittr)
+library(dplyr)
 data(profit_factor_data)
 profit_factor_data \%>\%
    group_by(X1) \%>\%

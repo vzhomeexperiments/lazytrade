@@ -1,7 +1,9 @@
 library(testthat)
-library(tidyverse)
+library(dplyr)
+library(magrittr)
 library(lazytrade)
 library(lubridate)
+library(readr)
 
 context("collect_data")
 

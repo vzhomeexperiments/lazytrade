@@ -1,5 +1,5 @@
 library(testthat)
-library(tidyverse)
+library(readr)
 
 context("test_import")
 

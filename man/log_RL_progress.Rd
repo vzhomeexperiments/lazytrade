@@ -25,7 +25,7 @@ Function will record Q values during updating of the model. These values will be
 
 # retrieve RL model Q values progress
 library(ReinforcementLearning)
-library(tidyverse)
+library(dplyr)
 library(magrittr)
 data(data_trades)
 x <- data_trades

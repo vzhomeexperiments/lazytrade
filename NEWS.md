@@ -9,6 +9,7 @@
 * removal of duplicate rows in the `aml_collect_data()` function
 * added a test for `to_m()` function
 * add warning to indicate if 'zeroes' in the data file column(s)
+* removing dependency from tidyverse
 
 # lazytrade 0.3.5
 
