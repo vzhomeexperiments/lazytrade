@@ -36,7 +36,8 @@
 #' @examples
 #'
 #' # evaluate data on macroeconomic event (required to start trading)
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #'
 #' dir <- normalizePath(tempdir(),winslash = "/")
 #'
@@ -53,8 +54,8 @@ evaluate_macroeconomic_event <- function(setup_file_path,
                                          macro_event_path,
                                          macro_file_name = "01_MacroeconomicEvent.csv",
                                          path_T1, path_T3){
-  requireNamespace("tidyverse", quietly = TRUE)
-
+  requireNamespace("readr", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
 
   # define path to the setup file
   setup_complete_path <- file.path(setup_file_path, setup_file_name)

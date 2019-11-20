@@ -37,7 +37,7 @@ Performs fresh data reading from the rds file
 \donttest{
 
 # test of function aml_make_model is duplicated here
-library(tidyverse)
+library(readr)
 library(h2o)
 library(lazytrade)
 

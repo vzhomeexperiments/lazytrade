@@ -35,7 +35,8 @@ see more info in the udemy course self-learning-trading-robot
 \examples{
 
 
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(lazytrade)
 
 # usind a sample data

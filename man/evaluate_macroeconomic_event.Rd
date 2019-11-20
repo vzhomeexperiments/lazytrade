@@ -52,7 +52,8 @@ or, when Macro economic event is present:
 \examples{
 
 # evaluate data on macroeconomic event (required to start trading)
-library(tidyverse)
+library(dplyr)
+library(readr)
 
 dir <- normalizePath(tempdir(),winslash = "/")
 

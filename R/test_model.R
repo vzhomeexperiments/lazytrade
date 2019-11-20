@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'
-#' library(tidyverse)
+#' library(dplyr)
 #' data(result_prev)
 #' data(test_data_pattern)
 #'
@@ -33,7 +33,7 @@
 #'
 #'
 test_model <- function(test_dataset, predictor_dataset, test_type){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   # arguments for debugging for regression
 
   if(test_type == "regression"){

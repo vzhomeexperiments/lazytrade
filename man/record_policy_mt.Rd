@@ -25,7 +25,7 @@ Function will write a policy 'decision' to the csv file specific for each Expert
 \examples{
 
 
-library(tidyverse)
+library(stringr)
 data(policy_tr_systDF)
 
 dir <- normalizePath(tempdir(),winslash = "/")

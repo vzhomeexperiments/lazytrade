@@ -31,7 +31,7 @@ all 28 major forex pairs
 }
 \examples{
 
-library(tidyverse)
+library(dplyr)
 data(result_prev)
 data(test_data_pattern)
 

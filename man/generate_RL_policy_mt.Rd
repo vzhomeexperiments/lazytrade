@@ -30,7 +30,7 @@ However policy 'ON' value will only be generated once the Q value is greater tha
 }
 \examples{
 
-library(tidyverse)
+library(dplyr)
 library(ReinforcementLearning)
 data(trading_systemDF)
 states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")

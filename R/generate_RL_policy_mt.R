@@ -18,7 +18,7 @@
 #'
 #' @examples
 #'
-#' library(tidyverse)
+#' library(dplyr)
 #' library(ReinforcementLearning)
 #' data(trading_systemDF)
 #' states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
@@ -28,7 +28,7 @@
 #'
 #'
 generate_RL_policy_mt <- function(x, states, actions, control){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
 
   # add dummy tupples with states and actions with minimal reward

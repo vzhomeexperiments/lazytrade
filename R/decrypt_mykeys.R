@@ -13,6 +13,9 @@
 #'
 #' \donttest{
 #'
+#' library(dplyr)
+#' library(openssl)
+#'
 #' # Consumer API keys
 #' ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,
 #'                                   "ConsumerAPIkeys.enc.rds"),
@@ -23,7 +26,7 @@
 #'
 decrypt_mykeys <- function(path_encrypted_content, path_private_key) {
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("openssl", quietly = TRUE)
   # get back our encrypted API key
   out <- read_rds(path_encrypted_content)

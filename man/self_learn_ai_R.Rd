@@ -46,6 +46,8 @@ Function can also write a log files with a results of the strategy test
 
 \donttest{
 
+library(dplyr)
+library(readr)
 # start h2o engine (using all CPU's by default)
 h2o.init()
 

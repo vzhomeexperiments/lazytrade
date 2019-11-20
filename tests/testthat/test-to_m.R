@@ -1,5 +1,5 @@
 library(testthat)
-library(tidyverse)
+library(magrittr)
 
 context("convert_to_matrix")
 

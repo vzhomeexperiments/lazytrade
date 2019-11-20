@@ -32,7 +32,8 @@
 #' \donttest{
 #'
 #'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(h2o)
 #' library(lazytrade)
 #'
@@ -62,7 +63,8 @@
 #'
 aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
   ### check if it's actually required to make a model: e.g. if model is tested and results are good...

@@ -18,8 +18,8 @@
 #'
 #' @examples
 #'
-#'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(lubridate)
 #' library(lazytrade)
 #' DFT1 <- import_data(trade_log_file = system.file("extdata",

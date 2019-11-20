@@ -20,7 +20,8 @@
 #'
 #'
 #'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(lubridate)
 #' DFT1 <- import_data(trade_log_file = system.file("extdata",
 #'                                                  "OrdersResultsT1.csv",

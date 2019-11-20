@@ -30,8 +30,10 @@ File names are selected to account different time periodicity and amount of the 
 }
 \examples{
 
-library(tidyverse)
+library(readr)
+library(dplyr)
 library(lubridate)
+library(magrittr)
 path_terminal <- system.file("extdata", package = "lazytrade")
 
 # load and prepare prices data

@@ -16,8 +16,9 @@
 #' @examples
 #'
 #'
-#' library(tidyverse)
+#' library(stringr)
 #' library(magrittr)
+#' library(dplyr)
 #' data(TradeStatePolicy)
 #'
 #' dir <- normalizePath(tempdir(),winslash = "/")
@@ -31,7 +32,8 @@
 #'
 #'
 record_policy <- function(x, last_result, trading_system, path_terminal, fileName = "SystemControl"){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("stringr", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("magrittr", quietly = TRUE)
 
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
@@ -40,7 +42,7 @@ record_policy <- function(x, last_result, trading_system, path_terminal, fileNam
   if(is_T3 == TRUE) { addition <- 200 } else if(is_T4 == TRUE) { addition <- 300 } else { addition <- 0 }
 
   # analyse latest result and extract action based on the RL policy
-    y <- x %>% filter(TradeState == last_result) %$% Policy
+    y <- x %>% dplyr::filter(TradeState == last_result) %$% Policy
 
   if(y == "ON"){
     # build dataframe for sending to the file

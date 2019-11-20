@@ -18,7 +18,8 @@
 #'
 #' \donttest{
 #' # test lasts 15 sec:
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(ReinforcementLearning)
 #' library(magrittr)
 #' data(trading_systemDF)
@@ -30,7 +31,8 @@
 #'
 write_control_parameters_mt <- function(x, path_control_files){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
   requireNamespace("magrittr", quietly = TRUE)
 

@@ -9,6 +9,7 @@ R version 3.6.1 (2019-07-05)
 There were no ERRORs or WARNINGs or NOTES
 
   * bug fixing and improvements
+  * removing dependency from tidyverse
   * added more tests and examples
 
 ## Downstream dependencies

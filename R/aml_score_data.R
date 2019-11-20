@@ -24,7 +24,7 @@
 #' \donttest{
 #'
 #' # test of function aml_make_model is duplicated here
-#' library(tidyverse)
+#' library(readr)
 #' library(h2o)
 #' library(lazytrade)
 #'
@@ -74,7 +74,8 @@ aml_score_data <- function(symbol,
                            path_sbxm,
                            path_sbxs){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
   #construct the path to the data object see function aml_collect_data.R

@@ -19,7 +19,8 @@
 #' @examples
 #'
 #' library(lazytrade)
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(lubridate)
 #' DFT1 <- import_data(trade_log_file = system.file("extdata",
 #'                                                  "OrdersResultsT1.csv",
@@ -29,7 +30,8 @@
 #'
 #'
 import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
 
   # use in production to read file

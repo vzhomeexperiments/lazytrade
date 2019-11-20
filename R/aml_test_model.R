@@ -28,7 +28,8 @@
 #'
 #' \donttest{
 #'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(h2o)
 #' library(lazytrade)
 #'
@@ -77,7 +78,8 @@
 #'
 aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
   #construct the path to the data object see function aml_collect_data.R

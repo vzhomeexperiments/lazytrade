@@ -21,7 +21,8 @@
 #' @examples
 #'
 #'
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #'
 #' # usind a sample data
 #' data(indicator_dataset)
@@ -31,7 +32,9 @@
 #'
 #'
 create_transposed_data <- function(x, n = 50){
-  requireNamespace("tidyverse", quietly = TRUE)
+
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   #
   #n <- 100
   #x <- indicator_dataset

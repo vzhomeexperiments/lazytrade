@@ -15,7 +15,7 @@
 #'
 #' # retrieve RL model Q values progress
 #' library(ReinforcementLearning)
-#' library(tidyverse)
+#' library(dplyr)
 #' library(magrittr)
 #' data(data_trades)
 #' x <- data_trades
@@ -26,7 +26,7 @@
 #' log_RL_progress(x = x,states = states, actions = actions, control = control)
 #'
 log_RL_progress <- function(x, states, actions, control){
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
   requireNamespace("magrittr", quietly = TRUE)
 

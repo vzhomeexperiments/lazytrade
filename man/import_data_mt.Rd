@@ -24,7 +24,8 @@ Function imports file from the MetaTrader sandbox. Function performs necessary c
 }
 \examples{
 
-library(tidyverse)
+library(dplyr)
+library(readr)
 import_data_mt(trade_log_file = system.file("extdata", "MarketTypeLog8132101.csv",
                                             package = "lazytrade"),
                demo_mode = TRUE)

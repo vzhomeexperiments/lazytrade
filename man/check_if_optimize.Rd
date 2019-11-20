@@ -38,7 +38,8 @@ Whenever there will be not enough trades then empty file will be written to the 
 \examples{
 
 library(lazytrade)
-library(tidyverse)
+library(dplyr)
+library(readr)
 library(lubridate)
 DFT1 <- import_data(trade_log_file = system.file("extdata",
                                                  "OrdersResultsT1.csv",

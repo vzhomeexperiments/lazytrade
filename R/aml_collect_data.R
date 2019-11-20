@@ -30,10 +30,9 @@
 #'
 #' @examples
 #'
-#'
-#'
 #' # write examples for the function
-#' library(tidyverse)
+#' library(dplyr)
+#' library(readr)
 #' library(lubridate)
 #' library(lazytrade)
 #'
@@ -60,7 +59,8 @@
 #'
 aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars, timeframe, path_data){
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
 
   # add mapping of columns to the symbols
