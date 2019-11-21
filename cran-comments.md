@@ -1,6 +1,7 @@
 ## Test environments
 * windows, R 3.6.1
 * ubuntu (on travis-ci), R 3.6.1
+* ubuntu (on docker container), R 3.6.1
 
 ## R CMD check results
 Status: OK

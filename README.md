@@ -39,12 +39,12 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
-#> -- Attaching packages -------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
+#> -- Attaching packages ----------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
 #> v ggplot2 3.2.1     v purrr   0.3.3
 #> v tibble  2.1.3     v dplyr   0.8.3
 #> v tidyr   1.0.0     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.4.0
-#> -- Conflicts ----------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts -------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ## basic example code
@@ -172,7 +172,19 @@ library(testthat)
 #> The following object is masked from 'package:tidyr':
 #> 
 #>     matches
-library(tidyverse)
+library(dplyr)
+library(magrittr)
+#> 
+#> Attaching package: 'magrittr'
+#> The following objects are masked from 'package:testthat':
+#> 
+#>     equals, is_less_than, not
+#> The following object is masked from 'package:purrr':
+#> 
+#>     set_names
+#> The following object is masked from 'package:tidyr':
+#> 
+#>     extract
 context("profit_factor")
 
 test_that("test value of the calculation", {
