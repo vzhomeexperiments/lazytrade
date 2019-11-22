@@ -361,9 +361,14 @@ then:
 
 spelling `devtools::spell_check()`
 
-checking on R hub `devtools::check_rhub()`
+checking on R hub `devtools::check_rhub(interactive = F)`
 
 checking win devel `devtools::check_win_devel()`
+
+checking win old devel `devtools::check_win_oldrelease()`
+
+check with rocker R in container - use docker image with R Studio, -
+clone repo, build, check package…
 
 Update news.md file
 
