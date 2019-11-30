@@ -12,7 +12,7 @@ test_that("join to vector works", {
   # join paths into a vector
   DFOLDER <- dir(DFOLDER, full.names = TRUE)
 
-  expect_length(DFOLDER, 3)
+  expect_length(DFOLDER, 2)
 
 })
 
