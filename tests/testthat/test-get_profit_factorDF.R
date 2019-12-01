@@ -7,15 +7,37 @@ context("profit_factor")
 
 data(profit_factorDF)
 
-test_that("filter works", {
+test_that("summarise works", {
 
   x <- profit_factorDF
-  num_orders <- 11
+  x <- x %>% ungroup()
+
   DF_L <- x %>%
-    ungroup %>%
     group_by(MagicNumber) %>%
     summarise(nOrders = n())
 
 
   expect_equal(DF_L[1,2]$nOrders, 11)
+})
+
+test_that("filter works", {
+
+  x <- profit_factorDF
+  x <- x %>% ungroup()
+  num_orders <- 10
+
+  DF_L <- x %>%
+    group_by(MagicNumber) %>%
+    summarise(nOrders = n()) %>%
+    filter(nOrders > num_orders) %>%
+    select(MagicNumber) %>%
+    as.data.frame() %>%
+    # subset only rows that contans magic numbers from x
+    inner_join(x, by = "MagicNumber") %>%
+    group_by(MagicNumber) %>%
+    filter(Profit < 0) %>%
+    summarise(Loss = abs(sum(Profit)))
+
+  expect_gt(sum(DF_L$Loss), expected = 45000)
+
 })
