@@ -1,5 +1,16 @@
 # lazytrade (development version)
 
+
+# lazytrade 0.3.7
+
+# Version 0.3.7
+
+## Changes
+
+* new function `opt_aggregate_results()` to aggregate results of the trading robots performance
+* new function `opt_create_graphs()` to create graphs of the trading robots performance
+* added more tests and removal of warning by using `ungroup()` function
+
 # lazytrade 0.3.6
 
 # Version 0.3.6

@@ -32,7 +32,7 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("vzhomeexperiments/lazytrade")
 ```
 
-## Example
+## Example - prepare data for machine learning
 
 This is a basic example which shows you how to solve a common problem:
 
@@ -58,6 +58,73 @@ head(macd_m, 2)
 #>      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
 #> [1,]    14    15    16    17    18    19    20
 #> [2,]    34    35    36    37    38    39    40
+```
+
+## Example - aggregate multiple log files and visualize results
+
+Multiple log files could be joined into one data object
+
+``` r
+library(lazytrade)
+library(readr)
+library(dplyr)
+library(magrittr)
+#> 
+#> Attaching package: 'magrittr'
+#> The following object is masked from 'package:purrr':
+#> 
+#>     set_names
+#> The following object is masked from 'package:tidyr':
+#> 
+#>     extract
+library(lubridate)
+#> 
+#> Attaching package: 'lubridate'
+#> The following object is masked from 'package:base':
+#> 
+#>     date
+
+# files are located in the sample folders
+DFOLDER <- system.file("extdata/RES", package = "lazytrade")
+
+DFR <- opt_aggregate_results(fold_path = DFOLDER)
+```
+
+This data object can be visualized
+
+``` r
+library(ggplot2)
+opt_create_graphs(x = DFR, outp_path = dir,graph_type = 'bars')
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+Or just visualize results with time-series plot
+
+``` r
+opt_create_graphs(x = DFR, outp_path = dir,graph_type = 'ts')
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+## Example - leverage Reinforcement Learning for Risk Management
+
+Example below would generate RL policy based on the trade results
+achieved so far
+
+``` r
+library(dplyr)
+library(ReinforcementLearning)
+library(magrittr)
+
+data(data_trades)
+states <- c("tradewin", "tradeloss")
+actions <- c("ON", "OFF")
+control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
+generate_RL_policy(data_trades, states, actions, control)
+#>   TradeState Policy
+#> 1  tradeloss     ON
+#> 2   tradewin    OFF
 ```
 
 # Notes to remind myself how to create R package
@@ -163,6 +230,9 @@ Example:
 library(testthat)
 #> 
 #> Attaching package: 'testthat'
+#> The following objects are masked from 'package:magrittr':
+#> 
+#>     equals, is_less_than, not
 #> The following object is masked from 'package:dplyr':
 #> 
 #>     matches
@@ -174,17 +244,6 @@ library(testthat)
 #>     matches
 library(dplyr)
 library(magrittr)
-#> 
-#> Attaching package: 'magrittr'
-#> The following objects are masked from 'package:testthat':
-#> 
-#>     equals, is_less_than, not
-#> The following object is masked from 'package:purrr':
-#> 
-#>     set_names
-#> The following object is masked from 'package:tidyr':
-#> 
-#>     extract
 context("profit_factor")
 
 test_that("test value of the calculation", {

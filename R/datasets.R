@@ -186,3 +186,22 @@
 #'
 #' }
 "result_R"
+
+#' Table with aggregated trade results
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with one column
+#' \describe{
+#'   \item{MagicNumber}{Unique identifiers of the Trading Robots from Trade Log}
+#'   \item{TicketNumber}{Ticket Number of closed position}
+#'   \item{OrderStartTime}{Date and Time when order started}
+#'   \item{OrderCloseTime}{Date and Time when order closed}
+#'   \item{Profit}{Monetary result of the trade}
+#'   \item{Symbol}{Symbol of the Asset e.g. EURUSD}
+#'   \item{OrderType}{Order Type 0 - buy, 1 - sell}
+#'   \item{CUMSUM_PNL}{Cumulative sum of the ordered data}
+#'
+#' }
+"DFR"

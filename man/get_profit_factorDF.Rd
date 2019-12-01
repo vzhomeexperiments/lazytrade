@@ -19,8 +19,9 @@ Function that returns the profit factors of the systems in a form of a DataFrame
 }
 \examples{
 
-
+library(lazytrade)
 library(dplyr)
+library(magrittr)
 data(profit_factorDF)
 get_profit_factorDF(profit_factorDF, 10)
 
