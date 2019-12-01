@@ -35,7 +35,7 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("vzhomeexperiments/lazytrade")
 ```
-## Example
+## Example - prepare data for machine learning
 
 This is a basic example which shows you how to solve a common problem:
 
@@ -48,6 +48,53 @@ macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(20)
 
 head(macd_m, 2)
 ```
+
+## Example - aggregate multiple log files and visualize results
+
+Multiple log files could be joined into one data object
+
+```{r warning=FALSE}
+library(lazytrade)
+library(readr)
+library(dplyr)
+library(magrittr)
+library(lubridate)
+
+# files are located in the sample folders
+DFOLDER <- system.file("extdata/RES", package = "lazytrade")
+
+DFR <- opt_aggregate_results(fold_path = DFOLDER)
+```
+
+This data object can be visualized
+
+```{r}
+library(ggplot2)
+opt_create_graphs(x = DFR, outp_path = dir,graph_type = 'bars')
+```
+
+Or just visualize results with time-series plot
+
+```{r}
+opt_create_graphs(x = DFR, outp_path = dir,graph_type = 'ts')
+```
+
+## Example - leverage Reinforcement Learning for Risk Management
+
+Example below would generate RL policy based on the trade results achieved so far
+
+```{r}
+library(dplyr)
+library(ReinforcementLearning)
+library(magrittr)
+
+data(data_trades)
+states <- c("tradewin", "tradeloss")
+actions <- c("ON", "OFF")
+control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
+generate_RL_policy(data_trades, states, actions, control)
+```
+
 
 
 # Notes to remind myself how to create R package

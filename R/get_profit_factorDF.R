@@ -10,8 +10,9 @@
 #'
 #' @examples
 #'
-#'
+#' library(lazytrade)
 #' library(dplyr)
+#' library(magrittr)
 #' data(profit_factorDF)
 #' get_profit_factorDF(profit_factorDF, 10)
 #'
@@ -21,6 +22,7 @@ get_profit_factorDF <- function(x, num_orders){
   requireNamespace("dplyr", quietly = TRUE)
   # generate DF with only MagicNumbers when > 10 trades and all trades are losers
   DF_L <- x %>%
+    ungroup %>%
     group_by(MagicNumber) %>%
     summarise(nOrders = n())%>%
     filter(nOrders > num_orders)%>%
@@ -32,6 +34,7 @@ get_profit_factorDF <- function(x, num_orders){
     summarise(Loss = abs(sum(Profit)))
   # generate DF with only MagicNumbers when > 10 trades and all trades are profits
   DF_P <- x %>%
+    ungroup %>%
     group_by(MagicNumber) %>%
     summarise(nOrders = n())%>%
     filter(nOrders > num_orders)%>%

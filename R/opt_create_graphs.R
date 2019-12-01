@@ -2,7 +2,8 @@
 #'
 #' @description Create graphs and store them into pdf file
 #'
-#' @details bar graph and time series optionally written to the pdf file
+#' @details bar graph and time series optionally written to the pdf file.
+#' File is named with a date of analysis to the location specified by the user
 #'
 #' @param x - dataframe with aggregated trading results
 #' @param outp_path - path to the folder where to write file
@@ -22,7 +23,11 @@
 #'  library(ggplot2)
 #'  data(DFR)
 #'  dir <- normalizePath(tempdir(),winslash = "/")
+#'  # create pdf file with two graphs
 #'  opt_create_graphs(x = DFR, outp_path = dir)
+#'
+#'  # only show time series plot
+#'  opt_create_graphs(x = DFR, graph_type = 'ts')
 #'
 #'
 opt_create_graphs <- function(x, outp_path, graph_type = "pdf"){

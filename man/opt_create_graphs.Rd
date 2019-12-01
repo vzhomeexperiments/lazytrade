@@ -20,7 +20,8 @@ graphic output
 Create graphs and store them into pdf file
 }
 \details{
-bar graph and time series optionally written to the pdf file
+bar graph and time series optionally written to the pdf file.
+File is named with a date of analysis to the location specified by the user
 }
 \examples{
 
@@ -32,7 +33,11 @@ bar graph and time series optionally written to the pdf file
  library(ggplot2)
  data(DFR)
  dir <- normalizePath(tempdir(),winslash = "/")
+ # create pdf file with two graphs
  opt_create_graphs(x = DFR, outp_path = dir)
+
+ # only show time series plot
+ opt_create_graphs(x = DFR, graph_type = 'ts')
 
 
 }
