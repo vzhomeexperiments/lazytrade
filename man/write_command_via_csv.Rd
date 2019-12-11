@@ -4,8 +4,7 @@
 \alias{write_command_via_csv}
 \title{Write csv files with indicated commands to the external system}
 \usage{
-write_command_via_csv(x, path_terminal = "",
-  fileName = "SystemControl")
+write_command_via_csv(x, path_terminal = "", fileName = "SystemControl")
 }
 \arguments{
 \item{x}{- dataframe object with resulting command e.g. 1 - enable; 0 - disable}

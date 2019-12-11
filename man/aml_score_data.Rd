@@ -4,8 +4,15 @@
 \alias{aml_score_data}
 \title{Function to score new data and predict change for each single currency pair}
 \usage{
-aml_score_data(symbol, num_bars, timeframe, path_model, path_data,
-  path_sbxm, path_sbxs)
+aml_score_data(
+  symbol,
+  num_bars,
+  timeframe,
+  path_model,
+  path_data,
+  path_sbxm,
+  path_sbxs
+)
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which the model shall predict}

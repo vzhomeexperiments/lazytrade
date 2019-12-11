@@ -4,8 +4,13 @@
 \alias{record_policy}
 \title{Record Reinforcement Learning Policy.}
 \usage{
-record_policy(x, last_result, trading_system, path_terminal,
-  fileName = "SystemControl")
+record_policy(
+  x,
+  last_result,
+  trading_system,
+  path_terminal,
+  fileName = "SystemControl"
+)
 }
 \arguments{
 \item{x}{- Dataframe containing columns MarketType and Policy}

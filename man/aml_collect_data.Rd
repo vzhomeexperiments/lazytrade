@@ -4,8 +4,14 @@
 \alias{aml_collect_data}
 \title{Function to read new data, transform data, save data for further retraining of regression model for a single currency pair}
 \usage{
-aml_collect_data(price_dataset, indicator_dataset, symbol, num_bars,
-  timeframe, path_data)
+aml_collect_data(
+  price_dataset,
+  indicator_dataset,
+  symbol,
+  num_bars,
+  timeframe,
+  path_data
+)
 }
 \arguments{
 \item{price_dataset}{Dataset containing assets prices. It will be used as a label}
