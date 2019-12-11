@@ -5,9 +5,14 @@
 \title{Function used to evaluate market type situation by reading the file with Macroeconomic Events
 and writing a trigger to the trading robot}
 \usage{
-evaluate_macroeconomic_event(setup_file_path,
-  setup_file_name = "Setup.csv", macro_event_path,
-  macro_file_name = "01_MacroeconomicEvent.csv", path_T1, path_T3)
+evaluate_macroeconomic_event(
+  setup_file_path,
+  setup_file_name = "Setup.csv",
+  macro_event_path,
+  macro_file_name = "01_MacroeconomicEvent.csv",
+  path_T1,
+  path_T3
+)
 }
 \arguments{
 \item{setup_file_path}{string, path to the folder with Setup.csv file}

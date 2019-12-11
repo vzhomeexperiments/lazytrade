@@ -4,9 +4,16 @@
 \alias{self_learn_ai_R}
 \title{Function to train Deep Learning regression model}
 \usage{
-self_learn_ai_R(price_dataset, indicator_dataset, num_bars, timeframe,
-  path_model, setup_mode = FALSE, research_mode = FALSE,
-  write_log = TRUE)
+self_learn_ai_R(
+  price_dataset,
+  indicator_dataset,
+  num_bars,
+  timeframe,
+  path_model,
+  setup_mode = FALSE,
+  research_mode = FALSE,
+  write_log = TRUE
+)
 }
 \arguments{
 \item{price_dataset}{Dataset containing assets prices. It will be used as a label}

@@ -4,8 +4,12 @@
 \alias{record_policy_mt}
 \title{Record Reinforcement Learning Policy for Market Types}
 \usage{
-record_policy_mt(x, trading_system, path_terminal,
-  fileName = "SystemControlMT")
+record_policy_mt(
+  x,
+  trading_system,
+  path_terminal,
+  fileName = "SystemControlMT"
+)
 }
 \arguments{
 \item{x}{- Dataframe containing columns MarketType and Policy}

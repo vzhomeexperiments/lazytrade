@@ -32,7 +32,8 @@
         "if_else", "lag", "mutate_all", "mutate_if", "slice", "str_detect",
         "predict", "read_rds", "summarise", "write.csv", "write_rds", "ymd_hms",
         "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols", "testdir",
-        "h2o.performance", "distinct", "dev.off", "geom_bar", "geom_line", "ggplot", "ggtitle", "pdf"
+        "h2o.performance", "distinct", "dev.off", "geom_bar", "geom_line", "ggplot", "ggtitle", "pdf",
+        "sha512", "write_tsv"
       )
     )
 

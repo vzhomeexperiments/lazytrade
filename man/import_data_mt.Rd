@@ -4,8 +4,7 @@
 \alias{import_data_mt}
 \title{Import Market Type related Data to R from the Sandbox}
 \usage{
-import_data_mt(path_terminal, trade_log_file, system_number,
-  demo_mode = FALSE)
+import_data_mt(path_terminal, trade_log_file, system_number, demo_mode = FALSE)
 }
 \arguments{
 \item{path_terminal}{- path to the sandbox}

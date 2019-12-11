@@ -4,8 +4,12 @@
 \alias{load_asset_data}
 \title{Load and Prepare Asset Data}
 \usage{
-load_asset_data(path_terminal, trade_log_file, time_period = 1,
-  data_deepth = 50000)
+load_asset_data(
+  path_terminal,
+  trade_log_file,
+  time_period = 1,
+  data_deepth = 50000
+)
 }
 \arguments{
 \item{path_terminal}{- path to the MT4 terminal, string}

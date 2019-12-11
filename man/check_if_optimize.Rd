@@ -4,9 +4,14 @@
 \alias{check_if_optimize}
 \title{Function check_if_optimize.}
 \usage{
-check_if_optimize(x, path_trading_robot = "",
-  num_trades_to_consider = 10, profit_factor_limit = 0.7,
-  demo_mode = FALSE, write_mode = FALSE)
+check_if_optimize(
+  x,
+  path_trading_robot = "",
+  num_trades_to_consider = 10,
+  profit_factor_limit = 0.7,
+  demo_mode = FALSE,
+  write_mode = FALSE
+)
 }
 \arguments{
 \item{x}{- dataframe containing trading results}
