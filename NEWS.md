@@ -6,7 +6,7 @@
 
 ## Changes
 
-* added utility function `util_generate_password()` to generate passwords for MT4 platform
+* added utility `util_generate_password()` to generate passwords e.g. for MT4 platform
 
 # lazytrade 0.3.7
 

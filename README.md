@@ -39,12 +39,12 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
-#> -- Attaching packages ----------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
-#> v ggplot2 3.2.1     v purrr   0.3.3
-#> v tibble  2.1.3     v dplyr   0.8.3
-#> v tidyr   1.0.0     v stringr 1.4.0
-#> v readr   1.3.1     v forcats 0.4.0
-#> -- Conflicts -------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+#> -- Attaching packages ---------------------------------------------------------------------------------- tidyverse 1.3.0 --
+#> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
+#> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
+#> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
+#> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
+#> -- Conflicts ------------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ## basic example code
@@ -52,12 +52,12 @@ library(tidyverse, warn.conflicts = FALSE)
 macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(20)
 
 head(macd_m, 2)
-#>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
-#> [1,]    1    2    3    4    5    6    7    8    9    10    11    12    13
-#> [2,]   21   22   23   24   25   26   27   28   29    30    31    32    33
-#>      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
-#> [1,]    14    15    16    17    18    19    20
-#> [2,]    34    35    36    37    38    39    40
+#>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+#> [1,]    1    2    3    4    5    6    7    8    9    10    11    12    13    14
+#> [2,]   21   22   23   24   25   26   27   28   29    30    31    32    33    34
+#>      [,15] [,16] [,17] [,18] [,19] [,20]
+#> [1,]    15    16    17    18    19    20
+#> [2,]    35    36    37    38    39    40
 ```
 
 ## Example - aggregate multiple log files and visualize results
@@ -125,6 +125,24 @@ generate_RL_policy(data_trades, states, actions, control)
 #>   TradeState Policy
 #> 1  tradeloss     ON
 #> 2   tradewin    OFF
+```
+
+## Example - generating passwords for trading platforms login
+
+Multiple trading accounts require passwords, package contains function
+that may easily generate random passwords:
+
+``` r
+library(lazytrade)
+library(stringr)
+library(magrittr)
+library(openssl)
+library(readr)
+
+#generate 8digit password for trading platform
+util_generate_password(salt = 'random text')
+#>          .
+#> 1 560e25FA
 ```
 
 # Notes to remind myself how to create R package

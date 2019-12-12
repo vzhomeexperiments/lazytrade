@@ -1,6 +1,11 @@
 #' R function to generate random passwords for MT4 platform or other needs
 #'
-#' @description Utility function to generate random passwords. Password lenght can be customized.
+#' @description Utility function to generate random passwords.
+#' Wrapper of cryptographic functions from 'openssl' library in R.
+#' Password lenght can be customized.
+#' By default function just output randomly generated 8 symbol password siutable for MT4 logins.
+#' It is also possible to create other passwords and include special symbols.
+#' When required, it's possible to write resulting password to the txt file.
 #' Once generated, password is written to the destination supplied by the user.
 #'
 #' @details Passwords are generated using sha512 cryptographic function from openssl package.
@@ -8,6 +13,8 @@
 #' Hashing function is using additional 'salt' which will be based on the current System time.
 #' Additionally, only a part of generated string is selected and used for password.
 #' Some letters of generated string are converted from lower to upper case.
+#'
+#' @author (C) 2019 Vladimir Zhbanko
 #'
 #'
 #' @param salt string, random text supplied by the user

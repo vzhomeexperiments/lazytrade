@@ -1,7 +1,9 @@
 ## Test environments
 * windows, R 3.6.1
 * ubuntu (on travis-ci), R 3.6.1
-* ubuntu (on docker container), R 3.6.1
+* R-hub builder
+* R version 3.6.1 (2019-07-05)
+* R Under development (unstable) (2019-12-09 r77545)
 
 ## R CMD check results
 Status: OK

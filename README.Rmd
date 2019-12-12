@@ -95,6 +95,20 @@ control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 generate_RL_policy(data_trades, states, actions, control)
 ```
 
+## Example - generating passwords for trading platforms login
+
+Multiple trading accounts require passwords, package contains function that may easily generate random passwords:
+
+```{r message=FALSE, warning=FALSE}
+library(lazytrade)
+library(stringr)
+library(magrittr)
+library(openssl)
+library(readr)
+
+#generate 8digit password for trading platform
+util_generate_password(salt = 'random text')
+```
 
 
 # Notes to remind myself how to create R package
