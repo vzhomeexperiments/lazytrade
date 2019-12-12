@@ -27,7 +27,12 @@ util_generate_password(
 string or text file with password
 }
 \description{
-Utility function to generate random passwords. Password lenght can be customized.
+Utility function to generate random passwords.
+Wrapper of cryptographic functions from 'openssl' library in R.
+Password lenght can be customized.
+By default function just output randomly generated 8 symbol password siutable for MT4 logins.
+It is also possible to create other passwords and include special symbols.
+When required, it's possible to write resulting password to the txt file.
 Once generated, password is written to the destination supplied by the user.
 }
 \details{
@@ -59,4 +64,7 @@ util_generate_password(salt = 'random text', special_symbols = TRUE)
 #generate longer password with special symbols
 util_generate_password(salt = 'random text', pass_len = 10, special_symbols = TRUE)
 
+}
+\author{
+(C) 2019 Vladimir Zhbanko
 }
