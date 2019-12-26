@@ -1,5 +1,13 @@
 # lazytrade (development version)
 
+# lazytrade 0.3.9
+
+# Version 0.3.9
+
+## Changes
+
+* simplification of R/h2o updates, function `aml_make_model()` may conditionally force model update
+
 # lazytrade 0.3.8
 
 # Version 0.3.8
