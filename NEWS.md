@@ -7,6 +7,7 @@
 ## Changes
 
 * simplification of R/h2o updates, function `aml_make_model()` may conditionally force model update
+* added function to simplify creation of configuration files to launch MT4 platform
 
 # lazytrade 0.3.8
 

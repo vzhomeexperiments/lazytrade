@@ -11,7 +11,7 @@ R version 3.6.2 (2019-12-12)
 
 There were no ERRORs or WARNINGs or NOTES
 
-  * enhance function
+  * enhance and add more functions
   * added more tests and examples
 
 ## Downstream dependencies
