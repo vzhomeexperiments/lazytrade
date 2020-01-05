@@ -4,7 +4,14 @@
 \alias{aml_make_model}
 \title{Function to train Deep Learning regression model for a single currency pair}
 \usage{
-aml_make_model(symbol, num_bars, timeframe, path_model, path_data)
+aml_make_model(
+  symbol,
+  num_bars,
+  timeframe,
+  path_model,
+  path_data,
+  force_update = FALSE
+)
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which to train the model}
@@ -16,6 +23,9 @@ aml_make_model(symbol, num_bars, timeframe, path_model, path_data)
 \item{path_model}{Path where the models are be stored}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
+
+\item{force_update}{Boolean, by setting this to TRUE function will generate new model
+(useful after h2o engine update)}
 }
 \value{
 Function is writing file object with the model

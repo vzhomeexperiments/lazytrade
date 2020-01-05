@@ -110,6 +110,24 @@ library(readr)
 util_generate_password(salt = 'random text')
 ```
 
+## Example - generate initialization files for MT4 platform
+
+Facilitate generation of initialisation files:
+
+```{r message=FALSE, warning=FALSE}
+library(lazytrade)
+
+dir <- normalizePath(tempdir(),winslash = "/")
+
+# test file to launch MT4 terminal with parameters
+write_ini_file(mt4_Profile = "Default",
+               mt4_Login = "12345678",
+               mt4_Password = "password",
+               mt4_Server = "BrokerServerName",
+               dss_inifilepath = dir,
+               dss_inifilename = "prod_T1.ini",
+               dss_mode = "prod")
+```
 
 # Notes to remind myself how to create R package
 

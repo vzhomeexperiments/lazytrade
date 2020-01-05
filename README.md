@@ -39,12 +39,12 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
-#> -- Attaching packages ---------------------------------------------------------------------------------- tidyverse 1.3.0 --
+#> -- Attaching packages -------------------------------------------------------------------------------- tidyverse 1.3.0 --
 #> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
 #> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
 #> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
 #> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
-#> -- Conflicts ------------------------------------------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts ----------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ## basic example code
@@ -142,7 +142,26 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 560e25FA
+#> 1 c63f787A
+```
+
+## Example - generate initialization files for MT4 platform
+
+Facilitate generation of initialisation files:
+
+``` r
+library(lazytrade)
+
+dir <- normalizePath(tempdir(),winslash = "/")
+
+# test file to launch MT4 terminal with parameters
+write_ini_file(mt4_Profile = "Default",
+               mt4_Login = "12345678",
+               mt4_Password = "password",
+               mt4_Server = "BrokerServerName",
+               dss_inifilepath = dir,
+               dss_inifilename = "prod_T1.ini",
+               dss_mode = "prod")
 ```
 
 # Notes to remind myself how to create R package

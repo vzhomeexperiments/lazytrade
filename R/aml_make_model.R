@@ -22,7 +22,8 @@
 #' @param timeframe           Data timeframe e.g. 1 min
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
-#'
+#' @param force_update        Boolean, by setting this to TRUE function will generate new model
+#'                            (useful after h2o engine update)
 #'
 #' @return Function is writing file object with the model
 #' @export
@@ -61,7 +62,8 @@
 #'
 #'
 #'
-aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
+aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
+                           force_update=FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -71,10 +73,20 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   ## recover the file name and path
   dec_file_name <- paste0("StrTest-", symbol, "M",timeframe,"X",num_bars, ".csv")
   dec_file_path <- file.path(path_model,  dec_file_name)
+
+  # generate a file name for model
+  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
+  m_path <- file.path(path_model, m_name)
+
   ## read the file and the status of the model
-  if(file.exists(dec_file_path)){
+  if(file.exists(dec_file_path) && force_update == FALSE){
     # read the file
     model_status <- read_csv(dec_file_path) %>% select(FinalQuality)
+  } else if(force_update == TRUE) {
+    # delete the model and previous test results
+    remove(dec_file_path)
+    remove(m_path)
+    model_status <- -1
   } else { model_status <- 0 }
 
   #construct the path to the data object see function aml_collect_data.R
@@ -84,9 +96,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   x <- try(read_rds(full_path), silent = T)
 
-  # generate a file name for model
-  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
-  m_path <- file.path(path_model, m_name)
+
 
   # proceed with further steps only if model status is < 0 and there are enough data in x
   if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 100)) {
