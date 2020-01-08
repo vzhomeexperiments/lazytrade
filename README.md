@@ -142,7 +142,7 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 c63f787A
+#> 1 a6b0BEB1
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -200,7 +200,7 @@ Science using Algorithmic Trading”
 
 Run this code to re-generate documentation `devtools::document()`
 
-### Fixing Licencse
+### Fixing License
 
 Run this code to fix license: `usethis::use_mit_license(name = "Vladimir
 Zhbanko")`
