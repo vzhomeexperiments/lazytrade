@@ -6,7 +6,9 @@
 
 ## Changes
 
-* check of examples markes as /donttest, rerun with --run-donttest 
+* check of examples markes as /donttest, rerun with --run-donttest
+* removed some examples with /donttest
+* added function `encrypt_api_key.R`
 
 # lazytrade 0.3.9
 

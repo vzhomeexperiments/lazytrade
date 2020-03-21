@@ -58,6 +58,9 @@
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
 #'
+#' #set delay to insure h2o unit closes properly before the next test
+#' Sys.sleep(5)
+#'
 #' }
 #'
 #'
