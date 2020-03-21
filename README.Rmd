@@ -176,6 +176,8 @@ Note: to document dataset see https://stackoverflow.com/questions/2310409/how-ca
 
 Document dataset using the R script `R/datasets.R` 
 
+Use data in the function with `data(x)`
+
 ## Adding examples to test package function
 
 ### Tests setup first time

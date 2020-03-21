@@ -141,6 +141,8 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
+#>          .
+#> 1 075fA148
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -217,6 +219,8 @@ dataset see
 <https://stackoverflow.com/questions/2310409/how-can-i-document-data-sets-with-roxygen>
 
 Document dataset using the R script `R/datasets.R`
+
+Use data in the function with `data(x)`
 
 ## Adding examples to test package function
 

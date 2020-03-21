@@ -205,3 +205,15 @@
 #'
 #' }
 "DFR"
+
+#' Table with indicator and market type category
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1-X128}{Values of the macd indicator}
+#'   \item{X129}{Category of Market Type}
+#' }
+"macd_ML2_small"

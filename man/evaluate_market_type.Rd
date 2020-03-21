@@ -31,6 +31,10 @@ also to shut it down with h2o.shutdown(prompt = F)
 \donttest{
 
 library(h2o)
+library(magrittr)
+
+path_model <- normalizePath(tempdir(),winslash = "/")
+path_data <- normalizePath(tempdir(),winslash = "/")
 
 # start h2o - don't start/stop within for loop
 h2o.init()
@@ -43,8 +47,8 @@ remain_path <- "/regression.bin/DL_Classification"
 model_path <- file.path(models_path, remain_path)
 
 #my_market_prediction <- evaluate_market_type(x = df,
-#                                              model_path = model_path,
-#                                              num_cols = 64)
+#                                             model_path = model_path,
+#                                             num_cols = 64)
 
 h2o.shutdown(prompt = FALSE)
 
