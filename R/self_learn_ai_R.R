@@ -32,19 +32,24 @@
 #'
 #' library(dplyr)
 #' library(readr)
+#' library(magrittr)
+#' library(h2o)
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #' # performing Deep Learning Regression using the custom function
-#' self_learn_ai_R(price_dataset = prices,
-#'                 indicator_dataset = macd,
-#'                 num_bars = 75,
-#'                 timeframe = 1,
-#'                 path_model = path_model,
-#'                 write_log = TRUE)
+#' #self_learn_ai_R(price_dataset = prices,
+#' #                indicator_dataset = macd,
+#' #                num_bars = 75,
+#' #                timeframe = 1,
+#' #                path_model = path_model,
+#' #                write_log = TRUE)
 #'
 #' # stop h2o engine
-#' h2o.shutdown(prompt = F)
+#' h2o.shutdown(prompt = FALSE)
+#'
+#' #set delay to insure h2o unit closes properly before the next test
+#' Sys.sleep(5)
 #'
 #' }
 #'
@@ -56,6 +61,7 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
                             write_log = TRUE){
 
   requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 

@@ -42,11 +42,14 @@ models_path <- tempdir()
 remain_path <- "/regression.bin/DL_Classification"
 model_path <- file.path(models_path, remain_path)
 
-my_market_prediction <- evaluate_market_type(x = df,
-                                             model_path = model_path,
-                                             num_cols = 64)
+#my_market_prediction <- evaluate_market_type(x = df,
+#                                              model_path = model_path,
+#                                              num_cols = 64)
 
 h2o.shutdown(prompt = FALSE)
+
+#set delay to insure h2o unit closes properly before the next test
+Sys.sleep(5)
 
 }
 
