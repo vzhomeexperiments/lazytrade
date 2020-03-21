@@ -29,6 +29,7 @@
 #' \donttest{
 #'
 #' library(dplyr)
+#' library(magrittr)
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
@@ -70,7 +71,7 @@
 #'                path_data = path_data)
 #'
 #' # stop h2o engine
-#' h2o.shutdown(prompt = F)
+#' h2o.shutdown(prompt = FALSE)
 #'
 #' }
 #'

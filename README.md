@@ -40,10 +40,10 @@ This is a basic example which shows you how to solve a common problem:
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
 #> -- Attaching packages -------------------------------------------------------------------------------- tidyverse 1.3.0 --
-#> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
-#> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
-#> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
-#> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
+#> v ggplot2 3.3.0     v purrr   0.3.3
+#> v tibble  2.1.3     v dplyr   0.8.5
+#> v tidyr   1.0.2     v stringr 1.4.0
+#> v readr   1.3.1     v forcats 0.5.0
 #> -- Conflicts ----------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
@@ -141,8 +141,6 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
-#>          .
-#> 1 a6b0BEB1
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -317,9 +315,16 @@ This will add automatic test coverage badge to the readme file on github
 ## Checking package
 
 Step 1. `devtools::document()` Step 2. `devtools::run_examples()` Step
-3. Menu ‘Build’ `Clean and Rebuild` Step 4. ‘Check’
+3. Menu ‘Build’ `Clean and Rebuild` Step 4. ‘Check’ `devtools::check()`
 
-`devtools::check()`
+## Checking package with –run-donttest enabled
+
+Whenever  examples construct is used author of the package must insure
+that those examples are running. Such examples are those that would
+require longer test execution. To perform this test package needs to be
+checked with the following command:
+
+`devtools::check(run_dont_test = TRUE)`
 
 ## Handling functions that write files
 

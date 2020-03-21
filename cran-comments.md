@@ -1,8 +1,8 @@
 ## Test environments
-* windows, R 3.6.2
+* windows, R 3.6.3
 * ubuntu (on travis-ci), R 3.6.2
 * R-hub builder
-* R version 3.6.2 (2019-12-12)
+* R version 3.6.3 (2020-02-29)
 * R Under development (unstable) (2019-12-24 r77619)
 
 ## R CMD check results
@@ -11,9 +11,8 @@ R version 3.6.2 (2019-12-12)
 
 There were no ERRORs or WARNINGs or NOTES
 
-  * enhance and add more functions
-  * added more tests and examples
-
+  * rerun with --run-donttest
+  
 ## Downstream dependencies
 R version 3.5.3 (2019-03-11)
 

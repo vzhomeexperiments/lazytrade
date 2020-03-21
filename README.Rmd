@@ -264,10 +264,16 @@ This will add automatic test coverage badge to the readme file on github
 Step 1. `devtools::document()`
 Step 2. `devtools::run_examples()`
 Step 3. Menu 'Build' `Clean and Rebuild`
-Step 4. 'Check'
+Step 4. 'Check' `devtools::check()`
+
+## Checking package with --run-donttest enabled
+
+Whenever \donttest{} examples construct is used author of the package must insure that those examples are running.
+Such examples are those that would require longer test execution. To perform this test package needs to be checked with the following command:
+
+`devtools::check(run_dont_test = TRUE)`
 
 
-`devtools::check()`
 
 ## Handling functions that write files
 

@@ -46,6 +46,7 @@ Performs fresh data reading from the rds file
 # test of function aml_make_model is duplicated here
 library(readr)
 library(h2o)
+library(magrittr)
 library(lazytrade)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
@@ -80,7 +81,7 @@ aml_score_data(symbol = 'EURUSD',
                path_sbxs = path_sbxs)
 
 # stop h2o engine
-h2o.shutdown(prompt = F)
+h2o.shutdown(prompt = FALSE)
 
 }
 

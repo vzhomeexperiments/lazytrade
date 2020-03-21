@@ -73,7 +73,7 @@ aml_make_model(symbol = 'EURUSD',
                path_data = path_data)
 
 # stop h2o engine
-h2o.shutdown(prompt = F)
+h2o.shutdown(prompt = FALSE)
 
 }
 
