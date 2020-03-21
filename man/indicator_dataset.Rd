@@ -4,11 +4,13 @@
 \name{indicator_dataset}
 \alias{indicator_dataset}
 \title{Table with indicator dataset}
-\format{A dataframe with several columns
+\format{
+A dataframe with several columns
 \describe{
   \item{X1}{Date and time of the indicator sample}
   \item{X2-X29}{Values of the assets}
-}}
+}
+}
 \usage{
 indicator_dataset
 }

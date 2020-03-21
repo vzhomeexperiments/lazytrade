@@ -4,11 +4,13 @@
 \name{TradeStatePolicy}
 \alias{TradeStatePolicy}
 \title{Table with Trade States and sample of actual policy for those states}
-\format{A dataframe with 2 columns:
+\format{
+A dataframe with 2 columns:
 \describe{
   \item{TradeState}{Current trade state status}
   \item{Policy}{Policy choice}
-}}
+}
+}
 \usage{
 TradeStatePolicy
 }

@@ -4,11 +4,13 @@
 \name{EURUSDM15X75}
 \alias{EURUSDM15X75}
 \title{Table with indicator and price change dataset}
-\format{A dataframe with several columns
+\format{
+A dataframe with several columns
 \describe{
   \item{X1}{future price change}
   \item{X2-X76}{Values of the macd indicator}
-}}
+}
+}
 \usage{
 EURUSDM15X75
 }

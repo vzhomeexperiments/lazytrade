@@ -4,11 +4,13 @@
 \name{result_R}
 \alias{result_R}
 \title{Table with predicte price change}
-\format{A dataframe with one column
+\format{
+A dataframe with one column
 \describe{
   \item{predict}{predicted future price change}
 
-}}
+}
+}
 \usage{
 result_R
 }

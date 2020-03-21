@@ -4,11 +4,13 @@
 \name{price_dataset}
 \alias{price_dataset}
 \title{Table with price dataset}
-\format{A dataframe with several columns
+\format{
+A dataframe with several columns
 \describe{
   \item{X1}{Date and time of the price sample}
   \item{X2-X29}{Values of the assets}
-}}
+}
+}
 \usage{
 price_dataset
 }

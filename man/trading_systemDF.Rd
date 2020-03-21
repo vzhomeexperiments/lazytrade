@@ -4,7 +4,8 @@
 \name{trading_systemDF}
 \alias{trading_systemDF}
 \title{Table with trade data and joined market type info}
-\format{A dataframe with several columns
+\format{
+A dataframe with several columns
 \describe{
   \item{"MagicNumber.x}{Unique identifiers of the Trading Robots from Trade Log}
   \item{TicketNumber}{Ticket Number of closed position}
@@ -15,7 +16,8 @@
   \item{OrderType}{Order Type 0 - buy, 1 - sell}
   \item{"MagicNumber.y}{Unique identifiers of the Trading Robots from Ticket Opening Log}
   \item{"MarketType}{Logged Market Type of the asset at the moment of Ticket Opening}
-}}
+}
+}
 \usage{
 trading_systemDF
 }

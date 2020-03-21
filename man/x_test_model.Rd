@@ -4,11 +4,13 @@
 \name{x_test_model}
 \alias{x_test_model}
 \title{Table with a dataset to test the Model}
-\format{A dataframe with several columns
+\format{
+A dataframe with several columns
 \describe{
   \item{X1}{future price change}
   \item{X2-X76}{Values of the macd indicator}
-}}
+}
+}
 \usage{
 x_test_model
 }

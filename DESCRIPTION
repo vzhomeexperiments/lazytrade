@@ -13,7 +13,7 @@ URL: https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/, https://gi
 BugReports: https://github.com/vzhomeexperiments/lazytrade/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Imports:
     readr,
     stringr,

@@ -4,7 +4,8 @@
 \name{DFR}
 \alias{DFR}
 \title{Table with aggregated trade results}
-\format{A dataframe with one column
+\format{
+A dataframe with one column
 \describe{
   \item{MagicNumber}{Unique identifiers of the Trading Robots from Trade Log}
   \item{TicketNumber}{Ticket Number of closed position}
@@ -15,7 +16,8 @@
   \item{OrderType}{Order Type 0 - buy, 1 - sell}
   \item{CUMSUM_PNL}{Cumulative sum of the ordered data}
 
-}}
+}
+}
 \usage{
 DFR
 }

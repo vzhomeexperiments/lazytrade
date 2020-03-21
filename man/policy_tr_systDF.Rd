@@ -4,11 +4,13 @@
 \name{policy_tr_systDF}
 \alias{policy_tr_systDF}
 \title{Table with Market Types and sample of actual policy for those states}
-\format{A dataframe with 2 columns:
+\format{
+A dataframe with 2 columns:
 \describe{
   \item{MarketType}{Current Market Type status}
   \item{Policy}{Policy choice}
-}}
+}
+}
 \usage{
 policy_tr_systDF
 }

@@ -4,10 +4,12 @@
 \name{result_prev}
 \alias{result_prev}
 \title{Table with one column as result from the model prediction}
-\format{A dataframe with one column
+\format{
+A dataframe with one column
 \describe{
   \item{predict}{Predicted values from the model}
-}}
+}
+}
 \usage{
 result_prev
 }

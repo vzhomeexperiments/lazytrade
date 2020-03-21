@@ -4,10 +4,12 @@
 \name{macd_df}
 \alias{macd_df}
 \title{Table with one column indicator dataset}
-\format{A dataframe with one column
+\format{
+A dataframe with one column
 \describe{
   \item{CADCHF}{Indicator values of the asset}
-}}
+}
+}
 \usage{
 macd_df
 }
