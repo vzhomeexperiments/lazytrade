@@ -58,10 +58,10 @@ data(macd_100)
 # use one column for testing
 x <- macd_100[ ,2]
 
-remain_path <- "/regression.bin/DL_Classification"
-model_path <- file.path(models_path, remain_path)
+remain_path <- "classification.bin/DL_Classification"
+model_path <- file.path(path_model, remain_path)
 
-my_market_prediction <- evaluate_market_type(x = df,
+my_market_prediction <- evaluate_market_type(x = x,
                                              model_path = model_path,
                                              num_cols = 128)
 

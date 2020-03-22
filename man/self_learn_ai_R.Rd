@@ -60,13 +60,24 @@ library(h2o)
 # start h2o engine (using all CPU's by default)
 h2o.init()
 
+path_model <- normalizePath(tempdir(),winslash = "/")
+path_data <- normalizePath(tempdir(),winslash = "/")
+
+data(indicator_dataset)
+data(price_dataset)
+
+prices <- price_dataset
+macd <- indicator_dataset
+
 # performing Deep Learning Regression using the custom function
-#self_learn_ai_R(price_dataset = prices,
-#                indicator_dataset = macd,
-#                num_bars = 75,
-#                timeframe = 1,
-#                path_model = path_model,
-#                write_log = TRUE)
+self_learn_ai_R(price_dataset = prices,
+                indicator_dataset = macd,
+                num_bars = 75,
+                timeframe = 1,
+                path_model = path_model,
+                setup_mode = FALSE,
+                research_mode = FALSE,
+                write_log = FALSE)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)
