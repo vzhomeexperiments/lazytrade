@@ -3,7 +3,7 @@
 #' @description Function will write a policy 'decision' to the csv file specific for each Expert Advisor
 #'
 #' @param x - Dataframe containing columns MarketType and Policy
-#' @param trading_system - numeric vector of lenght 1 with Trading System Magic Number information
+#' @param trading_system - numeric vector of length 1 with Trading System Magic Number information
 #' @param path_terminal - string, path to the terminal where this Policy/Decision must be written
 #' @param fileName - string, desired control file prefix e.g. 'SystemControlMT'
 #'

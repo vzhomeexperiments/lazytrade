@@ -2,7 +2,7 @@
 #'
 #' @description  Function is collecting data from the files using dedicated function load_asset_data.R.
 #' One file with a prices of the asset and another file with the corresponding indicator pattern.
-#' Both data objects are transformed to be siutable for Regression Modelling.
+#' Both data objects are transformed to be suitable for Regression Modelling.
 #' Indicator values will be placed into the column X1-X75 and price change is in the column 'LABEL'
 #' Result would be written to new or aggregated to the existing file
 #'

@@ -4,7 +4,7 @@
 #'
 #'
 #' @param x - Dataframe containing columns MarketType and Policy
-#' @param trading_system - character vector of lenght 1 with Trading System Magic Number information
+#' @param trading_system - character vector of length 1 with Trading System Magic Number information
 #' @param path_terminal - path to the sandbox where this Policy/Decision must be written
 #' @param last_result - character vector of the last result of the trade
 #' @param fileName - string, desired control file prefix e.g. 'SystemControl'

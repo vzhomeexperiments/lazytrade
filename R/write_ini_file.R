@@ -1,6 +1,6 @@
 #' Create initialization files to launch MT4 platform with specific configuration
 #'
-#' @description Function generate initialization files siutable for launching MT4 terminal with
+#' @description Function generate initialization files suitable for launching MT4 terminal with
 #' specific parameters. Several options available for generating files specific for each purpose.
 #' Option 'prod' will just use existing profile and connect to the broker server
 #' Option 'backtest' will generate file for the robot backtest
