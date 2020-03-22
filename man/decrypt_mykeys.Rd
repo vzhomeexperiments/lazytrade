@@ -23,17 +23,30 @@ Alternatively possible to use 'openssl' R package
 }
 \examples{
 
-\donttest{
-
 library(dplyr)
+library(magrittr)
 library(openssl)
+library(readr)
+
+path_ssh <- normalizePath(tempdir(),winslash = "/")
+rsa_keygen() \%>\% write_pem(path = file.path(path_ssh, 'id_api'))
+# extract and write your public key
+read_key(file = file.path(path_ssh, 'id_api'), password = "") \%>\%
+`[[`("pubkey") \%>\% write_pem(path = file.path(path_ssh, 'id_api.pub'))
+
+path_private_key <- file.path(path_ssh, "id_api")
+path_public_key <- file.path(path_ssh, "id_api.pub")
+
+#encrypting string 'my_key'...
+encrypt_api_key(api_key = 'my_key', enc_name = 'api_key.enc.rds',path_ssh = path_ssh)
+
+#encrypted content
+out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
 
 # Consumer API keys
-ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,
-                                  "ConsumerAPIkeys.enc.rds"),
+ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_ssh,
+                                  'api_key.enc.rds'),
                                   path_private_key = path_private_key)
-
-}
 
 
 }

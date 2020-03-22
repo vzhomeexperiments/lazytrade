@@ -11,23 +11,37 @@
 #'
 #' @examples
 #'
-#' \donttest{
-#'
 #' library(dplyr)
+#' library(magrittr)
 #' library(openssl)
+#' library(readr)
+#'
+#' path_ssh <- normalizePath(tempdir(),winslash = "/")
+#' rsa_keygen() %>% write_pem(path = file.path(path_ssh, 'id_api'))
+#' # extract and write your public key
+#' read_key(file = file.path(path_ssh, 'id_api'), password = "") %>%
+#' `[[`("pubkey") %>% write_pem(path = file.path(path_ssh, 'id_api.pub'))
+#'
+#' path_private_key <- file.path(path_ssh, "id_api")
+#' path_public_key <- file.path(path_ssh, "id_api.pub")
+#'
+#' #encrypting string 'my_key'...
+#' encrypt_api_key(api_key = 'my_key', enc_name = 'api_key.enc.rds',path_ssh = path_ssh)
+#'
+#' #encrypted content
+#' out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
 #'
 #' # Consumer API keys
-#' ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_encrypted_keys,
-#'                                   "ConsumerAPIkeys.enc.rds"),
+#' ConsumerAPIkeys <- decrypt_mykeys(path_encrypted_content = file.path(path_ssh,
+#'                                   'api_key.enc.rds'),
 #'                                   path_private_key = path_private_key)
-#'
-#' }
 #'
 #'
 decrypt_mykeys <- function(path_encrypted_content, path_private_key) {
 
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("openssl", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
   # get back our encrypted API key
   out <- read_rds(path_encrypted_content)
   # path to our key

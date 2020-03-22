@@ -176,6 +176,8 @@ Note: to document dataset see https://stackoverflow.com/questions/2310409/how-ca
 
 Document dataset using the R script `R/datasets.R` 
 
+Use data in the function with `data(x)`
+
 ## Adding examples to test package function
 
 ### Tests setup first time
@@ -264,10 +266,16 @@ This will add automatic test coverage badge to the readme file on github
 Step 1. `devtools::document()`
 Step 2. `devtools::run_examples()`
 Step 3. Menu 'Build' `Clean and Rebuild`
-Step 4. 'Check'
+Step 4. 'Check' `devtools::check()`
+
+## Locally checking package with --run-donttest enabled
+
+Whenever \donttest{} examples construct is used author of the package must insure that those examples are running.
+Such examples are those that would require longer test execution. To perform this test package needs to be checked with the following command:
+
+`devtools::check(run_dont_test = TRUE)`
 
 
-`devtools::check()`
 
 ## Handling functions that write files
 
@@ -450,6 +458,9 @@ spelling
 
 checking on R hub
 `devtools::check_rhub(interactive = F)`
+
+checking with release
+`devtools::check_win_release()`
 
 checking win devel
 `devtools::check_win_devel()`

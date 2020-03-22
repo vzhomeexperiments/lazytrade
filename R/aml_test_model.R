@@ -29,6 +29,7 @@
 #' \donttest{
 #'
 #' library(dplyr)
+#' library(magrittr)
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
@@ -70,7 +71,10 @@
 #'                path_data = path_data)
 #'
 #' # stop h2o engine
-#' h2o.shutdown(prompt = F)
+#' h2o.shutdown(prompt = FALSE)
+#'
+#' #set delay to insure h2o unit closes properly before the next test
+#' Sys.sleep(5)
 #'
 #' }
 #'
@@ -79,6 +83,7 @@
 aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   requireNamespace("dplyr", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 

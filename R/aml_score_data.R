@@ -24,8 +24,10 @@
 #' \donttest{
 #'
 #' # test of function aml_make_model is duplicated here
+#' library(dplyr)
 #' library(readr)
 #' library(h2o)
+#' library(magrittr)
 #' library(lazytrade)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
@@ -60,7 +62,10 @@
 #'                path_sbxs = path_sbxs)
 #'
 #' # stop h2o engine
-#' h2o.shutdown(prompt = F)
+#' h2o.shutdown(prompt = FALSE)
+#'
+#' #set delay to insure h2o unit closes properly before the next test
+#' Sys.sleep(5)
 #'
 #' }
 #'

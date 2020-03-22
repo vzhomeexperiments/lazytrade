@@ -1,5 +1,16 @@
 # lazytrade (development version)
 
+# lazytrade 0.3.10
+
+# Version 0.3.10
+
+## Changes
+
+* check of examples markes as /donttest, rerun with --run-donttest
+* removed some examples with /donttest
+* added functions `encrypt_api_key.R`, `mt_make_model.R`
+* minor enhancements
+
 # lazytrade 0.3.9
 
 # Version 0.3.9
