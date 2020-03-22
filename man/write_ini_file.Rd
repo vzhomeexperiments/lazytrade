@@ -149,7 +149,7 @@ If the parameter is not specified, the current setting is used.}
 output is a file with desired parameters
 }
 \description{
-Function generate initialization files siutable for launching MT4 terminal with
+Function generate initialization files suitable for launching MT4 terminal with
 specific parameters. Several options available for generating files specific for each purpose.
 Option 'prod' will just use existing profile and connect to the broker server
 Option 'backtest' will generate file for the robot backtest

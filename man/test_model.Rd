@@ -25,7 +25,7 @@ Function will return a data frame with several quality score metrics for the bes
 Goal of the function is to verify how good predicted results are.
 }
 \details{
-This function should work to backtest any possible dataset lenght. It could be that we will need to use it for testing
+This function should work to backtest any possible dataset length. It could be that we will need to use it for testing
 1 week or 1 month. It should also work for both Regression and Classification models. Note: strategy outcomes assumes trading on
 all 28 major forex pairs
 }

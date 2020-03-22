@@ -17,7 +17,7 @@ record_policy(
 
 \item{last_result}{- character vector of the last result of the trade}
 
-\item{trading_system}{- character vector of lenght 1 with Trading System Magic Number information}
+\item{trading_system}{- character vector of length 1 with Trading System Magic Number information}
 
 \item{path_terminal}{- path to the sandbox where this Policy/Decision must be written}
 

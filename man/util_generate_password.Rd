@@ -29,8 +29,8 @@ string or text file with password
 \description{
 Utility function to generate random passwords.
 Wrapper of cryptographic functions from 'openssl' library in R.
-Password lenght can be customized.
-By default function just output randomly generated 8 symbol password siutable for MT4 logins.
+Password length can be customized.
+By default function just output randomly generated 8 symbol password suitable for MT4 logins.
 It is also possible to create other passwords and include special symbols.
 When required, it's possible to write resulting password to the txt file.
 Once generated, password is written to the destination supplied by the user.

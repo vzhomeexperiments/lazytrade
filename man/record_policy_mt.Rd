@@ -14,7 +14,7 @@ record_policy_mt(
 \arguments{
 \item{x}{- Dataframe containing columns MarketType and Policy}
 
-\item{trading_system}{- numeric vector of lenght 1 with Trading System Magic Number information}
+\item{trading_system}{- numeric vector of length 1 with Trading System Magic Number information}
 
 \item{path_terminal}{- string, path to the terminal where this Policy/Decision must be written}
 
