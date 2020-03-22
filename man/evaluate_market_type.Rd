@@ -32,23 +32,38 @@ also to shut it down with h2o.shutdown(prompt = F)
 
 library(h2o)
 library(magrittr)
+library(dplyr)
+library(readr)
+library(lazytrade)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
 
-# start h2o - don't start/stop within for loop
+data(macd_ML2_small)
+write_rds(macd_ML2_small, file.path(path_data, 'macd_ML2_small.rds'))
+
+# start h2o engine (using all CPU's by default)
 h2o.init()
-# Use function to score the data to the model
-data(macd_df)
-x <- macd_df
-num_cols <- 64
-models_path <- tempdir()
+
+# performing Deep Learning Regression using the custom function
+# this function stores model to the temp location
+mt_make_model(num_bars = 128,
+              path_model = path_model,
+              path_data = path_data,
+              f_name_data = "macd_ML2_small.rds")
+
+# Use sample data
+data(macd_100)
+
+# use one column for testing
+x <- macd_100[ ,2]
+
 remain_path <- "/regression.bin/DL_Classification"
 model_path <- file.path(models_path, remain_path)
 
-#my_market_prediction <- evaluate_market_type(x = df,
-#                                             model_path = model_path,
-#                                             num_cols = 64)
+my_market_prediction <- evaluate_market_type(x = df,
+                                             model_path = model_path,
+                                             num_cols = 128)
 
 h2o.shutdown(prompt = FALSE)
 

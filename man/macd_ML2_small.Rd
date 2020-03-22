@@ -3,7 +3,7 @@
 \docType{data}
 \name{macd_ML2_small}
 \alias{macd_ML2_small}
-\title{Table with indicator and market type category}
+\title{Table with indicator and market type category used to train model}
 \format{
 A dataframe with several columns
 \describe{
@@ -15,6 +15,6 @@ A dataframe with several columns
 macd_ML2_small
 }
 \description{
-Table with indicator and market type category
+Table with indicator and market type category used to train model
 }
 \keyword{datasets}
