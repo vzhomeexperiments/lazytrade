@@ -34,17 +34,18 @@
 #' library(readr)
 #' library(magrittr)
 #' library(h2o)
+#' library(lazytrade)
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
-#' data(indicator_dataset)
-#' data(price_dataset)
+#' data(indicator_dataset_big)
+#' data(price_dataset_big)
 #'
-#' prices <- price_dataset
-#' macd <- indicator_dataset
+#' prices <- price_dataset_big
+#' macd <- indicator_dataset_big
 #'
 #' # performing Deep Learning Regression using the custom function
 #' self_learn_ai_R(price_dataset = prices,
@@ -76,8 +77,10 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
-  # transform data and get the labels shift rows down Note: the oldest data in the first row!!
-  dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression") %>% mutate_all(funs(lag), n=28)
+  # transform data and get the labels shift rows down Note: the oldest data in the first row!! mutate_all(~.-lag(.))
+  # working but depricated: %>% mutate_all(funs(lag), n=28)
+  # new alternative:        %>% mutate_all(~lag(., n = 28))
+  dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression") %>% mutate_all(~lag(., n = 28))
   # transform data for indicator. Note: the oldest data in the first row!!
   dat15 <- create_transposed_data(indicator_dataset, num_bars)
   # dataframe for the DL modelling it contains all the available data.
@@ -161,7 +164,7 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
      #condition OR will also overwrite the model in case previously made model is performing worse than the new one
      # NOTE: this condition dat31$FinalQuality > 0.8 can be removed after finding the first model
      (dat31$FinalQuality > 0.8 || dat31$FinalQuality > dat31_prev$FinalQuality)){
-  h2o.saveModel(ModelC, path = path_model, force = T)
+  h2o.saveModel(ModelC, path = path_model, force = TRUE)
   }
 
 

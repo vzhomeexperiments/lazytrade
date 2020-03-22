@@ -97,6 +97,29 @@
 #' }
 "indicator_dataset"
 
+#' Table with price dataset, 30000 rows
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{Date and time of the price sample}
+#'   \item{X2-X29}{Values of the assets}
+#' }
+"price_dataset_big"
+
+#' Table with indicator dataset, 30000 rows
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{Date and time of the indicator sample}
+#'   \item{X2-X29}{Values of the assets}
+#' }
+"indicator_dataset_big"
 
 #' Table with one column indicator dataset
 #'
