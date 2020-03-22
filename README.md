@@ -141,8 +141,6 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
-#>          .
-#> 1 075fA148
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -321,7 +319,7 @@ This will add automatic test coverage badge to the readme file on github
 Step 1. `devtools::document()` Step 2. `devtools::run_examples()` Step
 3. Menu ‘Build’ `Clean and Rebuild` Step 4. ‘Check’ `devtools::check()`
 
-## Checking package with –run-donttest enabled
+## Locally checking package with –run-donttest enabled
 
 Whenever  examples construct is used author of the package must insure
 that those examples are running. Such examples are those that would
@@ -467,6 +465,8 @@ then:
 spelling `devtools::spell_check()`
 
 checking on R hub `devtools::check_rhub(interactive = F)`
+
+checking with release `devtools::check_win_release()`
 
 checking win devel `devtools::check_win_devel()`
 

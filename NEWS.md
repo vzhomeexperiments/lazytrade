@@ -8,7 +8,8 @@
 
 * check of examples markes as /donttest, rerun with --run-donttest
 * removed some examples with /donttest
-* added function `encrypt_api_key.R`
+* added functions `encrypt_api_key.R`, `mt_make_model.R`
+* minor enhancements
 
 # lazytrade 0.3.9
 
