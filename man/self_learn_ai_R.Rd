@@ -74,7 +74,7 @@ macd <- indicator_dataset_big
 self_learn_ai_R(price_dataset = prices,
                 indicator_dataset = macd,
                 num_bars = 75,
-                timeframe = 1,
+                timeframe = 60,
                 path_model = path_model,
                 setup_mode = FALSE,
                 research_mode = FALSE,
