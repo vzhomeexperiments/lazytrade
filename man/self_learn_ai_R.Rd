@@ -55,19 +55,36 @@ Function can also write a log files with a results of the strategy test
 
 library(dplyr)
 library(readr)
+library(magrittr)
+library(h2o)
+library(lazytrade)
 # start h2o engine (using all CPU's by default)
 h2o.init()
+
+path_model <- normalizePath(tempdir(),winslash = "/")
+path_data <- normalizePath(tempdir(),winslash = "/")
+
+data(indicator_dataset_big)
+data(price_dataset_big)
+
+prices <- price_dataset_big
+macd <- indicator_dataset_big
 
 # performing Deep Learning Regression using the custom function
 self_learn_ai_R(price_dataset = prices,
                 indicator_dataset = macd,
                 num_bars = 75,
-                timeframe = 1,
+                timeframe = 60,
                 path_model = path_model,
-                write_log = TRUE)
+                setup_mode = FALSE,
+                research_mode = FALSE,
+                write_log = FALSE)
 
 # stop h2o engine
-h2o.shutdown(prompt = F)
+h2o.shutdown(prompt = FALSE)
+
+#set delay to insure h2o unit closes properly before the next test
+Sys.sleep(5)
 
 }
 
