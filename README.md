@@ -8,6 +8,8 @@
 [![Travis build
 status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
 [![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 The goal of lazytrade is to keep all functions and scripts of the
@@ -39,12 +41,12 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
-#> -- Attaching packages -------------------------------------------------------------------------------- tidyverse 1.3.0 --
-#> v ggplot2 3.3.0     v purrr   0.3.3
-#> v tibble  2.1.3     v dplyr   0.8.5
+#> -- Attaching packages ---------------------------------------------- tidyverse 1.3.0 --
+#> v ggplot2 3.3.0     v purrr   0.3.4
+#> v tibble  3.0.1     v dplyr   0.8.5
 #> v tidyr   1.0.2     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.5.0
-#> -- Conflicts ----------------------------------------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts ------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ## basic example code
@@ -80,9 +82,12 @@ library(magrittr)
 library(lubridate)
 #> 
 #> Attaching package: 'lubridate'
-#> The following object is masked from 'package:base':
+#> The following objects are masked from 'package:dplyr':
 #> 
-#>     date
+#>     intersect, setdiff, union
+#> The following objects are masked from 'package:base':
+#> 
+#>     date, intersect, setdiff, union
 
 # files are located in the sample folders
 DFOLDER <- system.file("extdata/RES", package = "lazytrade")
