@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
-The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading
+The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading. Created for Educational Purposes only!
 
 ## Installation
 

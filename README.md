@@ -16,7 +16,8 @@ The goal of lazytrade is to keep all functions and scripts of the
 lazytrade educational project on
 [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/).
 Functions are providing an opportunity to learn Computer and Data
-Science using example of Algorithmic Trading
+Science using example of Algorithmic Trading. Created for Educational
+Purposes only\!
 
 ## Installation
 
@@ -41,12 +42,12 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
-#> -- Attaching packages ---------------------------------------------- tidyverse 1.3.0 --
+#> -- Attaching packages ----------------------------------------------------------------------------------- tidyverse 1.3.0 --
 #> v ggplot2 3.3.0     v purrr   0.3.4
 #> v tibble  3.0.1     v dplyr   0.8.5
 #> v tidyr   1.0.2     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.5.0
-#> -- Conflicts ------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts -------------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ## basic example code
@@ -146,6 +147,8 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
+#>          .
+#> 1 20d2A7A2
 ```
 
 ## Example - generate initialization files for MT4 platform

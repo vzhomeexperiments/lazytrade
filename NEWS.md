@@ -1,5 +1,13 @@
 # lazytrade (development version)
 
+## Planned Changes
+
+* Add folder generation function
+* Remove warnings:
+
+1: `as_data_frame()` is deprecated as of tibble 2.0.0. Please use `as_tibble()` instead.
+2: `data_frame()` is deprecated as of tibble 1.1.0. Please use `tibble()` instead.
+
 # lazytrade 0.3.11
 
 # Version 0.3.11
@@ -8,12 +16,8 @@
 
 ### Implemented
 
-
-### Planned
-* Testing package under ver 4.0.0 of R
-* Add Methods source description
 * Add badge 'Maturing'
-* Add folder generation function
+* Add Methods source in Description file
 
 # lazytrade 0.3.10
 
