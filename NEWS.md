@@ -1,5 +1,20 @@
 # lazytrade (development version)
 
+# lazytrade 0.3.11
+
+# Version 0.3.11
+
+## Changes
+
+### Implemented
+
+
+### Planned
+* Testing package under ver 4.0.0 of R
+* Add Methods source description
+* Add badge 'Maturing'
+* Add folder generation function
+
 # lazytrade 0.3.10
 
 # Version 0.3.10
