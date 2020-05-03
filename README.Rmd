@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
 [![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN status](https://www.r-pkg.org/badges/version/lazytrade)](https://CRAN.R-project.org/package=lazytrade)
 <!-- badges: end -->
 
 The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading. Created for Educational Purposes only!

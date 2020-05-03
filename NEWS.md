@@ -16,7 +16,7 @@
 
 ### Implemented
 
-* Add badge 'Maturing'
+* Add badges 'Maturing', 'CRAN status'
 * Add Methods source in Description file
 
 # lazytrade 0.3.10
@@ -25,7 +25,7 @@
 
 ## Changes
 
-* check of examples markes as /donttest, rerun with --run-donttest
+* check of examples marked as /donttest, rerun with --run-donttest
 * removed some examples with /donttest
 * added functions `encrypt_api_key.R`, `mt_make_model.R`
 * minor enhancements

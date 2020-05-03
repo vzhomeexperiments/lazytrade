@@ -10,6 +10,8 @@ status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](ht
 [![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/lazytrade)](https://CRAN.R-project.org/package=lazytrade)
 <!-- badges: end -->
 
 The goal of lazytrade is to keep all functions and scripts of the
@@ -147,8 +149,6 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
-#>          .
-#> 1 20d2A7A2
 ```
 
 ## Example - generate initialization files for MT4 platform
