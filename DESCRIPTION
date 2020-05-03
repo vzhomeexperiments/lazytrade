@@ -10,7 +10,7 @@ Description: Provide sets of functions and methods to learn and practice data sc
     and even functions to generate predictions of price changes using pattern recognition deep regression learning.
     Summary of Methods used: 1. Awesome H2O tutorials: "https://github.com/h2oai/awesome-h2o", 
     Market Type research of Van Tharp Institute: "https://www.vantharp.com/",
-    Reinforcement Learning Nicolas Proellochs: "https://cran.r-project.org/web/packages/ReinforcementLearning/vignettes/ReinforcementLearning.html".
+    Reinforcement Learning vignette by Nicolas Proellochs: "https://cran.r-project.org/web/packages/ReinforcementLearning/vignettes/ReinforcementLearning.html".
 License: MIT + file LICENSE
 URL: https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/, https://github.com/vzhomeexperiments/lazytrade
 BugReports: https://github.com/vzhomeexperiments/lazytrade/issues
