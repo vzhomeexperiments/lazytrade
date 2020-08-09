@@ -43,7 +43,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(lazytrade)
-library(tidyverse, warn.conflicts = FALSE)
+library(magrittr, warn.conflicts = FALSE)
 ## basic example code
 # Convert a time series vector to matrix with 64 columns
 macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(20)
@@ -459,6 +459,11 @@ spelling
 `devtools::spell_check()`
 
 checking on R hub
+`rhub::validate_email()`
+`rhub::check(
+  platform="windows-x86_64-devel",
+  env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always")
+)`
 `devtools::check_rhub(interactive = F)`
 
 checking with release
