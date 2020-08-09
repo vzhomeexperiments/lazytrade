@@ -8,9 +8,9 @@ Description: Provide sets of functions and methods to learn and practice data sc
     Main goal is to process information within "Decision Support System" to come up with analysis or predictions.
     There are several utilities such as dynamic and adaptive risk management using reinforcement learning
     and even functions to generate predictions of price changes using pattern recognition deep regression learning.
-    Summary of Methods used: 1. Awesome H2O tutorials: "https://github.com/h2oai/awesome-h2o", 
-    Market Type research of Van Tharp Institute: "https://www.vantharp.com/",
-    Reinforcement Learning vignette by Nicolas Proellochs: "https://cran.r-project.org/web/packages/ReinforcementLearning/vignettes/ReinforcementLearning.html".
+    Summary of Methods used: 1. Awesome H2O tutorials: <https://github.com/h2oai/awesome-h2o>, 
+    Market Type research of Van Tharp Institute: <https://www.vantharp.com/>,
+    Reinforcement Learning vignette by Nicolas P.: <https://cran.r-project.org/web/packages/ReinforcementLearning/vignettes/ReinforcementLearning.html>.
 License: MIT + file LICENSE
 URL: https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/, https://github.com/vzhomeexperiments/lazytrade
 BugReports: https://github.com/vzhomeexperiments/lazytrade/issues

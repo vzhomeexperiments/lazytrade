@@ -45,9 +45,9 @@ This is a basic example which shows you how to solve a common problem:
 library(lazytrade)
 library(tidyverse, warn.conflicts = FALSE)
 #> -- Attaching packages ----------------------------------------------------------------------------------- tidyverse 1.3.0 --
-#> v ggplot2 3.3.0     v purrr   0.3.4
-#> v tibble  3.0.1     v dplyr   0.8.5
-#> v tidyr   1.0.2     v stringr 1.4.0
+#> v ggplot2 3.3.2     v purrr   0.3.4
+#> v tibble  3.0.3     v dplyr   1.0.1
+#> v tidyr   1.1.1     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.5.0
 #> -- Conflicts -------------------------------------------------------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
@@ -85,9 +85,6 @@ library(magrittr)
 library(lubridate)
 #> 
 #> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     intersect, setdiff, union
 #> The following objects are masked from 'package:base':
 #> 
 #>     date, intersect, setdiff, union
@@ -472,7 +469,10 @@ then:
 
 spelling `devtools::spell_check()`
 
-checking on R hub `devtools::check_rhub(interactive = F)`
+checking on R hub `rhub::validate_email()` `rhub::check(
+platform="windows-x86_64-devel",
+env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always") )`
+`devtools::check_rhub(interactive = F)`
 
 checking with release `devtools::check_win_release()`
 
