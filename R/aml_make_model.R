@@ -84,7 +84,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   ## read the file and the status of the model
   if(file.exists(dec_file_path) && force_update == FALSE){
     # read the file
-    model_status <- read_csv(dec_file_path) %>% select(FinalQuality)
+    model_status <- readr::read_csv(dec_file_path) %>% select(FinalQuality)
   } else if(force_update == TRUE) {
     # delete the model and previous test results
     remove(dec_file_path)
@@ -97,7 +97,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
   full_path <- file.path(path_data,  f_name)
 
-  x <- try(read_rds(full_path), silent = T)
+  x <- try(readr::read_rds(full_path), silent = T)
 
 
 
@@ -120,7 +120,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
   # load data into h2o environment
   #macd_ML  <- as.h2o(x = dat22, destination_frame = "macd_ML")
-  macd_ML  <- as.h2o(x = x, destination_frame = "macd_ML")
+  macd_ML  <- h2o::as.h2o(x = x, destination_frame = "macd_ML")
 
   # for loop to select the best neural network structure
 
@@ -128,7 +128,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
     # i <- 1
     # fit models from simplest to more complex
-  ModelC <- h2o.deeplearning(
+  ModelC <- h2o::h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
     x = names(macd_ML[,2:num_bars+1]),
     y = "LABEL",
@@ -147,15 +147,15 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
   #ModelC
   #summary(ModelC)
-  RMSE <- h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
+  RMSE <- h2o::h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
   names(RMSE) <- 'RMSE'
 
   # record results of modelling
   if(!exists("df_res")){
-    df_res <- nn_sets[i,] %>% t() %>% as.data.frame() %>% bind_cols(RMSE)
+    df_res <- nn_sets[i,] %>% t() %>% as.data.frame() %>% dplyr::bind_cols(RMSE)
   } else {
-    df_row <- nn_sets[i,] %>% t() %>% as.data.frame() %>% bind_cols(RMSE)
-    df_res <- df_res %>% bind_rows(df_row)
+    df_row <- nn_sets[i,] %>% t() %>% as.data.frame() %>% dplyr::bind_cols(RMSE)
+    df_res <- df_res %>% dplyr::bind_rows(df_row)
   }
 
 
@@ -164,10 +164,10 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   ## retrain and save the best model
   #what is the most accurate model?
   # find which row in the df_res has the smallest RMSE value
-  lowest_RMSE <- df_res %>% arrange(desc(RMSE)) %>% tail(1) %>% row.names() %>% as.integer()
+  lowest_RMSE <- df_res %>% dplyr::arrange(desc(RMSE)) %>% tail(1) %>% row.names() %>% as.integer()
 
   # train the model again:
-  ModelC <- h2o.deeplearning(
+  ModelC <- h2o::h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
     x = names(macd_ML[,2:num_bars+1]),
     y = "LABEL",
@@ -186,7 +186,7 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
 
   # save model object
-  h2o.saveModel(ModelC, path = path_model, force = T)
+  h2o::h2o.saveModel(ModelC, path = path_model, force = T)
 }
   #h2o.shutdown(prompt = FALSE)
 

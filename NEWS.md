@@ -1,12 +1,33 @@
 # lazytrade (development version)
 
+## Planned Changes
+
+* Solve dependencies stuff!!!
+* Add folder generation function
+* Remove warnings:
+
+1: `as_data_frame()` is deprecated as of tibble 2.0.0. Please use `as_tibble()` instead.
+2: `data_frame()` is deprecated as of tibble 1.1.0. Please use `tibble()` instead.
+
+# lazytrade 0.3.11
+
+# Version 0.3.11
+
+## Changes
+
+### Implemented
+
+* Add badges 'Maturing', 'CRAN status'
+* Add Methods source in Description file
+* Add packages name syntax e.g. `'readr::write_csv'`
+
 # lazytrade 0.3.10
 
 # Version 0.3.10
 
 ## Changes
 
-* check of examples markes as /donttest, rerun with --run-donttest
+* check of examples marked as /donttest, rerun with --run-donttest
 * removed some examples with /donttest
 * added functions `encrypt_api_key.R`, `mt_make_model.R`
 * minor enhancements

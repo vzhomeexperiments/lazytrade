@@ -30,7 +30,6 @@ Function works in combination with a function create_labelled_data
 
 
 library(dplyr)
-library(readr)
 
 # usind a sample data
 data(indicator_dataset)

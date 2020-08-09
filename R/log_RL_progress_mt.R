@@ -29,7 +29,6 @@
 log_RL_progress_mt <- function(x, states, actions, control){
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
 
   # add dummy tupples with states and actions with minimal reward
   d_tupple <- data.frame(State = states,
@@ -38,7 +37,7 @@ log_RL_progress_mt <- function(x, states, actions, control){
                          NextState = states,
                          stringsAsFactors = F)
   # generate RL model
-  model <- ReinforcementLearning(d_tupple, s = "State", a = "Action", r = "Reward",
+  model <- ReinforcementLearning::ReinforcementLearning(d_tupple, s = "State", a = "Action", r = "Reward",
                                  s_new = "NextState",iter = 1, control = control)
 
   # add rows of the x one by one to gradually update this model
@@ -48,7 +47,7 @@ log_RL_progress_mt <- function(x, states, actions, control){
     State <- x[i-1,]$MarketType
 
     # predict on i
-    Action <- computePolicy(model)[State]
+    Action <- ReinforcementLearning::computePolicy(model)[State]
 
     # reward
     Reward <- x[i-1,]$Profit
@@ -66,7 +65,7 @@ log_RL_progress_mt <- function(x, states, actions, control){
     }
 
     # update model with new data tupple
-    model <- ReinforcementLearning(df_tupple, s = "State", a = "Action", r = "Reward",
+    model <- ReinforcementLearning::ReinforcementLearning(df_tupple, s = "State", a = "Action", r = "Reward",
                                    s_new = "NextState", control = control, iter = 1, model = model)
     #model$Q
 

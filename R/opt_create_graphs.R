@@ -39,13 +39,13 @@ opt_create_graphs <- function(x, outp_path, graph_type = "pdf"){
     mutate_if(is.character, as.factor) %>%
     group_by(Symbol) %>%
     summarise(PairGain = sum(Profit)) %>%
-    ggplot(aes(x = Symbol, y = PairGain))+geom_bar(stat = "identity")
+    ggplot2::ggplot(aes(x = Symbol, y = PairGain))+ggplot2::geom_bar(stat = "identity")
 
   # generate time series plot
   # extract currency pairs used
   pairs_used <- unique(DFR$Symbol) %>% paste(collapse = " ")
-  ts <- x %>% ggplot(aes(x = OrderCloseTime, y = CUMSUM_PNL))+
-    geom_line()+ ggtitle(paste("Using pairs: ", pairs_used))
+  ts <- x %>% ggplot2::ggplot(ggplot2::aes(x = OrderCloseTime, y = CUMSUM_PNL))+
+    ggplot2::geom_line()+ ggplot2::ggtitle(paste("Using pairs: ", pairs_used))
 
   if(graph_type == "ts"){  print(ts)  }
 
@@ -54,10 +54,10 @@ opt_create_graphs <- function(x, outp_path, graph_type = "pdf"){
 
   if(graph_type == "pdf"){
 
-  pdf(file = file.path(outp_path, paste0(Sys.Date(), ".pdf")))
+    grDevices::pdf(file = file.path(outp_path, paste0(Sys.Date(), ".pdf")))
     print(ts)
     print(bars)
-  dev.off()
+    grDevices::dev.off()
   }
 
 

@@ -83,7 +83,6 @@
 aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   requireNamespace("dplyr", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
@@ -92,63 +91,63 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
   full_path <- file.path(path_data,  f_name)
 
-  x <- read_rds(full_path)
+  x <- readr::read_rds(full_path)
 
   # generate a file name for model
   m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
   m_path <- file.path(path_model, m_name)
   #load model
-  ModelR <- h2o.loadModel(path = m_path)
+  ModelR <- h2o::h2o.loadModel(path = m_path)
 
   # uploading data to h2o
-  recent_ML  <- as.h2o(x = x, destination_frame = "recent_ML")
+  recent_ML  <- h2o::as.h2o(x = x, destination_frame = "recent_ML")
   # PREDICT the next period...
-  result_R <- h2o.predict(ModelR, recent_ML) %>% as.data.frame()
+  result_R <- h2o::h2o.predict(ModelR, recent_ML) %>% as.data.frame()
 
   ## Checking the trading strategy assuming we open and hold position for 75 bars!
   # Note: the trading logic assumptions selected here may be wrong!
   dat31 <- x %>%
     # select only original value of the price change
-    select(LABEL) %>%
+    dplyr::select(LABEL) %>%
     # add column with predicted price change
-    bind_cols(result_R) %>%
+    dplyr::bind_cols(result_R) %>%
     ## account for a label and predicted results changes by using cumulative sum
     # label column
-    mutate(LABEL_CMSUM = cumsum(LABEL)) %>%
+    dplyr::mutate(LABEL_CMSUM = cumsum(LABEL)) %>%
     # lag column 'predict' to 75 periods, column P_lag will match corresponding real price in the column 'LABEL'
-    mutate(predict = lag(predict, 75)) %>%
+    dplyr::mutate(predict = lag(predict, 75)) %>%
     # omit na's
     na.omit() %>%
     # create a risk column, use 10 pips as a trigger
-    mutate(Risk = if_else(predict > 10, 1, if_else(predict < -10, -1, 0))) %>%
+    dplyr::mutate(Risk = if_else(predict > 10, 1, if_else(predict < -10, -1, 0))) %>%
     # predict column with cum sum value
-    mutate(predict_CMSUM = cumsum(predict)) %>%
+    dplyr::mutate(predict_CMSUM = cumsum(predict)) %>%
     # calculate expected outcome of risking the 'Risk': trade according to prediction
-    mutate(ExpectedGain = predict_CMSUM*Risk) %>%
+    dplyr::mutate(ExpectedGain = predict_CMSUM*Risk) %>%
     # calculate 'real' gain or loss. LABEL is how the price moved (ground truth) so the column will be real outcome
-    mutate(AchievedGain = LABEL_CMSUM*Risk) %>%
+    dplyr::mutate(AchievedGain = LABEL_CMSUM*Risk) %>%
     # to account on spread
-    mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, -5, 0))) %>%
+    dplyr::mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, -5, 0))) %>%
     # calculate 'net' gain
-    mutate(NetGain = AchievedGain + Spread) %>%
+    dplyr::mutate(NetGain = AchievedGain + Spread) %>%
     # remove zero values to calculate presumed number of trades
-    filter(AchievedGain != 0) %>%
+    dplyr::filter(AchievedGain != 0) %>%
     # get the sum of both columns
     # Column Expected PNL would be the result in case all trades would be successful
     # Column Achieved PNL is the results achieved in reality
-    summarise(ExpectedPnL = sum(ExpectedGain),
-              AchievedPnL = sum(NetGain),
-              TotalTrades = n(),
-              TPSL_Level = 10) %>%
+    dplyr::summarise(ExpectedPnL = sum(ExpectedGain),
+                     AchievedPnL = sum(NetGain),
+                     TotalTrades = n(),
+                     TPSL_Level = 10) %>%
     # interpret the results
-    mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
-           FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
+    dplyr::mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
+                  FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
 
 
    ## write condition to the csv file
   dec_file_name <- paste0("StrTest-", symbol, "M",timeframe,"X",num_bars, ".csv")
   dec_file_path <- file.path(path_model,  dec_file_name)
-  write_csv(dat31, dec_file_path)
+  readr::write_csv(dat31, dec_file_path)
 
   #h2o.shutdown(prompt = FALSE)
 

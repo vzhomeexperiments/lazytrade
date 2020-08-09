@@ -49,7 +49,7 @@ create_labelled_data <- function(x, n = 50, type = "regression"){
   namesdfr12 <- paste0("X", 1:n) #generated names for dataset useful later in the code
   dat11 <- x %>%
     # remove column 1 with data and time information
-    select(-1) %>%
+    dplyr::select(-1) %>%
     # split dataset into several objects each containing n rows (it will be a list)
     split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
   # remove last element of the list
@@ -62,30 +62,30 @@ create_labelled_data <- function(x, n = 50, type = "regression"){
 
         # classify by 2 classes 'BU', 'BE'
         if(!exists("dfr12")){
-          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal")
+          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% dplyr::as_tibble(.name_repair = "minimal")
           names(dfr12) <- namesdfr12
           dfr12 <- dfr12 %>%
-            mutate(LABEL = ifelse(.[[1]]>.[[n]], "BU", "BE"))} else {
-            dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal")
+            mutate(LABEL = base::ifelse(.[[1]]>.[[n]], "BU", "BE"))} else {
+            dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% dplyr::as_tibble(.name_repair = "minimal")
             names(dfr12) <- namesdfr12
             dfr12 <- dfr12 %>%
-              mutate(LABEL = ifelse(.[[1]]>.[[n]], "BU", "BE")) %>%
-              bind_rows(dfr12)
+              dplyr::mutate(LABEL = base::ifelse(.[[1]]>.[[n]], "BU", "BE")) %>%
+              dplyr::bind_rows(dfr12)
           }
     } else if(type == "regression"){
       # add label with numeric difference {in pips}
       # i <- 1
       if(!exists("dfr12")){
-        dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal", verbose =F)
+        dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% dplyr::as_tibble(.name_repair = "minimal", verbose =F)
         names(dfr12) <- namesdfr12
         dfr12 <- dfr12 %>%
-          mutate(LABEL = 10000*(.[[1]]-.[[n]]))} else {
-          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal", verbose =F)
+          dplyr::mutate(LABEL = 10000*(.[[1]]-.[[n]]))} else {
+          dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% dplyr::as_tibble(.name_repair = "minimal", verbose =F)
           names(dfr12) <- namesdfr12
           dfr12 <- dfr12 %>%
-            mutate(LABEL = 10000*(.[[1]]-.[[n]])) %>%
+            dplyr::mutate(LABEL = 10000*(.[[1]]-.[[n]])) %>%
             #oldest data will be on top of the dataframe!
-            bind_rows(dfr12)
+            dplyr::bind_rows(dfr12)
         }
 
 

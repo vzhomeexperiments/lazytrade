@@ -1,25 +1,27 @@
 Package: lazytrade
 Type: Package
 Title: Learn Computer and Data Science using Algorithmic Trading
-Version: 0.3.10
+Version: 0.3.11
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
 Description: Provide sets of functions and methods to learn and practice data science using idea of algorithmic trading.
     Main goal is to process information within "Decision Support System" to come up with analysis or predictions.
     There are several utilities such as dynamic and adaptive risk management using reinforcement learning
     and even functions to generate predictions of price changes using pattern recognition deep regression learning.
+    Summary of Methods used: 1. Awesome H2O tutorials: "https://github.com/h2oai/awesome-h2o", 
+    Market Type research of Van Tharp Institute: "https://www.vantharp.com/",
+    Reinforcement Learning vignette by Nicolas Proellochs: "https://cran.r-project.org/web/packages/ReinforcementLearning/vignettes/ReinforcementLearning.html".
 License: MIT + file LICENSE
 URL: https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/, https://github.com/vzhomeexperiments/lazytrade
 BugReports: https://github.com/vzhomeexperiments/lazytrade/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Imports:
     readr,
     stringr,
     dplyr,
     lubridate,
-    magrittr,
     ggplot2,
     grDevices,
     h2o,
@@ -27,5 +29,6 @@ Imports:
     openssl
 Suggests: 
     testthat (>= 2.1.0),
-    covr
+    covr,
+    magrittr
 Depends: R (>= 3.4.0)

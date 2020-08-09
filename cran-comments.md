@@ -1,19 +1,18 @@
 ## Test environments
-* windows, R 3.6.3
-* ubuntu (on travis-ci), R 3.6.2
+* windows, R 4.0.0
+* ubuntu (on travis-ci), R 3.6.3
 * R-hub builder
-* R version 3.6.3 (2020-02-29)
-* R Under development (unstable) (2020-03-11 r77925)
+* R version 4.0.0 (2020-04-24)
+* R Under development (unstable) (2020-05-01 r78341)
 
 ## R CMD check results
 Status: OK
-R version 3.6.3 (2020-02-29)
+R version 4.0.0 (2020-04-24)
 
 There were no ERRORs or WARNINGs or NOTES
 
-  * rerun with --run-donttest ok
-  * implemented changes to allow tests
+  * added method references to description
+  * added badges 'Lifecycle', 'CRAN Status'
   
 ## Downstream dependencies
-R version 3.5.3 (2019-03-11)
-
+R version 3.6.3 (2020-02-29)

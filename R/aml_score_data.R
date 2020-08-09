@@ -87,7 +87,7 @@ aml_score_data <- function(symbol,
   # generate a file name for latest dataset
   f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
   full_path <- file.path(path_data,  f_name)
-  x <- read_rds(full_path)
+  x <- readr::read_rds(full_path)
   #get latest data to predict
   x1 <- tail(x, 1)[, -1]
 
@@ -95,12 +95,12 @@ aml_score_data <- function(symbol,
   m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
   m_path <- file.path(path_model, m_name)
   #load model
-  ModelR <- h2o.loadModel(path = m_path)
+  ModelR <- h2o::h2o.loadModel(path = m_path)
 
   # uploading data to h2o
-  recent_ML  <- as.h2o(x = x1, destination_frame = "recent_ML")
+  recent_ML  <- h2o::as.h2o(x = x1, destination_frame = "recent_ML")
   # PREDICT the next period...
-  result_R <- h2o.predict(ModelR, recent_ML) %>% as.data.frame()
+  result_R <- h2o::h2o.predict(ModelR, recent_ML) %>% as.data.frame()
 
     ### Applying prediction by writing files
   # Rename the row and column names
@@ -109,8 +109,8 @@ aml_score_data <- function(symbol,
 
   # write files with predictions
   file_string <- paste0("AI_M", timeframe, "_Change", symbol, ".csv")
-  write_csv(result_R, file.path(path_sbxm, file_string))
-  write_csv(result_R, file.path(path_sbxs, file_string))
+  readr::write_csv(result_R, file.path(path_sbxm, file_string))
+  readr::write_csv(result_R, file.path(path_sbxs, file_string))
 
 
   #h2o.shutdown(prompt = FALSE)

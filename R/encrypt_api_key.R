@@ -53,7 +53,7 @@ encrypt_api_key <- function(api_key, enc_name = 'api_key.enc.rds',
                             file_rsa_pub = 'id_api.pub'){
 
   # check if the required packages are installed
-  if (!requireNamespace(c("magrittr", "openssl", "readr"),
+  if (!requireNamespace(c("openssl", "readr"),
                         quietly = TRUE)) {
     stop("Pkg needed for this function to work. Please install it.",
          call. = FALSE)
@@ -71,8 +71,8 @@ encrypt_api_key <- function(api_key, enc_name = 'api_key.enc.rds',
   # serialize the object
   serialize(connection = NULL) %>%
   # encrypt the object
-  encrypt_envelope(private_key_path) %>%
+  openssl::encrypt_envelope(private_key_path) %>%
   # write encrypted data to File to your working directory
-  write_rds(file.path(path_ssh, enc_name))
+  readr::write_rds(file.path(path_ssh, enc_name))
 
 }

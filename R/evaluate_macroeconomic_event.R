@@ -77,25 +77,25 @@ evaluate_macroeconomic_event <- function(setup_file_path,
   # -------------------------
 
     #read the file containing a flag (1 will mean that event is present hence no new opened orders)
-    DF_NT <- read_csv(file= macro_complete_path, col_types = "i")
+    DF_NT <- readr::read_csv(file= macro_complete_path, col_types = "i")
     #read the table of trading robots in operation
-    DF_Setup <- read_csv(setup_complete_path)
+    DF_Setup <- readr::read_csv(setup_complete_path)
 
     ## condition to disable systems
     if(DF_NT[1,1] == 1) {
       # disable trades in T1
       DF_Setup %>%
-        group_by(Magic) %>% select(Magic) %>% mutate(IsEnabled = 0) %>%
+        dplyr::group_by(Magic) %>% dplyr::select(Magic) %>% dplyr::mutate(IsEnabled = 0) %>%
         # write commands to disable systems
-        write_command_via_csv(path_T1)
+        lazytrade::write_command_via_csv(path_T1)
 
       # disable trades in T3
-      DF_Setup %>% group_by(Magic) %>%
-        mutate(MagicNumber = Magic + 200, IsEnabled = 0) %>%
-        group_by(MagicNumber) %>%
-        select(MagicNumber, IsEnabled) %>%
+      DF_Setup %>% dplyr::group_by(Magic) %>%
+        dplyr::mutate(MagicNumber = Magic + 200, IsEnabled = 0) %>%
+        dplyr::group_by(MagicNumber) %>%
+        dplyr::select(MagicNumber, IsEnabled) %>%
         # write commands to disable systems
-        write_command_via_csv(path_T3)
+        lazytrade::write_command_via_csv(path_T3)
 
     }
 
@@ -103,17 +103,17 @@ evaluate_macroeconomic_event <- function(setup_file_path,
     if(DF_NT[1,1] == 0) {
       # enable trades in T1
       DF_Setup %>%
-        group_by(Magic) %>% select(Magic) %>% mutate(IsEnabled = 1) %>%
+        dplyr::group_by(Magic) %>% dplyr::select(Magic) %>% dplyr::mutate(IsEnabled = 1) %>%
         # write commands to disable systems
-        write_command_via_csv(path_T1)
+        lazytrade::write_command_via_csv(path_T1)
 
       # enable trades in T3
-      DF_Setup %>% group_by(Magic) %>%
-        mutate(MagicNumber = Magic + 200, IsEnabled = 1) %>%
-        group_by(MagicNumber) %>%
-        select(MagicNumber, IsEnabled) %>%
+      DF_Setup %>% dplyr::group_by(Magic) %>%
+        dplyr::mutate(MagicNumber = Magic + 200, IsEnabled = 1) %>%
+        dplyr::group_by(MagicNumber) %>%
+        dplyr::select(MagicNumber, IsEnabled) %>%
         # write commands to disable systems
-        write_command_via_csv(path_T3)
+        lazytrade::write_command_via_csv(path_T3)
 
     }
 
