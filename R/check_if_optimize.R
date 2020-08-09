@@ -36,20 +36,20 @@
 #'
 #'
 #' # without writing to the file
-#' DFT1 %>% check_if_optimize(num_trades_to_consider = 10,
+#' DFT1 %>% check_if_optimize(num_trades_to_consider = 3,
 #'                            profit_factor_limit = 1.2,
 #'                            demo_mode = TRUE,
 #'                            write_mode = FALSE)
 #'
 #' # function will write to the temporary file
-#' DFT1 %>% check_if_optimize(num_trades_to_consider = 10,
+#' DFT1 %>% check_if_optimize(num_trades_to_consider = 3,
 #'                            profit_factor_limit = 1.2,
 #'                            demo_mode = TRUE,
 #'                            write_mode = TRUE)
 #'
 #'
 check_if_optimize <- function(x, path_trading_robot = "",
-                              num_trades_to_consider = 10,
+                              num_trades_to_consider = 3,
                               profit_factor_limit = 0.7,
                               demo_mode = FALSE,
                               write_mode = FALSE){
@@ -61,34 +61,36 @@ check_if_optimize <- function(x, path_trading_robot = "",
   if(!demo_mode){
 
   y <- x %>%  # filtered to contain last 20 orders for each system
-        group_by(MagicNumber) %>%
-        arrange(MagicNumber, desc(OrderCloseTime)) %>%
-        filter(row_number() <= num_trades_to_consider+1) %>%
-        get_profit_factorDF(num_trades_to_consider) %>%
-        ungroup() %>%
-        filter(PrFact < profit_factor_limit) %>%
-        select(MagicNumber, PrFact) %>%
-        mutate(ToOptimize = 1) %>%
-        inner_join(y = read_csv(file = file.path(path_trading_robot,"TEST", "Setup.csv"),
+        dplyr::group_by(MagicNumber) %>%
+        dplyr::arrange(MagicNumber, desc(OrderCloseTime)) %>%
+        dplyr::filter(row_number() <= num_trades_to_consider+1) %>%
+        lazytrade::get_profit_factorDF(num_trades_to_consider) %>%
+        dplyr::ungroup() %>%
+        dplyr::filter(PrFact < profit_factor_limit) %>%
+        dplyr::select(MagicNumber, PrFact) %>%
+        dplyr::mutate(ToOptimize = 1) %>%
+        dplyr::inner_join(y = readr::read_csv(file = file.path(path_trading_robot,"TEST", "Setup.csv"),
                                 col_types = "cci"),
                    by = c("MagicNumber" = "Magic"))
-  if(write_mode){write_csv(y, path = file.path(paste0(path_trading_robot, "TEST/", Sys.Date(), "-Re-Train", ".csv")))} else {return(y)}
+  if(write_mode){
+        readr::write_csv(y, path = file.path(paste0(path_trading_robot, "TEST/", Sys.Date(), "-Re-Train", ".csv")))
+    } else {return(y)}
 
   } else {
 
   y <- x %>%  # filtered to contain last 20 orders for each system
-        group_by(MagicNumber) %>%
-        arrange(MagicNumber, desc(OrderCloseTime)) %>%
-        filter(row_number() <= num_trades_to_consider+1) %>%
-        get_profit_factorDF(num_trades_to_consider) %>%
-        ungroup() %>%
-        filter(PrFact < profit_factor_limit) %>%
-        select(MagicNumber, PrFact) %>%
-        mutate(ToOptimize = 1) %>%
-        inner_join(y = read_csv(file = system.file("extdata", "Setup.csv", package = "lazytrade"),
+        dplyr::group_by(MagicNumber) %>%
+        dplyr::arrange(MagicNumber, desc(OrderCloseTime)) %>%
+        dplyr::filter(row_number() <= num_trades_to_consider+1) %>%
+        lazytrade::get_profit_factorDF(num_trades_to_consider) %>%
+        dplyr::ungroup() %>%
+        dplyr::filter(PrFact < profit_factor_limit) %>%
+        dplyr::select(MagicNumber, PrFact) %>%
+        dplyr::mutate(ToOptimize = 1) %>%
+        dplyr::inner_join(y = readr::read_csv(file = system.file("extdata", "Setup.csv", package = "lazytrade"),
                                 col_types = "cci"),
                    by = c("MagicNumber" = "Magic"))
-  if(write_mode){write_csv(y, tempfile("Re-Train", fileext = ".csv"))} else {return(y)}
+  if(write_mode){readr::write_csv(y, tempfile("Re-Train", fileext = ".csv"))} else {return(y)}
 
   }
 

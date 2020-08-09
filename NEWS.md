@@ -2,6 +2,7 @@
 
 ## Planned Changes
 
+* Solve dependencies stuff!!!
 * Add folder generation function
 * Remove warnings:
 

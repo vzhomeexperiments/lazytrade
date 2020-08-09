@@ -7,7 +7,7 @@
 check_if_optimize(
   x,
   path_trading_robot = "",
-  num_trades_to_consider = 10,
+  num_trades_to_consider = 3,
   profit_factor_limit = 0.7,
   demo_mode = FALSE,
   write_mode = FALSE
@@ -53,13 +53,13 @@ DFT1 <- import_data(trade_log_file = system.file("extdata",
 
 
 # without writing to the file
-DFT1 \%>\% check_if_optimize(num_trades_to_consider = 10,
+DFT1 \%>\% check_if_optimize(num_trades_to_consider = 3,
                            profit_factor_limit = 1.2,
                            demo_mode = TRUE,
                            write_mode = FALSE)
 
 # function will write to the temporary file
-DFT1 \%>\% check_if_optimize(num_trades_to_consider = 10,
+DFT1 \%>\% check_if_optimize(num_trades_to_consider = 3,
                            profit_factor_limit = 1.2,
                            demo_mode = TRUE,
                            write_mode = TRUE)

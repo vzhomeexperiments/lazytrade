@@ -76,15 +76,17 @@ aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars,
   price_dataset <- price_dataset[, c(1,cn)]
   indicator_dataset <- indicator_dataset[, c(1,cn)]
   # transform data and get the labels shift rows down Note: the oldest data in the first row!!
-  dat14 <- create_labelled_data(price_dataset, num_bars, type = "regression")
+  dat14 <- lazytrade::create_labelled_data(price_dataset, num_bars, type = "regression")
   dat14 <- rbind(NA, dat14[-nrow(dat14), ])
 
   # transform data for indicator. Note: the oldest data in the first row!!
-  dat15 <- create_transposed_data(indicator_dataset, num_bars)
+  dat15 <- lazytrade::create_transposed_data(indicator_dataset, num_bars)
   # dataframe for the DL modelling it contains all the available data.
   # Note: Zero values in rows will mean that there was no data in the MT4 database.
   #       These rows will be removed before modelling however it's advisable not to have those as it might give data artefacts!
-  dat16 <- dat14 %>% select(LABEL) %>% bind_cols(dat15) %>% na.omit() %>% filter_all(any_vars(. != 0)) %>% filter(LABEL < 600, LABEL > -600)
+  dat16 <- dat14 %>% dplyr::select(LABEL) %>%
+    dplyr::bind_cols(dat15) %>% stats::na.omit() %>%
+    dplyr::filter_all(any_vars(. != 0)) %>% dplyr::filter(LABEL < 600, LABEL > -600)
   # checking the data: summary(dat16) # too high values in the LABEL Column are non-sense! hist(dat16$LABEL)
   # add better names
   col_n1 <- "LABEL"
@@ -106,16 +108,16 @@ aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars,
   if(exists("df_row") && !file.exists(full_path))
   {
     # write file first time
-    write_rds(df_row, full_path)
+    readr::write_rds(df_row, full_path)
   } else if(exists("df_row") && file.exists(full_path)) {
     # read previous file
-    read_rds(full_path) %>%
+    readr::read_rds(full_path) %>%
       # join obtained data below! existing one
-      bind_rows(df_row) %>%
+      dplyr::bind_rows(df_row) %>%
       # check that data does not have double rows that are exactly same...
-      distinct() %>%
+      dplyr::distinct() %>%
       # write data back
-      write_rds(full_path)
+      readr::write_rds(full_path)
     #verify generated data
     # x1 <- read_rds(full_path)
   }
@@ -123,15 +125,15 @@ aml_collect_data <- function(price_dataset, indicator_dataset, symbol, num_bars,
   # add module of code that limit the data amount (e.g. delete too old data, leave max 1 mln(?) rows)
   # ---
   # check number of rows
-  x1_nrows <- read_rds(full_path) %>% nrow()
+  x1_nrows <- readr::read_rds(full_path) %>% nrow()
   # what to do if too much rows?
   if(x1_nrows > 1000000){
     # read all the data
-    read_rds(full_path) %>%
+    readr::read_rds(full_path) %>%
       # use only last 950000 rows, 950000 is to avoid this code to run so often...
-      tail(950000) %>%
+      utils::tail(950000) %>%
       # write them back
-      write_rds(full_path)
+      readr::write_rds(full_path)
   }
 
   # ---
