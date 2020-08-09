@@ -73,7 +73,6 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
                             write_log = TRUE){
 
   requireNamespace("dplyr", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 

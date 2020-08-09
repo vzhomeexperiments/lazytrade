@@ -83,7 +83,6 @@
 aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   requireNamespace("dplyr", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 

@@ -27,8 +27,8 @@ Imports:
     h2o,
     ReinforcementLearning,
     openssl
-importFrom: magrittr %>%, %$%
 Suggests: 
     testthat (>= 2.1.0),
-    covr
+    covr,
+    magrittr
 Depends: R (>= 3.4.0)

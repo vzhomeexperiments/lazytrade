@@ -41,7 +41,7 @@ decrypt_mykeys <- function(path_encrypted_content, path_private_key) {
 
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("openssl", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
+
   # get back our encrypted API key
   out <- readr::read_rds(path_encrypted_content)
   # path to our key

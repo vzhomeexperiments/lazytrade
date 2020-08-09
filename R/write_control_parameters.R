@@ -31,7 +31,6 @@ write_control_parameters <- function(x, path_control_files){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
 
 # delete DF_RES if it is exist
 if(exists("DF_RES")){rm(DF_RES)}

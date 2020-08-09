@@ -67,7 +67,6 @@ evaluate_market_type <- function(x, model_path, num_cols){
 
 
   requireNamespace("h2o", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
 
   # load models
   m1 <- h2o::h2o.loadModel(model_path)

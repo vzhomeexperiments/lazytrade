@@ -34,7 +34,6 @@
 record_policy <- function(x, last_result, trading_system, path_terminal, fileName = "SystemControl"){
   requireNamespace("stringr", quietly = TRUE)
   requireNamespace("dplyr", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
 
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
   is_T3 <- str_detect(path_terminal, "Terminal3")

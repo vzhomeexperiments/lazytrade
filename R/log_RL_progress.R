@@ -28,7 +28,6 @@
 log_RL_progress <- function(x, states, actions, control){
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
-  requireNamespace("magrittr", quietly = TRUE)
 
   # add dummy tupples with states and actions with minimal reward
   d_tupple <- data.frame(State = states,
