@@ -33,7 +33,6 @@ write_control_parameters_mt <- function(x, path_control_files){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
-  requireNamespace("ReinforcementLearning", quietly = TRUE)
   requireNamespace("magrittr", quietly = TRUE)
 
 
@@ -65,10 +64,10 @@ for (ALF in Alpha) {
       # EPS <- 0.1
       control <- list(alpha = ALF, gamma = GAM, epsilon = EPS)
       # retrieve RL model Q values progress
-      DF_RESEARCH <- log_RL_progress_mt(x = x,states = states, actions = actions, control = control)
+      DF_RESEARCH <- lazytrade::log_RL_progress_mt(x = x,states = states, actions = actions, control = control)
       # create object where all data can be aggregated
       if(!exists("DF_RES")){DF_RES <- DF_RESEARCH} else {
-        DF_RES <- bind_rows(DF_RES, DF_RESEARCH) }
+        DF_RES <- dplyr::bind_rows(DF_RES, DF_RESEARCH) }
 
     }
   }
@@ -81,23 +80,23 @@ for (ALF in Alpha) {
 # generate simulated trades in T3
 DF_RES1 <- DF_RES %>%
   # create column with policy decision (1 - command on to trade in T3, 0 - no trade)
-  mutate(T3_trigger = ifelse(rewardseq.ON > rewardseq.OFF & rewardseq.ON > 0, 1, 0)) %>%
+  dplyr::mutate(T3_trigger = ifelse(rewardseq.ON > rewardseq.OFF & rewardseq.ON > 0, 1, 0)) %>%
   # create shifted column with reward. This is to simulate future trades decisions of RL model
-  mutate(Prev_result = lag(totreward, 6)) %>%
+  dplyr::mutate(Prev_result = lag(totreward, 6)) %>%
   # TDL generate column with PNL in T3, this is based on trades executed by RL trigger
-  mutate(T3_PnL = ifelse(T3_trigger == 1, totreward, 0)) %>%
+  dplyr::mutate(T3_PnL = ifelse(T3_trigger == 1, totreward, 0)) %>%
   # group by all parameters and generate sum of column T3_PnL
-  group_by(alpha,gamma,epsilon) %>%
+  dplyr::group_by(alpha,gamma,epsilon) %>%
   #summarise
-  summarise(Tot_pnlT3 = sum(T3_PnL)) %>%
+  dplyr::summarise(Tot_pnlT3 = sum(T3_PnL)) %>%
   # find rows where Tot_pnlT3 column has a highest values
   #slice(which.max(Tot_pnlT3)) %>%
   # order
-  arrange(desc(Tot_pnlT3)) %>%
+  dplyr::arrange(desc(Tot_pnlT3)) %>%
   # get the first one
   head(1) %>%
   # select only control parameters
-  select(alpha, gamma, epsilon) %>%
+  dplyr::select(alpha, gamma, epsilon) %>%
   # convert to list
   as.list()
 
@@ -114,7 +113,7 @@ DF_RES1 <- DF_RES %>%
   # extract current magic number to be used as a file name
   m_number <- x %$% MagicNumber.x %>% head(1)
   # write rds file with control parameters
-  write_rds(DF_RES1, paste0(path_control_files,"/", m_number, ".rds"))
+  readr::write_rds(DF_RES1, paste0(path_control_files,"/", m_number, ".rds"))
 
 
 
