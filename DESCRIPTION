@@ -22,12 +22,12 @@ Imports:
     stringr,
     dplyr,
     lubridate,
-    magrittr,
     ggplot2,
     grDevices,
     h2o,
     ReinforcementLearning,
     openssl
+importFrom: magrittr %>%, %$%
 Suggests: 
     testthat (>= 2.1.0),
     covr

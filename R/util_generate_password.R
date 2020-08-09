@@ -88,9 +88,9 @@ util_generate_password <- function(salt = "something random",
     outpass <- paste0(p1,p2)
 
     # check if both numbers, lower and upper case letters are present
-    num_yes <- str_detect(outpass, pattern = '[0-9]')
-    low_yes <- str_detect(outpass, pattern = '[:lower:]')
-    upp_yes <- str_detect(outpass, pattern = '[:upper:]')
+    num_yes <- stringr::str_detect(outpass, pattern = '[0-9]')
+    low_yes <- stringr::str_detect(outpass, pattern = '[:lower:]')
+    upp_yes <- stringr::str_detect(outpass, pattern = '[:upper:]')
 
     if(num_yes == TRUE && low_yes == TRUE && upp_yes == TRUE) {
       # write generated and checked password to the file
@@ -98,7 +98,7 @@ util_generate_password <- function(salt = "something random",
       as.data.frame.character()
 
     if (write_file == TRUE) {
-      write_tsv(ready_pass, file_name)
+      readr::write_tsv(ready_pass, file_name)
     } else { return(ready_pass)}
 
       break() }

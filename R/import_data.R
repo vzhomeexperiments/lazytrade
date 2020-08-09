@@ -60,8 +60,8 @@ import_data <- function(path_terminal, trade_log_file, demo_mode = FALSE){
   # clean data if table is not empty
   if(!nrow(DFT1)==0){
     # data frame preparation
-    DFT1$OrderStartTime <- ymd_hms(DFT1$OrderStartTime)
-    DFT1$OrderCloseTime <- ymd_hms(DFT1$OrderCloseTime)
+    DFT1$OrderStartTime <- lubridate::ymd_hms(DFT1$OrderStartTime)
+    DFT1$OrderCloseTime <- lubridate::ymd_hms(DFT1$OrderCloseTime)
     DFT1$OrderType      <- as.factor(DFT1$OrderType)
     # code below removes duplicates
     DFT1 <- unique(DFT1)
