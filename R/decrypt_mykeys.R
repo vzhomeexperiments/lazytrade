@@ -43,9 +43,9 @@ decrypt_mykeys <- function(path_encrypted_content, path_private_key) {
   requireNamespace("openssl", quietly = TRUE)
   requireNamespace("magrittr", quietly = TRUE)
   # get back our encrypted API key
-  out <- read_rds(path_encrypted_content)
+  out <- readr::read_rds(path_encrypted_content)
   # path to our key
-  api_key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") %>%
+  api_key <- openssl::decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") %>%
     unserialize()
   return(api_key)
 }
