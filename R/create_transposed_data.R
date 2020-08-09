@@ -22,7 +22,6 @@
 #'
 #'
 #' library(dplyr)
-#' library(readr)
 #'
 #' # usind a sample data
 #' data(indicator_dataset)
@@ -34,7 +33,6 @@
 create_transposed_data <- function(x, n = 50){
 
   requireNamespace("dplyr", quietly = TRUE)
-  requireNamespace("readr", quietly = TRUE)
   #
   #n <- 100
   #x <- indicator_dataset
@@ -42,7 +40,7 @@ create_transposed_data <- function(x, n = 50){
   nr <- nrow(x)
   namesdfr12 <- paste0("X", 1:n) #generated names for dataset useful later in the code
 
-  dat11 <- x %>% select(-1) %>% split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
+  dat11 <- x %>% dplyr::select(-1) %>% split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
   dat11[length(dat11)] <- NULL
 
   # operations within the list
@@ -50,12 +48,12 @@ create_transposed_data <- function(x, n = 50){
     #i <- 1
 
     if(!exists("dfr12")){
-      dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal", verbose =F)
+      dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% dplyr::as_tibble(.name_repair = "minimal", verbose =F)
       names(dfr12) <- namesdfr12
       } else {
-        dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% as_tibble(.name_repair = "minimal", verbose =F)
+        dfr12 <- dat11[i] %>% as.data.frame() %>% t() %>% dplyr::as_tibble(.name_repair = "minimal", verbose =F)
           names(dfr12) <- namesdfr12
-          dfr12 <- dfr12 %>% bind_rows(dfr12)
+          dfr12 <- dfr12 %>% dplyr::bind_rows(dfr12)
       }
 
   }

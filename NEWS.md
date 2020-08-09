@@ -19,6 +19,7 @@
 
 * Add badges 'Maturing', 'CRAN status'
 * Add Methods source in Description file
+* Add packages name syntax e.g. `'readr::write_csv'`
 
 # lazytrade 0.3.10
 
