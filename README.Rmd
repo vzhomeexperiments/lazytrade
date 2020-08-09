@@ -43,7 +43,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(lazytrade)
-library(tidyverse, warn.conflicts = FALSE)
+library(magrittr, warn.conflicts = FALSE)
 ## basic example code
 # Convert a time series vector to matrix with 64 columns
 macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(20)
