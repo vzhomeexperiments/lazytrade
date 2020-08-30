@@ -6,11 +6,10 @@
 #' @details Performs fresh data reading from the rds file
 #'
 #'
-#' @author (C) 2019 Vladimir Zhbanko
+#' @author (C) 2020 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which the model shall predict
-#' @param num_bars            Number of bars used to detect pattern
-#' @param timeframe           Data timeframe e.g. 1 min
+#' @param timeframe           Data timeframe e.g. 60 min
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #' @param path_sbxm           Path to the sandbox where file with predicted price should be written (master terminal)

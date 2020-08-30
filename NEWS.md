@@ -16,7 +16,7 @@
 
 ### Implemented
 
-* Added function aml2_make_model.R aims to quick-train DL regression model from indicators data
+* Re-write functions aml*.R
 
 
 # lazytrade 0.3.11

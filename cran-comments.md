@@ -10,9 +10,7 @@ R version 4.0.2 (2020-06-22)
 
 There were no ERRORs or WARNINGs or NOTES
 
-  * added method references to description
-  * added badges 'Lifecycle', 'CRAN Status'
-  * solved Namespace notes
+
   
 ## Downstream dependencies
 R version 3.6.3 (2020-02-29)

@@ -17,9 +17,7 @@ aml_score_data(
 \arguments{
 \item{symbol}{Character symbol of the asset for which the model shall predict}
 
-\item{num_bars}{Number of bars used to detect pattern}
-
-\item{timeframe}{Data timeframe e.g. 1 min}
+\item{timeframe}{Data timeframe e.g. 60 min}
 
 \item{path_model}{Path where the models are be stored}
 
@@ -93,5 +91,5 @@ Sys.sleep(5)
 
 }
 \author{
-(C) 2019 Vladimir Zhbanko
+(C) 2020 Vladimir Zhbanko
 }
