@@ -4,14 +4,12 @@
 \alias{aml_test_model}
 \title{Function to test the model and conditionally decide to update existing model for a single currency pair}
 \usage{
-aml_test_model(symbol, num_bars, timeframe, path_model, path_data)
+aml_test_model(symbol, timeframe, path_model, path_data)
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which to train the model}
 
-\item{num_bars}{Number of bars used to detect pattern}
-
-\item{timeframe}{Data timeframe e.g. 1 min}
+\item{timeframe}{Data timeframe e.g. 60 min}
 
 \item{path_model}{Path where the models are be stored}
 
@@ -28,8 +26,8 @@ The outcome of this function will be used to perform update of existing model wi
 Function is reading shifted price data and corresponding indicator.
 Starting from the trained model function will test the trading strategy using simplified trading approach.
 Trading approach will entail using the last available indicator data, predict the price change for every row,
-shift predicted value by 75 bars as we will hold the asset for 75 bars.
-Account for the real price change after 75 bars by creating a cumulative sum column
+shift predicted value by 34 bars as we will hold the asset for 34 bars.
+Account for the real price change after 34 bars by creating a cumulative sum column
 Verify obtained summary results on the model and obtain virtual real/simulated result
 is consolidated to calculate model quality. Whenever this value is less than 0
 function is writing dedicated decision using simple *.csv file
@@ -44,21 +42,25 @@ library(magrittr)
 library(readr)
 library(h2o)
 library(lazytrade)
+library(lubridate)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
 
-data(EURUSDM15X75)
-write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
+ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
+                  package = "lazytrade") \%>\% read_csv(col_names = F)
+
+ind$X1 <- ymd_hms(ind$X1)
+
+write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
 
 # start h2o engine (using all CPU's by default)
 h2o.init()
 
 
 # performing Deep Learning Regression using the custom function
-aml_make_model(symbol = 'EURUSD',
-               num_bars = 75,
-               timeframe = 15,
+aml_make_model(symbol = 'USDJPY',
+               timeframe = 60,
                path_model = path_model,
                path_data = path_data)
 
@@ -66,18 +68,16 @@ path_sbxm <- normalizePath(tempdir(),winslash = "/")
 path_sbxs <- normalizePath(tempdir(),winslash = "/")
 
 # score the latest data to generate predictions for one currency pair
-aml_score_data(symbol = 'EURUSD',
-               num_bars = 75,
-               timeframe = 15,
+aml_score_data(symbol = 'USDJPY',
+               timeframe = 60,
                path_model = path_model,
                path_data = path_data,
                path_sbxm = path_sbxm,
                path_sbxs = path_sbxs)
 
 # test the results of predictions
-aml_test_model(symbol = 'EURUSD',
-               num_bars = 75,
-               timeframe = 15,
+aml_test_model(symbol = 'USDJPY',
+               timeframe = 60,
                path_model = path_model,
                path_data = path_data)
 
@@ -93,5 +93,5 @@ Sys.sleep(5)
 
 }
 \author{
-(C) 2019 Vladimir Zhbanko
+(C) 2020 Vladimir Zhbanko
 }

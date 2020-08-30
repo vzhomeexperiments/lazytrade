@@ -41,13 +41,11 @@ test_that("data trimming works", {
   # check number of rows
   x1_nrows <- readr::read_rds(full_path) %>% nrow()
   # what to do if too much rows?
-  if(x1_nrows > 2000){
+  if(x1_nrows > 8){
     # read all the data
     readr::read_rds(full_path) %>%
-      # arrange date descending order
-      arrange(desc(X1)) %>%
       # use only last 9500 rows, 9500 is to avoid this code to run so often...
-      utils::head(1000) %>%
+      utils::head(6) %>%
       # write them back
       readr::write_rds(full_path)
     }
@@ -55,7 +53,7 @@ test_that("data trimming works", {
   AI_RSIADXUSDJPY60 <- read_rds(full_path)
   # ---
 
-  expect_equal(nrow(AI_RSIADXUSDJPY60), 1000)
+  expect_equal(nrow(AI_RSIADXUSDJPY60), 6)
 
 
 })

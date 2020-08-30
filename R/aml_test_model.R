@@ -6,18 +6,17 @@
 #' @details  Function is reading shifted price data and corresponding indicator.
 #' Starting from the trained model function will test the trading strategy using simplified trading approach.
 #' Trading approach will entail using the last available indicator data, predict the price change for every row,
-#' shift predicted value by 75 bars as we will hold the asset for 75 bars.
-#' Account for the real price change after 75 bars by creating a cumulative sum column
+#' shift predicted value by 34 bars as we will hold the asset for 34 bars.
+#' Account for the real price change after 34 bars by creating a cumulative sum column
 #' Verify obtained summary results on the model and obtain virtual real/simulated result
 #' is consolidated to calculate model quality. Whenever this value is less than 0
 #' function is writing dedicated decision using simple *.csv file
 #' Such file will be used by the function aml_make_model.R to decide whether model must be updated...
 #'
-#' @author (C) 2019 Vladimir Zhbanko
+#' @author (C) 2020 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which to train the model
-#' @param num_bars            Number of bars used to detect pattern
-#' @param timeframe           Data timeframe e.g. 1 min
+#' @param timeframe           Data timeframe e.g. 60 min
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #'
@@ -33,21 +32,25 @@
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
+#' library(lubridate)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
-#' data(EURUSDM15X75)
-#' write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
+#' ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
+#'                   package = "lazytrade") %>% read_csv(col_names = F)
+#'
+#' ind$X1 <- ymd_hms(ind$X1)
+#'
+#' write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
 #'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #'
 #' # performing Deep Learning Regression using the custom function
-#' aml_make_model(symbol = 'EURUSD',
-#'                num_bars = 75,
-#'                timeframe = 15,
+#' aml_make_model(symbol = 'USDJPY',
+#'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data)
 #'
@@ -55,18 +58,16 @@
 #' path_sbxs <- normalizePath(tempdir(),winslash = "/")
 #'
 #' # score the latest data to generate predictions for one currency pair
-#' aml_score_data(symbol = 'EURUSD',
-#'                num_bars = 75,
-#'                timeframe = 15,
+#' aml_score_data(symbol = 'USDJPY',
+#'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data,
 #'                path_sbxm = path_sbxm,
 #'                path_sbxs = path_sbxs)
 #'
 #' # test the results of predictions
-#' aml_test_model(symbol = 'EURUSD',
-#'                num_bars = 75,
-#'                timeframe = 15,
+#' aml_test_model(symbol = 'USDJPY',
+#'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data)
 #'
@@ -80,7 +81,7 @@
 #'
 #'
 #'
-aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
+aml_test_model <- function(symbol, timeframe, path_model, path_data){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -88,13 +89,18 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
 
   #construct the path to the data object see function aml_collect_data.R
   # generate a file name to be able to read the right dataset
-  f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
+  f_name <- paste0("AI_RSIADX", symbol,timeframe, ".rds")
   full_path <- file.path(path_data,  f_name)
 
-  x <- readr::read_rds(full_path)
+  x <- readr::read_rds(full_path) %>%
+    # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
+    dplyr::mutate(dplyr::across(LABEL, ~lag(., n = 34))) %>%
+    # remove empty rows
+    na.omit() %>% filter_all(any_vars(. != 0))  %>%
+    select(-X1, -X2, -X3)
 
   # generate a file name for model
-  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
+  m_name <- paste0("DL_Regression", "-", symbol,"-", timeframe)
   m_path <- file.path(path_model, m_name)
   #load model
   ModelR <- h2o::h2o.loadModel(path = m_path)
@@ -104,7 +110,7 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   # PREDICT the next period...
   result_R <- h2o::h2o.predict(ModelR, recent_ML) %>% as.data.frame()
 
-  ## Checking the trading strategy assuming we open and hold position for 75 bars!
+  ## Checking the trading strategy assuming we open and hold position for 34 bars!
   # Note: the trading logic assumptions selected here may be wrong!
   dat31 <- x %>%
     # select only original value of the price change
@@ -114,12 +120,12 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
     ## account for a label and predicted results changes by using cumulative sum
     # label column
     dplyr::mutate(LABEL_CMSUM = cumsum(LABEL)) %>%
-    # lag column 'predict' to 75 periods, column P_lag will match corresponding real price in the column 'LABEL'
-    dplyr::mutate(predict = lag(predict, 75)) %>%
+    # lag column 'predict' to 34 periods, column P_lag will match corresponding real price in the column 'LABEL'
+    dplyr::mutate(predict = lag(predict, 34)) %>%
     # omit na's
     na.omit() %>%
     # create a risk column, use 10 pips as a trigger
-    dplyr::mutate(Risk = if_else(predict > 10, 1, if_else(predict < -10, -1, 0))) %>%
+    dplyr::mutate(Risk = if_else(predict > 50, 1, if_else(predict < -50, -1, 0))) %>%
     # predict column with cum sum value
     dplyr::mutate(predict_CMSUM = cumsum(predict)) %>%
     # calculate expected outcome of risking the 'Risk': trade according to prediction
@@ -138,7 +144,7 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
     dplyr::summarise(ExpectedPnL = sum(ExpectedGain),
                      AchievedPnL = sum(NetGain),
                      TotalTrades = n(),
-                     TPSL_Level = 10) %>%
+                     TPSL_Level = 50) %>%
     # interpret the results
     dplyr::mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
                   FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
