@@ -54,6 +54,13 @@ ind$X1 <- ymd_hms(ind$X1)
 
 write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
 
+# data transformation using the custom function for one symbol
+aml_collect_data(indicator_dataset = ind,
+                 symbol = 'USDJPY',
+                 timeframe = 60,
+                 path_data = path_data)
+
+
 # start h2o engine (using all CPU's by default)
 h2o.init()
 
@@ -62,7 +69,8 @@ h2o.init()
 aml_make_model(symbol = 'USDJPY',
                timeframe = 60,
                path_model = path_model,
-               path_data = path_data)
+               path_data = path_data,
+               force_update=FALSE)
 
 path_sbxm <- normalizePath(tempdir(),winslash = "/")
 path_sbxs <- normalizePath(tempdir(),winslash = "/")

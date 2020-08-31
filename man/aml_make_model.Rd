@@ -45,6 +45,7 @@ library(dplyr)
 library(readr)
 library(h2o)
 library(lazytrade)
+library(lubridate)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
@@ -71,7 +72,8 @@ h2o.init()
 aml_make_model(symbol = 'USDJPY',
                timeframe = 60,
                path_model = path_model,
-               path_data = path_data)
+               path_data = path_data,
+               force_update=FALSE)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)

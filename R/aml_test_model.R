@@ -44,6 +44,13 @@
 #'
 #' write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
 #'
+#' # data transformation using the custom function for one symbol
+#' aml_collect_data(indicator_dataset = ind,
+#'                  symbol = 'USDJPY',
+#'                  timeframe = 60,
+#'                  path_data = path_data)
+#'
+#'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
@@ -52,7 +59,8 @@
 #' aml_make_model(symbol = 'USDJPY',
 #'                timeframe = 60,
 #'                path_model = path_model,
-#'                path_data = path_data)
+#'                path_data = path_data,
+#'                force_update=FALSE)
 #'
 #' path_sbxm <- normalizePath(tempdir(),winslash = "/")
 #' path_sbxs <- normalizePath(tempdir(),winslash = "/")
@@ -92,12 +100,22 @@ aml_test_model <- function(symbol, timeframe, path_model, path_data){
   f_name <- paste0("AI_RSIADX", symbol,timeframe, ".rds")
   full_path <- file.path(path_data,  f_name)
 
-  x <- readr::read_rds(full_path) %>%
-    # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
-    dplyr::mutate(dplyr::across(LABEL, ~lag(., n = 34))) %>%
+
+  ## !!!!!! TDL
+  ## only select the latest 30% of data... or only last 2 month
+
+
+  #dataset with date column X1
+  y <- readr::read_rds(full_path) %>%
     # remove empty rows
-    na.omit() %>% filter_all(any_vars(. != 0))  %>%
-    select(-X1, -X2, -X3)
+    na.omit() %>% filter_all(any_vars(. != 0))
+
+
+  #dataset without X1 column (for predictions)
+  x <- y  %>%
+    select(-X1, -X2, -X3, -LABEL) %>%
+    # only keep last month for simulation
+    head(600)
 
   # generate a file name for model
   m_name <- paste0("DL_Regression", "-", symbol,"-", timeframe)
@@ -110,50 +128,95 @@ aml_test_model <- function(symbol, timeframe, path_model, path_data){
   # PREDICT the next period...
   result_R <- h2o::h2o.predict(ModelR, recent_ML) %>% as.data.frame()
 
-  ## Checking the trading strategy assuming we open and hold position for 34 bars!
-  # Note: the trading logic assumptions selected here may be wrong!
-  dat31 <- x %>%
-    # select only original value of the price change
-    dplyr::select(LABEL) %>%
+  ## Checking the trading strategy assuming we open and hold position for 3, 5, 10, 34 bars!
+
+  # To DO: Add ATR multiplier to simulate TP/SL
+  # add for loop for ATR Multiplier
+
+  # Note: Position will only be opened if predicted price is higher than a Trigger
+  Trigger <- c(10, 20, 30, 40, 50, 60, 70)
+  # trying different levels
+  for (TR in Trigger) {
+    #TR <- 10
+
+
+  dat31 <- y %>%
+    # using last 600 observations
+    head(600) %>%
+    ## select columns:
+    # X1 time index
+    # X2 price at the time index
+    # X3 price 34 bars ago
+    # LABEL is a price difference X3-X2
+    dplyr::select(X1, X2) %>%
     # add column with predicted price change
     dplyr::bind_cols(result_R) %>%
-    ## account for a label and predicted results changes by using cumulative sum
-    # label column
-    dplyr::mutate(LABEL_CMSUM = cumsum(LABEL)) %>%
-    # lag column 'predict' to 34 periods, column P_lag will match corresponding real price in the column 'LABEL'
-    dplyr::mutate(predict = lag(predict, 34)) %>%
-    # omit na's
+    ## create columns:
+    # dP_34 - price difference now vs 34 bars (only for check)
+    # dplyr::mutate(dP_34 = X3-X2) %>%
+    ## setup condition to enter the trade
+    # create a risk column, use 20 pips as a trigger
+    dplyr::mutate(Risk = if_else(predict > TR, 1, if_else(predict < -TR, -1, 0))) %>%
+    ## create several columns with shifted X2 price down:
+    # X2_3, X2_5, X2_10 where 3, 5, 10 indicates number of bars we will hold this position
+    dplyr::mutate(X2_3 = lag(X2, 3),
+                  X2_5 = lag(X2, 5),
+                  X2_10 = lag(X2, 10),
+                  X2_34 = lag(X2, 34)) %>%
+    # clean up this dataset
     na.omit() %>%
-    # create a risk column, use 10 pips as a trigger
-    dplyr::mutate(Risk = if_else(predict > 50, 1, if_else(predict < -50, -1, 0))) %>%
-    # predict column with cum sum value
-    dplyr::mutate(predict_CMSUM = cumsum(predict)) %>%
-    # calculate expected outcome of risking the 'Risk': trade according to prediction
-    dplyr::mutate(ExpectedGain = predict_CMSUM*Risk) %>%
-    # calculate 'real' gain or loss. LABEL is how the price moved (ground truth) so the column will be real outcome
-    dplyr::mutate(AchievedGain = LABEL_CMSUM*Risk) %>%
-    # to account on spread
-    dplyr::mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, -5, 0))) %>%
-    # calculate 'net' gain
-    dplyr::mutate(NetGain = AchievedGain + Spread) %>%
+    # now calculate several scenarios:
+    dplyr::mutate(Hold_3 = Risk*(X2_3 - X2),
+                  Hold_5 = Risk*(X2_5 - X2),
+                  Hold_10 = Risk*(X2_10 - X2),
+                  Hold_34 = Risk*(X2_34 - X2)) %>%
+
+
     # remove zero values to calculate presumed number of trades
-    dplyr::filter(AchievedGain != 0) %>%
-    # get the sum of both columns
+    dplyr::filter(Risk != 0) %>%
+    # get the sum of columns
     # Column Expected PNL would be the result in case all trades would be successful
     # Column Achieved PNL is the results achieved in reality
-    dplyr::summarise(ExpectedPnL = sum(ExpectedGain),
-                     AchievedPnL = sum(NetGain),
+    dplyr::summarise(PnL_3 = sum(Hold_3),
+                     PnL_5 = sum(Hold_5),
+                     PnL_10 = sum(Hold_10),
+                     PnL_34 = sum(Hold_34),
                      TotalTrades = n(),
-                     TPSL_Level = 50) %>%
-    # interpret the results
-    dplyr::mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
-                  FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
+                     TPSL_Level = TR) %>%
+
+  # interpret the results
+  dplyr::mutate(AchievedPnL = sum(PnL_3, PnL_5, PnL_10, PnL_34),
+                FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"))
+
+  # record results of testing
+  if(!exists("df_res")){
+    df_res <- dat31
+  } else {
+    df_res <- df_res %>% dplyr::bind_rows(dat31)
+  }
 
 
-   ## write condition to the csv file
-  dec_file_name <- paste0("StrTest-", symbol, "M",timeframe,"X",num_bars, ".csv")
+
+
+  } #end of the for loop
+
+  ## select the best trading option (Trigger and Max Hours option)
+  # select amount of bars to hold the position and suggested Trigger
+
+
+  df_tr <- df_res %>%
+    select(1:4, 6) %>%
+    tidyr::pivot_longer(!TPSL_Level) %>%
+    arrange(desc(value)) %>%
+    head(1)
+
+
+
+
+  ## write condition to the csv file
+  dec_file_name <- paste0("StrTest-", symbol, "M",timeframe, ".csv")
   dec_file_path <- file.path(path_model,  dec_file_name)
-  readr::write_csv(dat31, dec_file_path)
+  readr::write_csv(df_tr, dec_file_path)
 
   #h2o.shutdown(prompt = FALSE)
 

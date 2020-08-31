@@ -90,6 +90,8 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
       dplyr::bind_rows(dat11) %>%
       # check that data does not have double rows that are exactly same...
       dplyr::distinct() %>%
+      # arrange date descending order
+      arrange(desc(X1)) %>%
       # write data back
       readr::write_rds(full_path)
     #verify generated data

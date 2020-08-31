@@ -36,6 +36,7 @@
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
+#' library(lubridate)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
@@ -62,7 +63,8 @@
 #' aml_make_model(symbol = 'USDJPY',
 #'                timeframe = 60,
 #'                path_model = path_model,
-#'                path_data = path_data)
+#'                path_data = path_data,
+#'                force_update=FALSE)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -136,7 +138,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   # load data into h2o environment
   #macd_ML  <- as.h2o(x = dat22, destination_frame = "macd_ML")
   macd_ML  <- h2o::as.h2o(x = dat22, destination_frame = "macd_ML")
-
+  recent_ML  <- h2o::as.h2o(x = dat21, destination_frame = "recent_ML")
   # for loop to select the best neural network structure
 
   for (i in 1:dim(nn_sets)[1]) {
@@ -162,7 +164,10 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
 
   #ModelC
   #summary(ModelC)
-  RMSE <- h2o::h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
+
+  RMSE <- h2o::h2o.performance(ModelC,newdata = recent_ML)@metrics$RMSE %>%
+    as.data.frame()
+  #RMSE <- h2o::h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
   names(RMSE) <- 'RMSE'
 
   # record results of modelling
