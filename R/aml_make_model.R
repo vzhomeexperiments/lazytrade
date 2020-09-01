@@ -42,7 +42,7 @@
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
 #' ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
-#'                   package = "lazytrade") %>% read_csv(col_names = F)
+#'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
 #'
 #' ind$X1 <- ymd_hms(ind$X1)
 #'
@@ -95,7 +95,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   ## read the file and the status of the model
   if(file.exists(dec_file_path) && force_update == FALSE){
     # read the file
-    model_status <- readr::read_csv(dec_file_path) %>% select(FinalQuality)
+    model_status <- readr::read_csv(dec_file_path) %>% select(MaxPerf) %$% MaxPerf
   } else if(force_update == TRUE) {
     # delete the model and previous test results
     remove(dec_file_path)
@@ -111,7 +111,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   x <- try(readr::read_rds(full_path), silent = T)
 
   # proceed with further steps only if model status is < 0 and there are enough data in x
-  if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 100)) {
+  if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 1000)) {
 
     dat12 <- x %>%
       # lagging the dataset:    %>% mutate_all(~lag(., n = 28))

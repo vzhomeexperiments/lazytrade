@@ -217,14 +217,19 @@
 #'
 #' @format A dataframe with one column
 #' \describe{
-#'   \item{MagicNumber}{Unique identifiers of the Trading Robots from Trade Log}
-#'   \item{TicketNumber}{Ticket Number of closed position}
-#'   \item{OrderStartTime}{Date and Time when order started}
-#'   \item{OrderCloseTime}{Date and Time when order closed}
-#'   \item{Profit}{Monetary result of the trade}
-#'   \item{Symbol}{Symbol of the Asset e.g. EURUSD}
-#'   \item{OrderType}{Order Type 0 - buy, 1 - sell}
-#'   \item{CUMSUM_PNL}{Cumulative sum of the ordered data}
+#'   \item{predict}{predicted price change}
+#' }
+#'
+"result_R1"
+
+#' Table with predicted price change
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with one column
+#' \describe{
+#'   \item{predict}{predicted price change}
 #'
 #' }
 "DFR"
@@ -279,3 +284,18 @@
 #'
 #' }
 "macd_100"
+"y"
+
+#' Table with indicators and price change which is used to train model
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{Time index}
+#'   \item{X2}{Closed price now}
+#'   \item{X3}{Closed price 34 bars ago}
+#'   \item{X4-X19}{Series of Indicator values}
+#'   \item{LABEL}{Price difference, difference between X3 and X2}
+#' }

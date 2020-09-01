@@ -41,10 +41,11 @@ library(dplyr)
 library(readr)
 library(lubridate)
 library(lazytrade)
+library(magrittr)
 
 
 ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
-                  package = "lazytrade") \%>\% read_csv(col_names = F)
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
 
 ind$X1 <- ymd_hms(ind$X1)
 

@@ -45,7 +45,7 @@ path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
 
 ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
-                  package = "lazytrade") \%>\% read_csv(col_names = F)
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
 
 ind$X1 <- ymd_hms(ind$X1)
 

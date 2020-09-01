@@ -23,6 +23,10 @@
         "totreward", "trstate", "MarketType","predict_CMSUM", "LABEL_CMSUM",
         "CUMSUM_PNL", "DFR", "PairGain", "Symbol", "aes", "asset_name",
 
+        "X2_3", "X2_5", "X2_10","X2_34","Hold_3", "Hold_5",
+        "Hold_10","Hold_34","PnL_3","PnL_5","PnL_10","PnL_34",
+        "value",
+
 
         # sample function names
         ".", "%>%", "%$%", "group_by",  "arrange", "desc",
