@@ -138,6 +138,8 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
+#>          .
+#> 1 518b835B
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -312,12 +314,18 @@ Step 1. `devtools::document()` Step 2. `devtools::run_examples()` Step
 
 ## Locally checking package with –run-donttest enabled
 
+This is now a default option
+
 Whenever  examples construct is used author of the package must insure
 that those examples are running. Such examples are those that would
 require longer test execution. To perform this test package needs to be
 checked with the following command:
 
 `devtools::check(run_dont_test = TRUE)`
+
+whenever a quick check is required:
+
+`devtools::check(run_dont_test = FALSE)` ???
 
 ## Handling functions that write files
 

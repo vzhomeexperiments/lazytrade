@@ -8,9 +8,10 @@
 Status: OK
 R version 4.0.2 (2020-06-22)
 
-There were no ERRORs or WARNINGs or NOTES
+There were no ERRORs or WARNINGs
 
+There is a Note:
+'Unable to verify current time'
 
-  
 ## Downstream dependencies
 R version 3.6.3 (2020-02-29)

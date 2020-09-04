@@ -3,7 +3,7 @@
 \docType{data}
 \name{macd_100}
 \alias{macd_100}
-\title{Table with indicator only used to train model, 128 rows}
+\title{Table with indicator only used to train model, 128 col 1646 rows}
 \format{
 A dataframe with several columns
 \describe{
@@ -42,6 +42,6 @@ A dataframe with several columns
 macd_100
 }
 \description{
-Table with indicator only used to train model, 128 rows
+Table with indicator only used to train model, 128 col 1646 rows
 }
 \keyword{datasets}

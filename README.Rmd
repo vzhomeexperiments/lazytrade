@@ -270,14 +270,19 @@ Step 2. `devtools::run_examples()`
 Step 3. Menu 'Build' `Clean and Rebuild`
 Step 4. 'Check' `devtools::check()`
 
-## Locally checking package with --run-donttest enabled
+
+## Locally checking package with --run-donttest enabled 
+
+This is now a default option
 
 Whenever \donttest{} examples construct is used author of the package must insure that those examples are running.
 Such examples are those that would require longer test execution. To perform this test package needs to be checked with the following command:
 
 `devtools::check(run_dont_test = TRUE)`
 
+whenever a quick check is required:
 
+`devtools::check(run_dont_test = FALSE)` ???
 
 ## Handling functions that write files
 
