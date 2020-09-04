@@ -8,6 +8,17 @@
 1: `as_data_frame()` is deprecated as of tibble 2.0.0. Please use `as_tibble()` instead.
 2: `data_frame()` is deprecated as of tibble 1.1.0. Please use `tibble()` instead.
 
+# lazytrade 0.3.12
+
+# Version 0.3.12
+
+## Changes
+
+### Implemented
+
+* Re-write functions aml*.R
+
+
 # lazytrade 0.3.11
 
 # Version 0.3.11

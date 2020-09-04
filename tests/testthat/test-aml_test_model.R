@@ -7,48 +7,52 @@ library(lazytrade)
 context("test_model")
 
 
-test_that("test works", {
+test_that("strategy test works", {
 
-  data(x_test_model)
-  data(result_R)
+  data(y)
+  data(result_R1)
 
-  dat31 <- x_test_model %>%
-    # select only original value of the price change
-    select(LABEL) %>%
+  NB <- 20
+  TR <- 20
+  symbol <- 'USDJPY'
+
+  dat31 <- y %>%
+    # using last 600 observations
+    head(600) %>%
+    ## select columns:
+    # X1 time index
+    # X2 price at the time index
+    # X3 price 34 bars ago
+    # LABEL is a price difference X3-X2
+    dplyr::select(X1, X2) %>%
     # add column with predicted price change
-    bind_cols(result_R) %>%
-    ## account for a label and predicted results changes by using cumulative sum
-    # label column
-    mutate(LABEL_CMSUM = cumsum(LABEL)) %>%
-    # lag column 'predict' to 75 periods, column P_lag will match corresponding real price in the column 'LABEL'
-    mutate(predict = lag(predict, 75)) %>%
-    # omit na's
+    dplyr::bind_cols(result_R1) %>%
+    ## create columns:
+    # dP_34 - price difference now vs 34 bars (only for check)
+    # dplyr::mutate(dP_34 = X3-X2) %>%
+    ## setup condition to enter the trade
+    # create a risk column, use 20 pips as a trigger
+    dplyr::mutate(Risk = if_else(predict > TR, 1, if_else(predict < -TR, -1, 0))) %>%
+    ## create a columns with shifted X2 price down:
+    # value BR will indicate number of bars we will hold this position
+    dplyr::mutate(X2_NB = lag(X2, NB)) %>%
+    # clean up this dataset
     na.omit() %>%
-    # create a risk column, use 10 pips as a trigger
-    mutate(Risk = if_else(predict > 10, 1, if_else(predict < -10, -1, 0))) %>%
-    # predict column with cum sum value
-    mutate(predict_CMSUM = cumsum(predict)) %>%
-    # calculate expected outcome of risking the 'Risk': trade according to prediction
-    mutate(ExpectedGain = predict_CMSUM*Risk) %>%
-    # calculate 'real' gain or loss. LABEL is how the price moved (ground truth) so the column will be real outcome
-    mutate(AchievedGain = LABEL_CMSUM*Risk) %>%
-    # to account on spread
-    mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, -5, 0))) %>%
-    # calculate 'net' gain
-    mutate(NetGain = AchievedGain + Spread) %>%
+    # now calculate the scenario
+    dplyr::mutate(Hold_NB = Risk*(X2_NB - X2)) %>%
     # remove zero values to calculate presumed number of trades
-    filter(AchievedGain != 0) %>%
-    # get the sum of both columns
+    dplyr::filter(Risk != 0) %>%
+    # get the sum of columns
     # Column Expected PNL would be the result in case all trades would be successful
     # Column Achieved PNL is the results achieved in reality
-    summarise(ExpectedPnL = sum(ExpectedGain),
-              AchievedPnL = sum(NetGain),
-              TotalTrades = n(),
-              TPSL_Level = 10) %>%
-    # interpret the results
-    mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
-           FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
+    dplyr::summarise(PnL_NB = sum(Hold_NB),
+                     TotalTrades = n(),
+                     TR_Level = TR,
+                     NB_hold = NB,
+                     Symbol = symbol) %>%
 
+    # interpret the results
+    dplyr::mutate(FinalOutcome = if_else(PnL_NB > 0, "Good", "Bad"))
   expect_equal(ncol(dat31), 6)
 
 })

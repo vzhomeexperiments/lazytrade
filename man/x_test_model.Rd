@@ -7,8 +7,8 @@
 \format{
 A dataframe with several columns
 \describe{
-  \item{X1}{future price change}
-  \item{X2-X76}{Values of the macd indicator}
+  \item{LABEL}{future price change}
+  \item{X1-X75}{Values of the macd indicator}
 }
 }
 \usage{

@@ -15,17 +15,16 @@
 #'
 #'
 #'
-#' @author (C) 2019 Vladimir Zhbanko
+#' @author (C) 2020 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which to train the model
-#' @param num_bars            Number of bars used to detect pattern
 #' @param timeframe           Data timeframe e.g. 1 min
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #' @param force_update        Boolean, by setting this to TRUE function will generate new model
 #'                            (useful after h2o engine update)
 #'
-#' @return Function is writing file object with the model
+#' @return Function is writing file object with the best model
 #' @export
 #'
 #' @examples
@@ -37,23 +36,35 @@
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
+#' library(lubridate)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
-#' data(EURUSDM15X75)
-#' write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
+#' ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
+#'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
+#'
+#' ind$X1 <- ymd_hms(ind$X1)
+#'
+#'
+#' # data transformation using the custom function for one symbol
+#' aml_collect_data(indicator_dataset = ind,
+#'                  symbol = 'USDJPY',
+#'                  timeframe = 60,
+#'                  path_data = path_data)
+#'
+#' # dataset will be written to the temp directory
 #'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #'
 #' # performing Deep Learning Regression using the custom function
-#' aml_make_model(symbol = 'EURUSD',
-#'                num_bars = 75,
-#'                timeframe = 15,
+#' aml_make_model(symbol = 'USDJPY',
+#'                timeframe = 60,
 #'                path_model = path_model,
-#'                path_data = path_data)
+#'                path_data = path_data,
+#'                force_update=FALSE)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -65,7 +76,7 @@
 #'
 #'
 #'
-aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
+aml_make_model <- function(symbol, timeframe, path_model, path_data,
                            force_update=FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
@@ -74,17 +85,17 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
   ### check if it's actually required to make a model: e.g. if model is tested and results are good...
   ## recover the file name and path
-  dec_file_name <- paste0("StrTest-", symbol, "M",timeframe,"X",num_bars, ".csv")
+  dec_file_name <- paste0("StrTest-", symbol, "M",timeframe, ".csv")
   dec_file_path <- file.path(path_model,  dec_file_name)
 
   # generate a file name for model
-  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
+  m_name <- paste0("DL_Regression", "-", symbol,"-", timeframe)
   m_path <- file.path(path_model, m_name)
 
   ## read the file and the status of the model
   if(file.exists(dec_file_path) && force_update == FALSE){
     # read the file
-    model_status <- readr::read_csv(dec_file_path) %>% select(FinalQuality)
+    model_status <- readr::read_csv(dec_file_path) %>% select(MaxPerf) %$% MaxPerf
   } else if(force_update == TRUE) {
     # delete the model and previous test results
     remove(dec_file_path)
@@ -94,34 +105,40 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
   #construct the path to the data object see function aml_collect_data.R
   # generate a file name
-  f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
+  f_name <- paste0("AI_RSIADX", symbol,timeframe, ".rds")
   full_path <- file.path(path_data,  f_name)
 
   x <- try(readr::read_rds(full_path), silent = T)
 
-
-
   # proceed with further steps only if model status is < 0 and there are enough data in x
-  if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 100)) {
+  if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 1000)) {
+
+    dat12 <- x %>%
+      # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
+      dplyr::mutate(dplyr::across(LABEL, ~lag(., n = 34))) %>%
+      # remove empty rows
+      na.omit() %>% filter_all(any_vars(. != 0))  %>%
+      select(-X1, -X2, -X3)
+
 
   # split data to train and test blocks
   # note: model will be tested on the PAST data and trained on the NEWEST data
-  test_ind  <- 1:round(0.3*(nrow(x))) #train indices 1:xxx
-  dat21 <- x[test_ind, ]    #dataset to test the model using 30% of data
-  dat22 <- x[-test_ind, ]   #dataset to train the model
+  test_ind  <- 1:round(0.3*(nrow(dat12))) #train indices 1:xxx
+  dat21 <- dat12[test_ind, ]    #dataset to test the model using 30% of data
+  dat22 <- dat12[-test_ind, ]   #dataset to train the model
 
   ## ---------- Data Modelling  ---------------
   #h2o.init()
 
   ### random network structure
-  nn_sets <- sample.int(n = 200, 24) %>% matrix(ncol = 4)
+  nn_sets <- sample.int(n = 100, 24) %>% matrix(ncol = 3)
 
   ###
 
   # load data into h2o environment
   #macd_ML  <- as.h2o(x = dat22, destination_frame = "macd_ML")
-  macd_ML  <- h2o::as.h2o(x = x, destination_frame = "macd_ML")
-
+  macd_ML  <- h2o::as.h2o(x = dat22, destination_frame = "macd_ML")
+  recent_ML  <- h2o::as.h2o(x = dat21, destination_frame = "recent_ML")
   # for loop to select the best neural network structure
 
   for (i in 1:dim(nn_sets)[1]) {
@@ -129,8 +146,8 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
     # i <- 1
     # fit models from simplest to more complex
   ModelC <- h2o::h2o.deeplearning(
-    model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
-    x = names(macd_ML[,2:num_bars+1]),
+    model_id = paste0("DL_Regression", "-", symbol, "-", timeframe),
+    x = names(macd_ML[,1:16]),
     y = "LABEL",
     training_frame = macd_ML,
     activation = "Tanh",
@@ -147,7 +164,10 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
   #ModelC
   #summary(ModelC)
-  RMSE <- h2o::h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
+
+  RMSE <- h2o::h2o.performance(ModelC,newdata = recent_ML)@metrics$RMSE %>%
+    as.data.frame()
+  #RMSE <- h2o::h2o.performance(ModelC)@metrics$RMSE %>% as.data.frame()
   names(RMSE) <- 'RMSE'
 
   # record results of modelling
@@ -168,8 +188,8 @@ aml_make_model <- function(symbol, num_bars, timeframe, path_model, path_data,
 
   # train the model again:
   ModelC <- h2o::h2o.deeplearning(
-    model_id = paste0("DL_Regression", "-", symbol, "-", num_bars, "-", timeframe),
-    x = names(macd_ML[,2:num_bars+1]),
+    model_id = paste0("DL_Regression", "-", symbol, "-", timeframe),
+    x = names(macd_ML[,1:16]),
     y = "LABEL",
     training_frame = macd_ML,
     activation = "Tanh",

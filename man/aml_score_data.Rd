@@ -4,22 +4,12 @@
 \alias{aml_score_data}
 \title{Function to score new data and predict change for each single currency pair}
 \usage{
-aml_score_data(
-  symbol,
-  num_bars,
-  timeframe,
-  path_model,
-  path_data,
-  path_sbxm,
-  path_sbxs
-)
+aml_score_data(symbol, timeframe, path_model, path_data, path_sbxm, path_sbxs)
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which the model shall predict}
 
-\item{num_bars}{Number of bars used to detect pattern}
-
-\item{timeframe}{Data timeframe e.g. 1 min}
+\item{timeframe}{Data timeframe e.g. 60 min}
 
 \item{path_model}{Path where the models are be stored}
 
@@ -46,6 +36,7 @@ Performs fresh data reading from the rds file
 # test of function aml_make_model is duplicated here
 library(dplyr)
 library(readr)
+library(lubridate)
 library(h2o)
 library(magrittr)
 library(lazytrade)
@@ -53,17 +44,27 @@ library(lazytrade)
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
 
-data(EURUSDM15X75)
-write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
+ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
 
+ind$X1 <- ymd_hms(ind$X1)
+
+write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
+
+
+# data transformation using the custom function for one symbol
+aml_collect_data(indicator_dataset = ind,
+                 symbol = 'USDJPY',
+                 timeframe = 60,
+                 path_data = path_data)
 # start h2o engine (using all CPU's by default)
+
 h2o.init()
 
 
 # performing Deep Learning Regression using the custom function
-aml_make_model(symbol = 'EURUSD',
-               num_bars = 75,
-               timeframe = 15,
+aml_make_model(symbol = 'USDJPY',
+               timeframe = 60,
                path_model = path_model,
                path_data = path_data)
 
@@ -73,9 +74,8 @@ path_sbxs <- normalizePath(tempdir(),winslash = "/")
 
 
 # score the latest data to generate predictions for one currency pair
-aml_score_data(symbol = 'EURUSD',
-               num_bars = 75,
-               timeframe = 15,
+aml_score_data(symbol = 'USDJPY',
+               timeframe = 60,
                path_model = path_model,
                path_data = path_data,
                path_sbxm = path_sbxm,
@@ -93,5 +93,5 @@ Sys.sleep(5)
 
 }
 \author{
-(C) 2019 Vladimir Zhbanko
+(C) 2020 Vladimir Zhbanko
 }

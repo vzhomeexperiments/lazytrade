@@ -21,7 +21,9 @@
         "funs", "n", "nOrders",  "path_T1", "path_T3",
         "rewardseq.OFF", "rewardseq.ON",
         "totreward", "trstate", "MarketType","predict_CMSUM", "LABEL_CMSUM",
-        "CUMSUM_PNL", "DFR", "PairGain", "Symbol", "aes",
+        "CUMSUM_PNL", "DFR", "PairGain", "Symbol", "aes", "asset_name",
+
+        "Hold_NB", "MaxPerf", "NB_hold", "PnL_NB", "TR_Level", "X2_NB",
 
 
         # sample function names
@@ -33,7 +35,7 @@
         "predict", "read_rds", "summarise", "write.csv", "write_rds", "ymd_hms",
         "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols", "testdir",
         "h2o.performance", "distinct", "dev.off", "geom_bar", "geom_line", "ggplot", "ggtitle", "pdf",
-        "sha512", "write_tsv", "encrypt_envelope", "mutate_at"
+        "sha512", "write_tsv", "encrypt_envelope", "mutate_at", "across"
       )
     )
 

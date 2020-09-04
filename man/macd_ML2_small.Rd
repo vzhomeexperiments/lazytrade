@@ -8,7 +8,7 @@
 A dataframe with several columns
 \describe{
   \item{X1-X128}{Values of the macd indicator}
-  \item{X129}{Category of Market Type}
+  \item{M_T}{Category of Market Type}
 }
 }
 \usage{

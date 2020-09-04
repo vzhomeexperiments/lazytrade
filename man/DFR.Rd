@@ -3,18 +3,18 @@
 \docType{data}
 \name{DFR}
 \alias{DFR}
-\title{Table with aggregated trade results}
+\title{Table with predicted price change}
 \format{
 A dataframe with one column
 \describe{
-  \item{MagicNumber}{Unique identifiers of the Trading Robots from Trade Log}
+  \item{"MagicNumber.x}{Unique identifiers of the Trading Robots from Trade Log}
   \item{TicketNumber}{Ticket Number of closed position}
   \item{OrderStartTime}{Date and Time when order started}
   \item{OrderCloseTime}{Date and Time when order closed}
   \item{Profit}{Monetary result of the trade}
   \item{Symbol}{Symbol of the Asset e.g. EURUSD}
   \item{OrderType}{Order Type 0 - buy, 1 - sell}
-  \item{CUMSUM_PNL}{Cumulative sum of the ordered data}
+  \item{"CUMSUM_PNL}{Cumulative sum of Profit and Loss}
 
 }
 }
@@ -22,6 +22,6 @@ A dataframe with one column
 DFR
 }
 \description{
-Table with aggregated trade results
+Table with predicted price change
 }
 \keyword{datasets}

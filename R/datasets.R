@@ -181,8 +181,8 @@
 #'
 #' @format A dataframe with several columns
 #' \describe{
-#'   \item{X1}{future price change}
-#'   \item{X2-X76}{Values of the macd indicator}
+#'   \item{LABEL}{future price change}
+#'   \item{X1-X75}{Values of the macd indicator}
 #' }
 "EURUSDM15X75"
 
@@ -193,8 +193,8 @@
 #'
 #' @format A dataframe with several columns
 #' \describe{
-#'   \item{X1}{future price change}
-#'   \item{X2-X76}{Values of the macd indicator}
+#'   \item{LABEL}{future price change}
+#'   \item{X1-X75}{Values of the macd indicator}
 #' }
 "x_test_model"
 
@@ -217,14 +217,26 @@
 #'
 #' @format A dataframe with one column
 #' \describe{
-#'   \item{MagicNumber}{Unique identifiers of the Trading Robots from Trade Log}
+#'   \item{predict}{predicted price change}
+#' }
+#'
+"result_R1"
+
+#' Table with predicted price change
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with one column
+#' \describe{
+#'   \item{"MagicNumber.x}{Unique identifiers of the Trading Robots from Trade Log}
 #'   \item{TicketNumber}{Ticket Number of closed position}
 #'   \item{OrderStartTime}{Date and Time when order started}
 #'   \item{OrderCloseTime}{Date and Time when order closed}
 #'   \item{Profit}{Monetary result of the trade}
 #'   \item{Symbol}{Symbol of the Asset e.g. EURUSD}
 #'   \item{OrderType}{Order Type 0 - buy, 1 - sell}
-#'   \item{CUMSUM_PNL}{Cumulative sum of the ordered data}
+#'   \item{"CUMSUM_PNL}{Cumulative sum of Profit and Loss}
 #'
 #' }
 "DFR"
@@ -237,11 +249,12 @@
 #' @format A dataframe with several columns
 #' \describe{
 #'   \item{X1-X128}{Values of the macd indicator}
-#'   \item{X129}{Category of Market Type}
+#'   \item{M_T}{Category of Market Type}
 #' }
+#'
 "macd_ML2_small"
 
-#' Table with indicator only used to train model, 128 rows
+#' Table with indicator only used to train model, 128 col 1646 rows
 #'
 #' @docType data
 #' @keywords datasets
@@ -279,3 +292,18 @@
 #'
 #' }
 "macd_100"
+
+#' Table with indicators and price change which is used to train model
+#'
+#' @docType data
+#' @keywords datasets
+#'
+#' @format A dataframe with several columns
+#' \describe{
+#'   \item{X1}{Time index}
+#'   \item{X2}{Closed price now}
+#'   \item{X3}{Closed price 34 bars ago}
+#'   \item{X4-X19}{Series of Indicator values}
+#'   \item{LABEL}{Price difference, difference between X3 and X2}
+#' }
+"y"

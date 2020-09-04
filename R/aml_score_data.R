@@ -6,11 +6,10 @@
 #' @details Performs fresh data reading from the rds file
 #'
 #'
-#' @author (C) 2019 Vladimir Zhbanko
+#' @author (C) 2020 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which the model shall predict
-#' @param num_bars            Number of bars used to detect pattern
-#' @param timeframe           Data timeframe e.g. 1 min
+#' @param timeframe           Data timeframe e.g. 60 min
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #' @param path_sbxm           Path to the sandbox where file with predicted price should be written (master terminal)
@@ -26,6 +25,7 @@
 #' # test of function aml_make_model is duplicated here
 #' library(dplyr)
 #' library(readr)
+#' library(lubridate)
 #' library(h2o)
 #' library(magrittr)
 #' library(lazytrade)
@@ -33,17 +33,27 @@
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
-#' data(EURUSDM15X75)
-#' write_rds(EURUSDM15X75, file.path(path_data, 'EURUSDM15X75.rds'))
+#' ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
+#'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
 #'
+#' ind$X1 <- ymd_hms(ind$X1)
+#'
+#' write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
+#'
+#'
+#' # data transformation using the custom function for one symbol
+#' aml_collect_data(indicator_dataset = ind,
+#'                  symbol = 'USDJPY',
+#'                  timeframe = 60,
+#'                  path_data = path_data)
 #' # start h2o engine (using all CPU's by default)
+#'
 #' h2o.init()
 #'
 #'
 #' # performing Deep Learning Regression using the custom function
-#' aml_make_model(symbol = 'EURUSD',
-#'                num_bars = 75,
-#'                timeframe = 15,
+#' aml_make_model(symbol = 'USDJPY',
+#'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data)
 #'
@@ -53,9 +63,8 @@
 #'
 #'
 #' # score the latest data to generate predictions for one currency pair
-#' aml_score_data(symbol = 'EURUSD',
-#'                num_bars = 75,
-#'                timeframe = 15,
+#' aml_score_data(symbol = 'USDJPY',
+#'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data,
 #'                path_sbxm = path_sbxm,
@@ -72,7 +81,6 @@
 #'
 #'
 aml_score_data <- function(symbol,
-                           num_bars,
                            timeframe,
                            path_model,
                            path_data,
@@ -85,14 +93,15 @@ aml_score_data <- function(symbol,
 
   #construct the path to the data object see function aml_collect_data.R
   # generate a file name for latest dataset
-  f_name <- paste0(symbol, "M",timeframe,"X",num_bars, ".rds")
+  f_name <- paste0("AI_RSIADX", symbol,timeframe, ".csv")
   full_path <- file.path(path_data,  f_name)
-  x <- readr::read_rds(full_path)
+
+  x <- readr::read_csv(full_path, col_names = F)
   #get latest data to predict
-  x1 <- tail(x, 1)[, -1]
+  x1 <- head(x, 1)[, -c(1:3)]
 
   # generate a file name for model
-  m_name <- paste0("DL_Regression", "-", symbol,"-", num_bars, "-", timeframe)
+  m_name <- paste0("DL_Regression", "-", symbol,"-", timeframe)
   m_path <- file.path(path_model, m_name)
   #load model
   ModelR <- h2o::h2o.loadModel(path = m_path)
