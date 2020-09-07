@@ -111,7 +111,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   x <- try(readr::read_rds(full_path), silent = T)
 
   # proceed with further steps only if model status is < 0 and there are enough data in x
-  if(model_status < 0 || (!file.exists(m_path) && nrow(x) > 1000)) {
+  if(model_status <= 0 || (!file.exists(m_path) && nrow(x) > 1000)) {
 
     dat12 <- x %>%
       # lagging the dataset:    %>% mutate_all(~lag(., n = 28))

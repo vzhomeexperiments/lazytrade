@@ -58,7 +58,7 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
 
   dat11 <- indicator_dataset %>%
     # find the price difference between now and xx bars ago also consider JPY pairs...
-    dplyr::mutate(LABEL = ifelse(X2 < 10, 1000*(X3-X2), 100 * (X3-X2)))
+    dplyr::mutate(LABEL = ifelse(X2 < 10, 10000*(X3-X2), 100 * (X3-X2)))
 
   # dat12 <- dat11 %>%
   #   # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
