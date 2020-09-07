@@ -2,7 +2,8 @@
 % Please edit documentation in R/aml_collect_data.R
 \name{aml_collect_data}
 \alias{aml_collect_data}
-\title{Function to read new data, transform data, save data for further retraining of regression model for a single currency pair}
+\title{Function to read new data, transform, aggregate and save data for further retraining of regression model
+for a single currency pair}
 \usage{
 aml_collect_data(indicator_dataset, symbol, timeframe, path_data)
 }
@@ -20,12 +21,12 @@ Function is writing files into Decision Support System folder, mainly file objec
 }
 \description{
 Function is collecting data from the files
-Data object are transformed to be suitable for Regression Modelling.
+Data objects are transformed to be suitable for Regression Modelling.
 Price change will be in the column 'LABEL', column X1 will keep the time index
-Result would be written to a new or aggregated to the existing '.rds' file
+Result will be written to a new or aggregated to the existing '.rds' file
 
 Function is also checking that generated dataset is not too big.
-Should the dataset is too big (e.g. > 10000 rows), then only latest 9500 rows will be used.
+Should the dataset is too big (e.g. > 50000 rows), then only latest 40000 rows will be used.
 Note: the amount 10000 rows is not verified in practice, further testing is required.
 }
 \details{

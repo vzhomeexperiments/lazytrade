@@ -20,6 +20,8 @@
 #' @param timeframe           Data timeframe e.g. 60 min
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
+#' @param path_sbxm           Path to the sandbox where file with strategy test results should be written (master terminal)
+#' @param path_sbxs           Path to the sandbox where file with strategy test results should be written (slave terminal)
 #'
 #' @return Function is writing file into Decision Support System folder
 #' @export
@@ -79,7 +81,9 @@
 #'                num_bars = 600,
 #'                timeframe = 60,
 #'                path_model = path_model,
-#'                path_data = path_data)
+#'                path_data = path_data,
+#'                path_sbxm = path_sbxm,
+#'                path_sbxs = path_sbxs)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -91,7 +95,9 @@
 #'
 #'
 #'
-aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
+aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
+                           path_sbxm = path_sbxm,
+                           path_sbxs = path_sbxs){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -233,6 +239,10 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data){
   dec_file_name <- paste0("StrTest-", symbol, "M",timeframe, ".csv")
   dec_file_path <- file.path(path_model,  dec_file_name)
   readr::write_csv(df_tr, dec_file_path)
+
+  # also write these results for MT4 robot use
+  readr::write_csv(df_tr, file.path(path_sbxm, dec_file_name))
+  readr::write_csv(df_tr, file.path(path_sbxs, dec_file_name))
 
   #h2o.shutdown(prompt = FALSE)
 

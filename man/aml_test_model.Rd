@@ -4,7 +4,15 @@
 \alias{aml_test_model}
 \title{Function to test the model and conditionally decide to update existing model for a single currency pair}
 \usage{
-aml_test_model(symbol, num_bars, timeframe, path_model, path_data)
+aml_test_model(
+  symbol,
+  num_bars,
+  timeframe,
+  path_model,
+  path_data,
+  path_sbxm = path_sbxm,
+  path_sbxs = path_sbxs
+)
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which to train the model}
@@ -16,6 +24,10 @@ aml_test_model(symbol, num_bars, timeframe, path_model, path_data)
 \item{path_model}{Path where the models are be stored}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
+
+\item{path_sbxm}{Path to the sandbox where file with strategy test results should be written (master terminal)}
+
+\item{path_sbxs}{Path to the sandbox where file with strategy test results should be written (slave terminal)}
 }
 \value{
 Function is writing file into Decision Support System folder
@@ -90,7 +102,9 @@ aml_test_model(symbol = 'USDJPY',
                num_bars = 600,
                timeframe = 60,
                path_model = path_model,
-               path_data = path_data)
+               path_data = path_data,
+               path_sbxm = path_sbxm,
+               path_sbxs = path_sbxs)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)

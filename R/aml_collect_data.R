@@ -1,12 +1,13 @@
-#' Function to read new data, transform data, save data for further retraining of regression model for a single currency pair
+#' Function to read new data, transform, aggregate and save data for further retraining of regression model
+#' for a single currency pair
 #'
 #' @description  Function is collecting data from the files
-#' Data object are transformed to be suitable for Regression Modelling.
+#' Data objects are transformed to be suitable for Regression Modelling.
 #' Price change will be in the column 'LABEL', column X1 will keep the time index
-#' Result would be written to a new or aggregated to the existing '.rds' file
+#' Result will be written to a new or aggregated to the existing '.rds' file
 #'
 #' Function is also checking that generated dataset is not too big.
-#' Should the dataset is too big (e.g. > 10000 rows), then only latest 9500 rows will be used.
+#' Should the dataset is too big (e.g. > 50000 rows), then only latest 40000 rows will be used.
 #' Note: the amount 10000 rows is not verified in practice, further testing is required.
 #'
 #' @details Function is handling shift of the price and indicator datasets.
@@ -55,11 +56,12 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
 
-
+  # create a new column 'LABEL'
   dat11 <- indicator_dataset %>%
     # find the price difference between now and xx bars ago also consider JPY pairs...
     dplyr::mutate(LABEL = ifelse(X2 < 10, 10000*(X3-X2), 100 * (X3-X2)))
 
+  # dataset lagging will be performed before modelling
   # dat12 <- dat11 %>%
   #   # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
   #   dplyr::mutate(dplyr::across(LABEL, ~lag(., n = 34))) %>%
@@ -68,7 +70,7 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
   #    # Note: Zero values in rows will mean that there was no data in the MT4 database.
   #   filter_all(any_vars(. != 0))
 
-  # checking the data: summary(dat16) # too high values in the LABEL Column are non-sense! hist(dat12$LABEL)
+  # checking the data: summary(dat11) # too high values in the LABEL Column are non-sense! hist(dat11$LABEL)
 
   ## ---------- Data Saving ---------------
 
@@ -78,21 +80,21 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
 
   # check that old data in the file name is exist or not...
 
-  # retrieve already recorded data >> add temporary dataframe >> write to the data_update folder
-  # check if there is a rds file in the data_update folder and add the df_temp there
+  # retrieve already recorded data >> add only the new data >> write to the data folder
+  # check if there is a rds file in the data folder
   if(exists("dat11") && !file.exists(full_path))
   {
     # write file first time
     readr::write_rds(dat11, full_path)
   } else if(exists("dat11") && file.exists(full_path)) {
-    # read previous file
+    # read previous file and aggregate
     readr::read_rds(full_path) %>%
       # join obtained data below! existing one
       dplyr::bind_rows(dat11) %>%
       # check that data does not have double rows that are exactly same...
       dplyr::distinct() %>%
-      # arrange date descending order
-      arrange(desc(X1)) %>%
+      # arrange by date in a descending order
+      dplyr::arrange(desc(X1)) %>%
       # write data back
       readr::write_rds(full_path)
     #verify generated data
@@ -108,8 +110,8 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
     # read all the data
     readr::read_rds(full_path) %>%
       # arrange date descending order
-      arrange(desc(X1)) %>%
-      # use only last 9500 rows, 9500 is to avoid this code to run so often...
+      dplyr::arrange(desc(X1)) %>%
+      # use only last 40000 rows, 40000 is to avoid this code to run so often...
       utils::head(40000) %>%
       # write them back
       readr::write_rds(full_path)

@@ -1,30 +1,28 @@
-#' Function to train Deep Learning regression model for a single currency pair
+#' Function to train Deep Learning regression model for a single asset
 #'
 #' @description  Function is training h2o deep learning model to match future prices of the asset to the indicator pattern.
-#' Main idea is to be able to predict future prices by solely relying on the most recent indicator pattern.
+#' Main idea is to be able to predict future prices by solely relying on the recently retrieved indicator pattern.
 #' This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
 #'
-#' Deep learning model structure is obtained from the 6 random combinations of neurons within 4 layers of the network,
+#' Deep learning model structure is obtained from the 8 random combinations of neurons within 3 hidden layers of the network,
 #' the most accurate model configuration will be automatically selected
 #'
-#' In addition the function will check if there is a need to update the model. To do that function will check
+#' In addition, the function will check if there is a need to update the model. To do that function will check
 #' results of the function aml_test_model.R.
 #'
 #' @details Function is using the dataset prepared by the function aml_collect_data.R.
 #' Function will start to train the model as soon as there are more than 100 rows in the dataset
 #'
-#'
-#'
 #' @author (C) 2020 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which to train the model
 #' @param timeframe           Data timeframe e.g. 1 min
-#' @param path_model          Path where the models are be stored
+#' @param path_model          Path where the models shall be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #' @param force_update        Boolean, by setting this to TRUE function will generate new model
 #'                            (useful after h2o engine update)
 #'
-#' @return Function is writing file object with the best model
+#' @return Function is writing a file object with the best Deep Learning Regression model
 #' @export
 #'
 #' @examples
@@ -111,7 +109,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   x <- try(readr::read_rds(full_path), silent = T)
 
   # proceed with further steps only if model status is < 0 and there are enough data in x
-  if(model_status <= 0 || (!file.exists(m_path) && nrow(x) > 1000)) {
+  if((model_status <= 0 && nrow(x) > 1000) || (!file.exists(m_path) && nrow(x) > 1000)) {
 
     dat12 <- x %>%
       # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
@@ -183,8 +181,8 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
 
   ## retrain and save the best model
   #what is the most accurate model?
-  # find which row in the df_res has the smallest RMSE value
-  lowest_RMSE <- df_res %>% dplyr::arrange(desc(RMSE)) %>% tail(1) %>% row.names() %>% as.integer()
+  # find which row in the df_res has the smallest RMSE value slice(which.min(Employees))
+  lowest_RMSE <- df_res %>% dplyr::slice(which.min(RMSE)) %>% select(-RMSE) %>% unlist() %>% unname()
 
   # train the model again:
   ModelC <- h2o::h2o.deeplearning(
@@ -195,7 +193,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     activation = "Tanh",
     overwrite_with_best_model = TRUE,
     autoencoder = FALSE,
-    hidden = nn_sets[lowest_RMSE, ],
+    hidden = lowest_RMSE,
     loss = "Automatic",
     sparse = TRUE,
     l1 = 1e-4,
