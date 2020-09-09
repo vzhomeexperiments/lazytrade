@@ -10,6 +10,7 @@
 #'
 #' @param x - dataframe with one column containing asset indicator in the time descending order,
 #' typically 64 or more values
+#'
 #' @param model_path - path to the model
 #' @param num_cols - number of columns (features) in the final vector input to the model
 #'
@@ -30,18 +31,18 @@
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
-#' data(macd_ML2_small)
-#' write_rds(macd_ML2_small, file.path(path_data, 'macd_ML2_small.rds'))
+#' data(macd_ML2)
+#' write_rds(macd_ML2, file.path(path_data, 'macd_ML2.rds'))
 #'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #' # performing Deep Learning Regression using the custom function
 #' # this function stores model to the temp location
-#' mt_make_model(num_bars = 128,
+#' mt_make_model(num_bars = 64,
 #'               path_model = path_model,
 #'               path_data = path_data,
-#'               f_name_data = "macd_ML2_small.rds")
+#'               f_name_data = "macd_ML2.rds")
 #'
 #' # Use sample data
 #' data(macd_100)
@@ -54,7 +55,7 @@
 #'
 #' my_market_prediction <- evaluate_market_type(x = x,
 #'                                              model_path = model_path,
-#'                                              num_cols = 128)
+#'                                              num_cols = 64)
 #'
 #' h2o.shutdown(prompt = FALSE)
 #'

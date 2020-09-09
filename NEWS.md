@@ -21,6 +21,7 @@
 * aml_make_model ... will build a model
 * aml_score... is designed to use model and predict
 * aml_test... is designed to perform a strategy test
+* mt_make_model .. rewrite in the similar fashion as in aml function
 * examples and tests are available
 
 # lazytrade 0.3.11

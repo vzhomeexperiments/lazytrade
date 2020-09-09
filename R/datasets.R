@@ -248,11 +248,11 @@
 #'
 #' @format A dataframe with several columns
 #' \describe{
-#'   \item{X1-X128}{Values of the macd indicator}
+#'   \item{X1-X64}{Values of the macd indicator}
 #'   \item{M_T}{Category of Market Type}
 #' }
 #'
-"macd_ML2_small"
+"macd_ML2"
 
 #' Table with indicator only used to train model, 128 col 1646 rows
 #'
