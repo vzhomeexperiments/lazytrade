@@ -8,16 +8,20 @@
 1: `as_data_frame()` is deprecated as of tibble 2.0.0. Please use `as_tibble()` instead.
 2: `data_frame()` is deprecated as of tibble 1.1.0. Please use `tibble()` instead.
 
-# lazytrade 0.3.12
+# lazytrade 0.4.0
 
-# Version 0.3.12
+# Version 0.4.0
 
 ## Changes
 
 ### Implemented
 
 * Re-write functions aml*.R
-
+* aml_collect.. will keep the time index
+* aml_make_model ... will build a model
+* aml_score... is designed to use model and predict
+* aml_test... is designed to perform a strategy test
+* examples and tests are available
 
 # lazytrade 0.3.11
 

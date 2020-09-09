@@ -1,16 +1,15 @@
 #' Function to read new data, transform, aggregate and save data for further retraining of regression model
 #' for a single currency pair
 #'
-#' @description  Function is collecting data from the files
+#' @description  Function is collecting data from the csv files
 #' Data objects are transformed to be suitable for Regression Modelling.
 #' Price change will be in the column 'LABEL', column X1 will keep the time index
 #' Result will be written to a new or aggregated to the existing '.rds' file
 #'
 #' Function is also checking that generated dataset is not too big.
 #' Should the dataset is too big (e.g. > 50000 rows), then only latest 40000 rows will be used.
-#' Note: the amount 10000 rows is not verified in practice, further testing is required.
 #'
-#' @details Function is handling shift of the price and indicator datasets.
+#' @details Function is not handling shift of the price and indicator datasets.
 #'
 #' This function is relying on the data collection from the dedicated data robot
 #' Other 'aml_*' functions will work based on the data processed by this function
@@ -34,14 +33,15 @@
 #' library(lazytrade)
 #' library(magrittr)
 #'
-#'
+#' # sample dataset
 #' ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
 #'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
 #'
+#' # convert to POSIX format
 #' ind$X1 <- ymd_hms(ind$X1)
 #'
+#' # create temporary path (check output of tempdir() to check the result)
 #' path_data <- normalizePath(tempdir(),winslash = "/")
-#'
 #'
 #' # data transformation using the custom function for one symbol
 #' aml_collect_data(indicator_dataset = ind,
