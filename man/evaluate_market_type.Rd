@@ -4,13 +4,13 @@
 \alias{evaluate_market_type}
 \title{Function to score data and predict current market type using pre-trained classification model}
 \usage{
-evaluate_market_type(x, model_path, num_cols)
+evaluate_market_type(x, path_model, num_cols)
 }
 \arguments{
 \item{x}{- dataframe with one column containing asset indicator in the time descending order,
 typically 64 or more values}
 
-\item{model_path}{- path to the model}
+\item{path_model}{- path to the model}
 
 \item{num_cols}{- number of columns (features) in the final vector input to the model}
 }
@@ -40,17 +40,17 @@ path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
 
 data(macd_ML2)
-write_rds(macd_ML2, file.path(path_data, 'macd_ML2.rds'))
 
 # start h2o engine (using all CPU's by default)
 h2o.init()
 
 # performing Deep Learning Regression using the custom function
 # this function stores model to the temp location
-mt_make_model(num_bars = 64,
+mt_make_model(indicator_dataset = macd_ML2,
+              num_bars = 64,
               path_model = path_model,
-              path_data = path_data,
-              f_name_data = "macd_ML2.rds")
+              path_data = path_data)
+
 
 # Use sample data
 data(macd_100)
@@ -58,12 +58,10 @@ data(macd_100)
 # use one column for testing
 x <- macd_100[ ,2]
 
-remain_path <- "classification.bin/DL_Classification"
-model_path <- file.path(path_model, remain_path)
 
-my_market_prediction <- evaluate_market_type(x = x,
-                                             model_path = model_path,
-                                             num_cols = 64)
+evaluate_market_type(x = x,
+                     path_model = path_model,
+                     num_cols = 64)
 
 h2o.shutdown(prompt = FALSE)
 

@@ -18,10 +18,10 @@
 #' @author (C) 2020 Vladimir Zhbanko
 #' @backref Market Type research of Van Tharp Institute: <https://www.vantharp.com/>
 #'
+#' @param indicator_dataset   Dataset containing indicator patterns to train the model
 #' @param num_bars            Number of bars used to detect pattern
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
-#' @param f_name_data         Name of the file with the data
 #'
 #' @return Function is writing file object with the model
 #' @export
@@ -31,6 +31,7 @@
 #' \donttest{
 #'
 #' library(dplyr)
+#' library(magrittr)
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
@@ -39,17 +40,18 @@
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
 #' data(macd_ML2)
-#' write_rds(macd_ML2, file.path(path_data, 'macd_ML2.rds'))
+#'
+#' Sys.sleep(5)
 #'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #'
 #' # performing Deep Learning Regression using the custom function
-#' mt_make_model(num_bars = 64,
+#' mt_make_model(indicator_dataset = macd_ML2,
+#'               num_bars = 64,
 #'               path_model = path_model,
-#'               path_data = path_data,
-#'               f_name_data = "macd_ML2.rds")
+#'               path_data = path_data)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -61,14 +63,42 @@
 #'
 #'
 #'
-mt_make_model <- function(num_bars, path_model, path_data, f_name_data){
+mt_make_model <- function(indicator_dataset,
+                          num_bars,
+                          path_model, path_data){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
-  macd_ML2 <- read_rds(file.path(path_data, f_name_data)) %>% mutate_at("M_T", as.factor)
 
+
+  ## check if the latest data is available
+  # construct path to the new data
+  path_newdata <- file.path(path_data, "macd_ai_classified.rds")
+  if(file.exists(path_newdata)){
+    # use new data...
+    macd_ML2 <- read_rds(path_newdata) %>%
+      # and add new data
+      bind_rows(indicator_dataset) %>%
+      # convert one column to factor
+      mutate_at("M_T", as.factor)
+  } else {
+    # use input data and transform dataset column to factor
+    macd_ML2 <- indicator_dataset %>% mutate_at("M_T", as.factor)
+  }
+
+  # check if we don't have too much data
+  x1_nrows <- macd_ML2 %>% nrow()
+  # what to do if too much rows?
+  if(x1_nrows > 50000){
+    # read all the data
+    macd_ML2 <- macd_ML2 %>%
+      # use only last 40000 rows, 40000 is to avoid this code to run so often...
+      utils::head(40000)
+  }
+
+  # get this data into h2o:
   macd_ML  <- as.h2o(x = macd_ML2, destination_frame = "macd_ML")
 
   # try different models and choose the best one...
@@ -136,7 +166,7 @@ mt_make_model <- function(num_bars, path_model, path_data, f_name_data){
     #balance_classes = T,
     epochs = 200)
 
-h2o.saveModel(ModelC, file.path(path_model, "classification.bin"), force = TRUE)
+h2o.saveModel(ModelC, path = path_model, force = TRUE)
 
   #h2o.shutdown(prompt = FALSE)
 

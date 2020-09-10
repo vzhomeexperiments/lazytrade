@@ -11,7 +11,7 @@
 #' @param x - dataframe with one column containing asset indicator in the time descending order,
 #' typically 64 or more values
 #'
-#' @param model_path - path to the model
+#' @param path_model - path to the model
 #' @param num_cols - number of columns (features) in the final vector input to the model
 #'
 #' @return dataframe with predicted value of the market type
@@ -32,17 +32,17 @@
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
 #' data(macd_ML2)
-#' write_rds(macd_ML2, file.path(path_data, 'macd_ML2.rds'))
 #'
 #' # start h2o engine (using all CPU's by default)
 #' h2o.init()
 #'
 #' # performing Deep Learning Regression using the custom function
 #' # this function stores model to the temp location
-#' mt_make_model(num_bars = 64,
+#' mt_make_model(indicator_dataset = macd_ML2,
+#'               num_bars = 64,
 #'               path_model = path_model,
-#'               path_data = path_data,
-#'               f_name_data = "macd_ML2.rds")
+#'               path_data = path_data)
+#'
 #'
 #' # Use sample data
 #' data(macd_100)
@@ -50,12 +50,10 @@
 #' # use one column for testing
 #' x <- macd_100[ ,2]
 #'
-#' remain_path <- "classification.bin/DL_Classification"
-#' model_path <- file.path(path_model, remain_path)
 #'
-#' my_market_prediction <- evaluate_market_type(x = x,
-#'                                              model_path = model_path,
-#'                                              num_cols = 64)
+#' evaluate_market_type(x = x,
+#'                      path_model = path_model,
+#'                      num_cols = 64)
 #'
 #' h2o.shutdown(prompt = FALSE)
 #'
@@ -64,13 +62,17 @@
 #'
 #' }
 #'
-evaluate_market_type <- function(x, model_path, num_cols){
+evaluate_market_type <- function(x, path_model, num_cols){
 
 
   requireNamespace("h2o", quietly = TRUE)
 
+  # generate a file name for model
+  m_name <- "DL_Classification"
+  m_path <- file.path(path_model, m_name)
+
   # load models
-  m1 <- h2o::h2o.loadModel(model_path)
+  m1 <- h2o::h2o.loadModel(m_path)
 
 
   if(class(m1)[1] == "H2ORegressionModel") {

@@ -18,7 +18,7 @@
         "X2", "X20", "X21", "X22", "X23", "X24", "X25", "X26", "X27", "X28", "X29",
         "X3", "X4", "X5", "X6", "X7", "X8", "X9", "alpha", "any_vars",
         "computePolicy", "decrypt_envelope", "epsilon",
-        "funs", "n", "nOrders",  "path_T1", "path_T3",
+        "funs", "n", "nOrders",  "path_T1", "path_T3","path_model", "path_data",
         "rewardseq.OFF", "rewardseq.ON",
         "totreward", "trstate", "MarketType","predict_CMSUM", "LABEL_CMSUM",
         "CUMSUM_PNL", "DFR", "PairGain", "Symbol", "aes", "asset_name",

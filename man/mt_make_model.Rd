@@ -4,16 +4,16 @@
 \alias{mt_make_model}
 \title{Function to train Deep Learning Classification model for Market Type recognition}
 \usage{
-mt_make_model(num_bars, path_model, path_data, f_name_data)
+mt_make_model(indicator_dataset, num_bars, path_model, path_data)
 }
 \arguments{
+\item{indicator_dataset}{Dataset containing indicator patterns to train the model}
+
 \item{num_bars}{Number of bars used to detect pattern}
 
 \item{path_model}{Path where the models are be stored}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
-
-\item{f_name_data}{Name of the file with the data}
 }
 \value{
 Function is writing file object with the model
@@ -40,6 +40,7 @@ Once the best neural network is found then the better model is trained and store
 \donttest{
 
 library(dplyr)
+library(magrittr)
 library(readr)
 library(h2o)
 library(lazytrade)
@@ -48,17 +49,18 @@ path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
 
 data(macd_ML2)
-write_rds(macd_ML2, file.path(path_data, 'macd_ML2.rds'))
+
+Sys.sleep(5)
 
 # start h2o engine (using all CPU's by default)
 h2o.init()
 
 
 # performing Deep Learning Regression using the custom function
-mt_make_model(num_bars = 64,
+mt_make_model(indicator_dataset = macd_ML2,
+              num_bars = 64,
               path_model = path_model,
-              path_data = path_data,
-              f_name_data = "macd_ML2.rds")
+              path_data = path_data)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)
