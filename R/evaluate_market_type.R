@@ -109,6 +109,8 @@ evaluate_market_type <- function(x, path_model, num_cols){
     # retrieve the predicted value of the market type
     e1 <- h2o::h2o.predict(m1, test) %>% as.data.frame()
 
+    # obtained values will be analysed in the scoring script
+
     # output result of prediction from the function
     return(e1)
 
