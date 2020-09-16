@@ -16,6 +16,7 @@
 
 ### Implemented
 
+* Added extended package features in the Readme file
 * Re-write functions aml*.R
 * aml_collect.. will keep the time index
 * aml_make_model ... will build a model
