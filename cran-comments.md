@@ -13,5 +13,7 @@ There were no ERRORs or WARNINGs
 There is a Note:
 'Unable to verify current time'
 
+As of request from 16.09.2020 <http> references are now removed from the readme file
+
 ## Downstream dependencies
 R version 3.6.3 (2020-02-29)
