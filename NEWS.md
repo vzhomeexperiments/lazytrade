@@ -8,6 +8,18 @@
 1: `as_data_frame()` is deprecated as of tibble 2.0.0. Please use `as_tibble()` instead.
 2: `data_frame()` is deprecated as of tibble 1.1.0. Please use `tibble()` instead.
 
+# lazytrade 0.4.1
+
+# Version 0.4.1
+
+## Changes
+
+### Implemented
+
+* added option to balance classes for mt_make_model function
+
+
+
 # lazytrade 0.4.0
 
 # Version 0.4.0

@@ -22,6 +22,7 @@
 #' @param num_bars            Number of bars used to detect pattern
 #' @param path_model          Path where the models are be stored
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
+#' @param activate_balance    Boolean, option to choose if to balance market type classes or not, default TRUE
 #'
 #' @return Function is writing file object with the model
 #' @export
@@ -51,7 +52,8 @@
 #' mt_make_model(indicator_dataset = macd_ML2,
 #'               num_bars = 64,
 #'               path_model = path_model,
-#'               path_data = path_data)
+#'               path_data = path_data,
+#'               activate_balance = TRUE)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -65,7 +67,8 @@
 #'
 mt_make_model <- function(indicator_dataset,
                           num_bars,
-                          path_model, path_data){
+                          path_model, path_data,
+                          activate_balance = TRUE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -124,7 +127,7 @@ mt_make_model <- function(indicator_dataset,
     l1 = 1e-4,
     distribution = "AUTO",
     stopping_metric = "AUTO",
-    #balance_classes = T,
+    balance_classes = activate_balance,
     epochs = 200)
 
   #ModelC
@@ -163,7 +166,7 @@ mt_make_model <- function(indicator_dataset,
     l1 = 1e-4,
     distribution = "AUTO",
     stopping_metric = "AUTO",
-    #balance_classes = T,
+    balance_classes = activate_balance,
     epochs = 200)
 
 h2o.saveModel(ModelC, path = path_model, force = TRUE)

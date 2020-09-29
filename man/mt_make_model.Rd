@@ -4,7 +4,13 @@
 \alias{mt_make_model}
 \title{Function to train Deep Learning Classification model for Market Type recognition}
 \usage{
-mt_make_model(indicator_dataset, num_bars, path_model, path_data)
+mt_make_model(
+  indicator_dataset,
+  num_bars,
+  path_model,
+  path_data,
+  activate_balance = TRUE
+)
 }
 \arguments{
 \item{indicator_dataset}{Dataset containing indicator patterns to train the model}
@@ -14,6 +20,8 @@ mt_make_model(indicator_dataset, num_bars, path_model, path_data)
 \item{path_model}{Path where the models are be stored}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
+
+\item{activate_balance}{Boolean, option to choose if to balance market type classes or not, default TRUE}
 }
 \value{
 Function is writing file object with the model
@@ -60,7 +68,8 @@ h2o.init()
 mt_make_model(indicator_dataset = macd_ML2,
               num_bars = 64,
               path_model = path_model,
-              path_data = path_data)
+              path_data = path_data,
+              activate_balance = TRUE)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)
