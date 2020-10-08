@@ -26,6 +26,7 @@
 #'
 #'
 #' library(dplyr)
+#' library(magrittr)
 #' library(readr)
 #' library(lazytrade)
 #'
@@ -51,7 +52,7 @@ create_labelled_data <- function(x, n = 50, type = "regression"){
     # remove column 1 with data and time information
     dplyr::select(-1) %>%
     # split dataset into several objects each containing n rows (it will be a list)
-    split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
+    base::split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
   # remove last element of the list
   dat11[length(dat11)] <- NULL
 

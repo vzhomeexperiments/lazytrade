@@ -16,7 +16,9 @@
 
 ### Implemented
 
-* added option to balance classes for mt_make_model function
+* added option to balance classes in mt_make_model function
+* add and delete depricated functions
+* change names of functions to reflect the purpose: mt - market type, rl- reinforcement learning, util - utility
 
 
 

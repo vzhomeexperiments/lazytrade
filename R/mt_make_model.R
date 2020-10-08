@@ -3,6 +3,7 @@
 #' @description  Function is training h2o deep learning model to match manually classified patterns of the financial
 #' indicator. Main idea is to be able to detect Market Type by solely relying on the current indicator pattern.
 #' This is in the attempt to evaluate current market type and to use proper trading strategy.
+#' Function will always try to gather mode data to update the model.
 #'
 #' Selected Market Periods according to the theory from Van K. Tharp:
 #' 1. Bull normal, BUN
@@ -18,10 +19,11 @@
 #' @author (C) 2020 Vladimir Zhbanko
 #' @backref Market Type research of Van Tharp Institute: <https://www.vantharp.com/>
 #'
-#' @param indicator_dataset   Dataset containing indicator patterns to train the model
-#' @param num_bars            Number of bars used to detect pattern
-#' @param path_model          Path where the models are be stored
-#' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
+#' @param indicator_dataset   Dataframe, Dataset containing indicator patterns to train the model
+#' @param num_bars            Integer, Number of bars used to detect pattern
+#' @param timeframe           Integer, Data timeframe in Minutes.
+#' @param path_model          String, Path where the models are be stored
+#' @param path_data           String, Path where the aggregated historical data is stored, if exists in rds format
 #' @param activate_balance    Boolean, option to choose if to balance market type classes or not, default TRUE
 #'
 #' @return Function is writing file object with the model
@@ -40,7 +42,7 @@
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
-#' data(macd_ML2)
+#' data(macd_ML60M)
 #'
 #' Sys.sleep(5)
 #'
@@ -49,8 +51,9 @@
 #'
 #'
 #' # performing Deep Learning Regression using the custom function
-#' mt_make_model(indicator_dataset = macd_ML2,
+#' mt_make_model(indicator_dataset = macd_ML60M,
 #'               num_bars = 64,
+#'               timeframe = 60,
 #'               path_model = path_model,
 #'               path_data = path_data,
 #'               activate_balance = TRUE)
@@ -67,6 +70,7 @@
 #'
 mt_make_model <- function(indicator_dataset,
                           num_bars,
+                          timeframe = 60,
                           path_model, path_data,
                           activate_balance = TRUE){
 
@@ -78,7 +82,8 @@ mt_make_model <- function(indicator_dataset,
 
   ## check if the latest data is available
   # construct path to the new data
-  path_newdata <- file.path(path_data, "macd_ai_classified.rds")
+  path_file_name <- paste0("macd_ai_classified_", timeframe, "M.rds")
+  path_newdata <- file.path(path_data, path_file_name)
   if(file.exists(path_newdata)){
     # use new data...
     macd_ML2 <- read_rds(path_newdata) %>%
@@ -114,7 +119,7 @@ mt_make_model <- function(indicator_dataset,
 
 
   ModelC <- h2o.deeplearning(
-    model_id = "DL_Classification",
+    model_id = paste0("DL_Classification", "_", timeframe, "M"),
     x = names(macd_ML[,1:num_bars]),
     y = "M_T",
     training_frame = macd_ML,
@@ -153,7 +158,7 @@ mt_make_model <- function(indicator_dataset,
   lowest_RMSE <- df_res %>% dplyr::slice(which.min(RMSE)) %>% select(-RMSE) %>% unlist() %>% unname()
 
   ModelC <- h2o.deeplearning(
-    model_id = "DL_Classification",
+    model_id = paste0("DL_Classification", "_", timeframe, "M"),
     x = names(macd_ML[,1:num_bars]),
     y = "M_T",
     training_frame = macd_ML,

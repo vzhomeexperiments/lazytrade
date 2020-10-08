@@ -36,6 +36,7 @@ see more info in the udemy course self-learning-trading-robot
 
 
 library(dplyr)
+library(magrittr)
 library(readr)
 library(lazytrade)
 

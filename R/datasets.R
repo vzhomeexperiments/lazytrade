@@ -252,7 +252,7 @@
 #'   \item{M_T}{Category of Market Type}
 #' }
 #'
-"macd_ML2"
+"macd_ML60M"
 
 #' Table with indicator only used to train model, 128 col 1646 rows
 #'

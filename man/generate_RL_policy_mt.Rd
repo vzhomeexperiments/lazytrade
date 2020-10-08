@@ -32,11 +32,15 @@ However policy 'ON' value will only be generated once the Q value is greater tha
 
 library(dplyr)
 library(ReinforcementLearning)
+library(lazytrade)
 data(trading_systemDF)
 states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
 actions <- c("ON", "OFF")
 control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
-generate_RL_policy_mt(trading_systemDF, states, actions, control)
+generate_RL_policy_mt(x = trading_systemDF,
+                      states = states,
+                      actions = actions,
+                      control = control)
 
 
 }

@@ -23,7 +23,7 @@
 #'
 #' dir <- normalizePath(tempdir(),winslash = "/")
 #'
-#' record_policy(x = TradeStatePolicy,
+#' rl_record_policy(x = TradeStatePolicy,
 #'               last_result = "tradewin",
 #'               trading_system = 8118101,
 #'               path_terminal = dir,
@@ -31,7 +31,7 @@
 #'
 #'
 #'
-record_policy <- function(x, last_result, trading_system, path_terminal, fileName = "SystemControl"){
+rl_record_policy <- function(x, last_result, trading_system, path_terminal, fileName = "SystemControl"){
   requireNamespace("stringr", quietly = TRUE)
   requireNamespace("dplyr", quietly = TRUE)
 

@@ -20,14 +20,19 @@
 #'
 #' library(dplyr)
 #' library(ReinforcementLearning)
+#' library(lazytrade)
 #' data(trading_systemDF)
 #' states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
 #' actions <- c("ON", "OFF")
 #' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
-#' generate_RL_policy_mt(trading_systemDF, states, actions, control)
+#' generate_RL_policy_mt(x = trading_systemDF,
+#'                       states = states,
+#'                       actions = actions,
+#'                       control = control)
 #'
 #'
 generate_RL_policy_mt <- function(x, states, actions, control){
+
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
 
@@ -70,10 +75,10 @@ generate_RL_policy_mt <- function(x, states, actions, control){
   # extract custom policy from the obtained dataset
   df_Q <- model$Q %>% as.data.frame() %>%
     # create column with market periods
-    mutate(MarketType = row.names(.)) %>%
+    dplyr::mutate(MarketType = row.names(.)) %>%
     # interpret policy as defined logic, value at ON must be >= 0!
-    mutate(Policy = ifelse(ON <= 0, "OFF", ifelse(ON > OFF, "ON", ifelse(OFF > ON, "OFF", NA)))) %>%
-    select(MarketType, Policy)
+    dplyr::mutate(Policy = ifelse(ON <= 0, "OFF", ifelse(ON > OFF, "ON", ifelse(OFF > ON, "OFF", NA)))) %>%
+    dplyr::select(MarketType, Policy)
 
    #plot(model)
    return(df_Q)

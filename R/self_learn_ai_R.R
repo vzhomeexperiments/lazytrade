@@ -71,7 +71,7 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
                             setup_mode = FALSE,
                             research_mode = FALSE,
                             write_log = TRUE){
-
+  .Deprecated("self_learn_ai_R",msg = "This function is replaced by function aml_make_model")
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)

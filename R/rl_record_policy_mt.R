@@ -14,22 +14,23 @@
 #'
 #'
 #' library(stringr)
+#' library(lazytrade)
 #' data(policy_tr_systDF)
 #'
 #' dir <- normalizePath(tempdir(),winslash = "/")
 #'
-#' record_policy_mt(x = policy_tr_systDF,
+#' rl_record_policy_mt(x = policy_tr_systDF,
 #'                  trading_system = 8118101,
 #'                  path_terminal = dir,
 #'                  fileName = "SystemControlMT")
 #'
 #'
-record_policy_mt <- function(x, trading_system, path_terminal, fileName = "SystemControlMT"){
+rl_record_policy_mt <- function(x, trading_system, path_terminal, fileName = "SystemControlMT"){
   requireNamespace("stringr", quietly = TRUE)
 
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
-  is_T3 <- str_detect(path_terminal, "Terminal3")
-  is_T4 <- str_detect(path_terminal, "Terminal4")
+  is_T3 <- stringr::str_detect(path_terminal, "Terminal3")
+  is_T4 <- stringr::str_detect(path_terminal, "Terminal4")
   if(is_T3 == TRUE) { addition <- 200 } else if(is_T4 == TRUE) { addition <- 300 } else { addition <- 0 }
 
   # -------------------------

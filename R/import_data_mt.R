@@ -16,13 +16,15 @@
 #'
 #' library(dplyr)
 #' library(readr)
-#' import_data_mt(trade_log_file = system.file("extdata", "MarketTypeLog8132101.csv",
+#' library(lazytrade)
+#' import_data_mt(trade_log_file = system.file("extdata", "MarketTypeLog9139106.csv",
 #'                                             package = "lazytrade"),
 #'                demo_mode = TRUE)
 #'
 #'
 #'
 import_data_mt <- function(path_terminal, trade_log_file, system_number, demo_mode = FALSE){
+  .Deprecated("mt_import_data",msg = "using new function naming conventions")
 
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("dplyr", quietly = TRUE)
@@ -31,16 +33,16 @@ import_data_mt <- function(path_terminal, trade_log_file, system_number, demo_mo
 
   trade_log_file <- paste0("MarketTypeLog", system_number, ".csv")
   DFT1 <- try(read_csv(file = file.path(path_terminal, trade_log_file),
-               col_names = c("MagicNumber", "TicketNumber", "MarketType"),
-               col_types = "iic"),
+               col_names = c("MagicNumber", "TicketNumber", "MarketTypeCode","OrderDurationMin", "MarketType"),
+               col_types = "iiiic"),
       silent = TRUE)
 
   } else {
 
     #trade_log_file <- system.file("extdata", "MarketTypeLog8132101.csv", package = "lazytrade")
     DFT1 <- try(read_csv(file = trade_log_file,
-                         col_names = c("MagicNumber", "TicketNumber", "MarketType"),
-                         col_types = "iic"),
+                         col_names = c("MagicNumber", "TicketNumber", "MarketTypeCode","OrderDurationMin", "MarketType"),
+                         col_types = "iiiic"),
                 silent = TRUE)
 
 
