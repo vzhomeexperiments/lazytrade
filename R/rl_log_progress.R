@@ -1,6 +1,6 @@
 #' Function to log RL progress.
 #'
-#' @description Function will record Q values during updating of the model. These values will be used by another function
+#' @description Function will record Q values during the model update. These values will be used by another function
 #'
 #' @param x - dataframe containing trading results
 #' @param states  - Selected states of the System
@@ -23,9 +23,9 @@
 #' actions <- c("ON", "OFF")
 #' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 #'
-#' log_RL_progress(x = x,states = states, actions = actions, control = control)
+#' rl_log_progress(x = x,states = states, actions = actions, control = control)
 #'
-log_RL_progress <- function(x, states, actions, control){
+rl_log_progress <- function(x, states, actions, control){
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
 

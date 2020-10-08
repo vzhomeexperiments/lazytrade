@@ -9,9 +9,9 @@
 #' However policy 'ON' value will only be generated once the Q value is greater than zero
 #'
 #' @param x - Dataframe containing trading data
-#' @param states - possible states for Reinforcement Learning
-#' @param actions - possible actions
-#' @param control - control parameters
+#' @param states - Character vector, Selected states of the System
+#' @param actions - Character vector, Selected actions executed under environment
+#' @param control - List, control parameters as defined in the Reinforcement Learning Package
 #'
 #' @return Function returns data frame with reinforcement learning model policy
 #' @export
@@ -19,19 +19,20 @@
 #' @examples
 #'
 #' library(dplyr)
+#' library(magrittr)
 #' library(ReinforcementLearning)
 #' library(lazytrade)
 #' data(trading_systemDF)
 #' states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
 #' actions <- c("ON", "OFF")
 #' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
-#' generate_RL_policy_mt(x = trading_systemDF,
+#' rl_generate_policy_mt(x = trading_systemDF,
 #'                       states = states,
 #'                       actions = actions,
 #'                       control = control)
 #'
 #'
-generate_RL_policy_mt <- function(x, states, actions, control){
+rl_generate_policy_mt <- function(x, states, actions, control){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
@@ -60,10 +61,10 @@ generate_RL_policy_mt <- function(x, states, actions, control){
     # combine data as dataframe
     i_tupple <- data.frame(State,Action,Reward,NextState,row.names = i, stringsAsFactors = F) %>%
       # change factor column to as.character (required by RL function)
-      mutate_if(is.factor, as.character)
+      dplyr::mutate_if(is.factor, as.character)
     # join dummy tupple to current row in the new object
     if(!exists("df_tupple")){df_tupple <- bind_rows(d_tupple, i_tupple)} else {
-      df_tupple <- bind_rows(df_tupple, i_tupple)
+      df_tupple <- dplyr::bind_rows(df_tupple, i_tupple)
     }
 
     # update model with new data tupple
