@@ -75,6 +75,9 @@ head(macd_m, 2)
 #> [2,]    35    36    37    38    39    40
 ```
 
+Why is it useful? It is possible to convert time-series data into matrix
+data to do make modeling
+
 ## Example - aggregate multiple log files and visualize results
 
 Multiple log files could be joined into one data object
@@ -136,7 +139,7 @@ data(data_trades)
 states <- c("tradewin", "tradeloss")
 actions <- c("ON", "OFF")
 control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
-generate_RL_policy(data_trades, states, actions, control)
+rl_generate_policy(data_trades, states, actions, control)
 #>   TradeState Policy
 #> 1  tradeloss     ON
 #> 2   tradewin    OFF
@@ -157,7 +160,7 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 ce37D988
+#> 1 505fF03E
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -302,7 +305,7 @@ test_that("test value of the calculation", {
     group_by(X1) %>%
     summarise(PnL = sum(X5),
               NumTrades = n(),
-              PrFact = profit_factor(X5)) %>%
+              PrFact = util_profit_factor(X5)) %>%
     select(PrFact) %>%
     head(1) %>%
     as.vector() %>%
