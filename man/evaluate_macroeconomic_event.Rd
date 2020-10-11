@@ -59,6 +59,7 @@ or, when Macro economic event is present:
 # evaluate data on macroeconomic event (required to start trading)
 library(dplyr)
 library(readr)
+library(lazytrade)
 
 dir <- normalizePath(tempdir(),winslash = "/")
 

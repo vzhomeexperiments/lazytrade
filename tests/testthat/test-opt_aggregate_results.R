@@ -5,9 +5,15 @@ library(lazytrade)
 
 context("data transformation")
 
+  dir <- normalizePath(tempdir(),winslash = "/")
+
+  file.copy(from = system.file("extdata/RES", package = "lazytrade"),
+            to = dir, recursive = TRUE)
+#'
+
 test_that("join to vector works", {
 
-  DFOLDER <- system.file("extdata/RES", package = "lazytrade")
+  DFOLDER <- file.path(dir, "RES")
 
   # join paths into a vector
   DFOLDER <- dir(DFOLDER, full.names = TRUE)
@@ -18,7 +24,7 @@ test_that("join to vector works", {
 
 test_that("data aggregation works", {
 
-  DFOLDER <- system.file("extdata/RES", package = "lazytrade")
+  DFOLDER <- file.path(dir, "RES")
 
   # join paths into a vector
   DFOLDER <- dir(DFOLDER, full.names = TRUE)
@@ -33,7 +39,7 @@ test_that("data aggregation works", {
     for (FILE in filesToRead) {
       #FILE <- filesToRead[1]
       # import data
-      DF_TEST <- import_data(path_terminal = FOLDER, trade_log_file = FILE)
+      DF_TEST <- lazytrade::import_data(path_sbxm = FOLDER, trade_log_file = FILE)
       DF_TEST$Symbol <- as.character(DF_TEST$Symbol)
       DF_TEST$OrderType <- as.character(DF_TEST$OrderType)
       #agregate

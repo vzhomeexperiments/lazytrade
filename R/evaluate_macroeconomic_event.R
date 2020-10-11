@@ -38,6 +38,7 @@
 #' # evaluate data on macroeconomic event (required to start trading)
 #' library(dplyr)
 #' library(readr)
+#' library(lazytrade)
 #'
 #' dir <- normalizePath(tempdir(),winslash = "/")
 #'
@@ -79,7 +80,7 @@ evaluate_macroeconomic_event <- function(setup_file_path,
     #read the file containing a flag (1 will mean that event is present hence no new opened orders)
     DF_NT <- readr::read_csv(file= macro_complete_path, col_types = "i")
     #read the table of trading robots in operation
-    DF_Setup <- readr::read_csv(setup_complete_path)
+    DF_Setup <- readr::read_csv(setup_complete_path, col_types = "ffi")
 
     ## condition to disable systems
     if(DF_NT[1,1] == 1) {

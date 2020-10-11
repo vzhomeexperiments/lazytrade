@@ -26,7 +26,7 @@ library(lazytrade)
 path_sbxm <- normalizePath(tempdir(),winslash = "/")
 
 file.copy(from = system.file("extdata", "MarketTypeLog9139106.csv", package = "lazytrade"),
-         to = file.path(path_sbxm, "MarketTypeLog9139106.csv"), overwrite = TRUE)
+          to = file.path(path_sbxm, "MarketTypeLog9139106.csv"), overwrite = TRUE)
 
 DF1 <- mt_import_data(path_sbxm = path_sbxm,
                       system_number = 9139106)
