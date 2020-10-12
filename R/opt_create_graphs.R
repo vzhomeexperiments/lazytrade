@@ -36,9 +36,9 @@ opt_create_graphs <- function(x, outp_path, graph_type = "pdf"){
 
   # generate bar plot
   bars <- x %>%
-    mutate_if(is.character, as.factor) %>%
-    group_by(Symbol) %>%
-    summarise(PairGain = sum(Profit)) %>%
+    dplyr::mutate_if(is.character, as.factor) %>%
+    dplyr::group_by(Symbol) %>%
+    dplyr::summarise(PairGain = sum(Profit)) %>%
     ggplot2::ggplot(aes(x = Symbol, y = PairGain))+ggplot2::geom_bar(stat = "identity")
 
   # generate time series plot

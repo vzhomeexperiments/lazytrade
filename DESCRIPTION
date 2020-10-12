@@ -26,8 +26,7 @@ Imports:
     grDevices,
     h2o,
     ReinforcementLearning,
-    openssl,
-    tidyr
+    openssl
 Suggests: 
     testthat (>= 2.1.0),
     covr,

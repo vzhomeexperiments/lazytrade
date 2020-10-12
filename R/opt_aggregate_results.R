@@ -79,7 +79,7 @@ opt_aggregate_results <- function(path_data){
     #sort by close date
     dplyr::arrange(OrderCloseTime) %>%
     #create cumulative sum column
-    mutate(CUMSUM_PNL = cumsum(Profit))
+    dplyr::mutate(CUMSUM_PNL = cumsum(Profit))
 
   return(DFR)
 

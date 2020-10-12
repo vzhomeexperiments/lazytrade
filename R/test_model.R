@@ -47,59 +47,63 @@ test_model <- function(test_dataset, predictor_dataset, test_type){
       # do the testing
       if(!exists("dat31")){
         # join real values with predicted values
-        dat31 <- test_dataset %>% select(LABEL) %>% bind_cols(predictor_dataset) %>%
+        dat31 <- test_dataset %>%
+          dplyr::select(LABEL) %>%
+          dplyr::bind_cols(predictor_dataset) %>%
           # add column risk that has +1 if buy trade and -1 if sell trade, 0 (no risk) if prediction is exact zero
           # mutate(Risk = if_else(predict > 0, 1, if_else(predict < 0, -1, 0))) %>%
-          mutate(Risk = if_else(predict > TPSL, 1, if_else(predict < -TPSL, -1, 0))) %>%
+          dplyr::mutate(Risk = dplyr::if_else(predict > TPSL, 1, dplyr::if_else(predict < -TPSL, -1, 0))) %>%
           # calculate expected outcome of risking the 'Risk': trade according to prediction
-          mutate(ExpectedGain = predict*Risk) %>%
+          dplyr::mutate(ExpectedGain = predict*Risk) %>%
           # calculate 'real' gain or loss. LABEL is how the price moved (ground truth) so the column will be real outcome
-          mutate(AchievedGain = LABEL*Risk) %>%
+          dplyr::mutate(AchievedGain = LABEL*Risk) %>%
           # to account on spread
-          mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, + 5, 0))) %>%
+          dplyr::mutate(Spread = dplyr::if_else(AchievedGain > 0, - 5, dplyr::if_else(AchievedGain < 0, + 5, 0))) %>%
           # calculate 'net' gain
-          mutate(NetGain = AchievedGain + Spread) %>%
+          dplyr::mutate(NetGain = AchievedGain + Spread) %>%
           # remove zero values to calculate presumed number of trades
-          filter(AchievedGain != 0) %>%
+          dplyr::filter(AchievedGain != 0) %>%
           # get the sum of both columns
           # Column Expected PNL would be the result in case all trades would be successful
           # Column Achieved PNL is the results achieved in reality
-          summarise(ExpectedPnL = sum(ExpectedGain),
-                    AchievedPnL = sum(NetGain),
-                    TotalTrades = n(),
-                    TPSL_Level = TPSL) %>%
+          dplyr::summarise(ExpectedPnL = sum(ExpectedGain),
+                           AchievedPnL = sum(NetGain),
+                           TotalTrades = n(),
+                           TPSL_Level = TPSL) %>%
           # interpret the results
-          mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
-                 FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
+          dplyr::mutate(FinalOutcome = dplyr::if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
+                        FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
       } else {
         #
-        dat311 <- test_dataset %>% select(LABEL) %>% bind_cols(predictor_dataset) %>%
+        dat311 <- test_dataset %>%
+          dplyr::select(LABEL) %>%
+          dplyr::bind_cols(predictor_dataset) %>%
           # add column risk that has +1 if buy trade and -1 if sell trade, 0 (no risk) if prediction is exact zero
           # mutate(Risk = if_else(predict > 0, 1, if_else(predict < 0, -1, 0))) %>%
-          mutate(Risk = if_else(predict > TPSL, 1, if_else(predict < -TPSL, -1, 0))) %>%
+          dplyr::mutate(Risk = dplyr::if_else(predict > TPSL, 1, dplyr::if_else(predict < -TPSL, -1, 0))) %>%
           # calculate expected outcome of risking the 'Risk': trade according to prediction
-          mutate(ExpectedGain = predict*Risk) %>%
+          dplyr::mutate(ExpectedGain = predict*Risk) %>%
           # calculate 'real' gain or loss. LABEL is how the price moved (ground truth) so the column will be real outcome
-          mutate(AchievedGain = LABEL*Risk) %>%
+          dplyr::mutate(AchievedGain = LABEL*Risk) %>%
           # to account on spread
-          mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, + 5, 0))) %>%
+          dplyr::mutate(Spread = if_else(AchievedGain > 0, - 5, if_else(AchievedGain < 0, + 5, 0))) %>%
           # calculate 'net' gain
-          mutate(NetGain = AchievedGain + Spread) %>%
+          dplyr::mutate(NetGain = AchievedGain + Spread) %>%
           # remove zero values to calculate presumed number of trades
-          filter(AchievedGain != 0) %>%
+          dplyr::filter(AchievedGain != 0) %>%
           # get the sum of both columns
           # Column Expected PNL would be the result in case all trades would be successful
           # Column Achieved PNL is the results achieved in reality
-          summarise(ExpectedPnL = sum(ExpectedGain),
-                    AchievedPnL = sum(NetGain),
-                    TotalTrades = n(),
-                    TPSL_Level = TPSL) %>%
+          dplyr::summarise(ExpectedPnL = sum(ExpectedGain),
+                           AchievedPnL = sum(NetGain),
+                           TotalTrades = n(),
+                           TPSL_Level = TPSL) %>%
           # interpret the results
-          mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
-                 FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
+          dplyr::mutate(FinalOutcome = dplyr::if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
+                        FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
 
         # join final results
-        dat31 <- bind_rows(dat31, dat311)
+        dat31 <- dplyr::bind_rows(dat31, dat311)
       }
 
 
@@ -111,9 +115,9 @@ test_model <- function(test_dataset, predictor_dataset, test_type){
     max_trades <- 0.8 * max(dat31$TotalTrades) %>% round()
     min_trades <- 0.2 * max(dat31$TotalTrades) %>% round()
     # step 2: filter out only those results
-    dat51 <- dat31 %>% filter(TotalTrades < max_trades, TotalTrades > min_trades) %>%
+    dat51 <- dat31 %>% dplyr::filter(TotalTrades < max_trades, TotalTrades > min_trades) %>%
       # step 3: keep only rows with the maximum quality
-      slice(which.max(FinalQuality))
+      dplyr::slice(which.max(FinalQuality))
 
     # return the result of the function
     return(dat51)
@@ -122,21 +126,22 @@ test_model <- function(test_dataset, predictor_dataset, test_type){
 
   if(test_type == "classification"){
 
-    dat31 <-  predictor_dataset %>% bind_cols(test_dataset) %>%
+    dat31 <-  predictor_dataset %>%
+      dplyr::bind_cols(test_dataset) %>%
       # generate column of estimated risk trusting the model
-      mutate(RiskEstim = if_else(predict == "BU", 1, -1)) %>%
+      dplyr::mutate(RiskEstim = if_else(predict == "BU", 1, -1)) %>%
       # generate colmn of 'known' direction
-      mutate(RiskKnown = if_else(LABEL > 0, 1, if_else(LABEL < 0, -1, 0))) %>%
+      dplyr::mutate(RiskKnown = dplyr::if_else(LABEL > 0, 1, dplyr::if_else(LABEL < 0, -1, 0))) %>%
       # calculate expected outcome of risking the 'RiskEst'
-      mutate(AchievedGain = RiskEstim*LABEL) %>%
+      dplyr::mutate(AchievedGain = RiskEstim*LABEL) %>%
       # calculate 'real' gain or loss
-      mutate(ExpectedGain = RiskKnown*LABEL) %>%
+      dplyr::mutate(ExpectedGain = RiskKnown*LABEL) %>%
       # get the sum of both columns
-      summarise(ExpectedPnL = sum(ExpectedGain),
-                AchievedPnL = sum(AchievedGain)) %>%
+      dplyr::summarise(ExpectedPnL = sum(ExpectedGain),
+                       AchievedPnL = sum(AchievedGain)) %>%
       # interpret the results
-      mutate(FinalOutcome = if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
-             FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
+      dplyr::mutate(FinalOutcome = dplyr::if_else(AchievedPnL > 0, "VeryGood", "VeryBad"),
+                    FinalQuality = AchievedPnL/(0.0001+ExpectedPnL))
 
   }
 

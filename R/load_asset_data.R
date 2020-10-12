@@ -40,7 +40,7 @@ load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data
 
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
-  DFT1 <- try(read_csv(file = file.path(path_terminal, paste0(trade_log_file, time_period, "-", data_deepth, ".csv")),
+  DFT1 <- try(readr::read_csv(file = file.path(path_terminal, paste0(trade_log_file, time_period, "-", data_deepth, ".csv")),
                        col_names = F),
               silent = TRUE)
   if(class(DFT1)[1] == "try-error") {stop("Error reading file. File with trades may not exist yet!",
@@ -53,14 +53,16 @@ load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data
 
   if(!nrow(DFT1)==0){
     # data frame preparation
-    DFT1$X1 <- ymd_hms(DFT1$X1)
+    DFT1$X1 <- lubridate::ymd_hms(DFT1$X1)
     if(trade_log_file == "AI_CP"){
     ## divide JPY pairs by 100
     DFT2 <- DFT1[ , c(8,10,18,22,24,25,26)]/100
-    DFT3 <- DFT1[, -c(8,10,18,22,24,25,26)] %>% bind_cols(DFT2) %>% select(1,2,3,4,5,6,7,8,
-                                                                           9,10,11,12,13,14,15,
-                                                                           16,17,18,19,20,21,22,
-                                                                           23,24,25,26,27,28,29)
+    DFT3 <- DFT1[, -c(8,10,18,22,24,25,26)] %>%
+      dplyr::bind_cols(DFT2) %>%
+      dplyr::select(1,2,3,4,5,6,7,8,
+                    9,10,11,12,13,14,15,
+                    16,17,18,19,20,21,22,
+                    23,24,25,26,27,28,29)
     return(DFT3)
     }
 

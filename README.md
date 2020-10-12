@@ -105,7 +105,7 @@ library(lubridate)
 # files are located in the sample folders
 DFOLDER <- system.file("extdata/RES", package = "lazytrade")
 
-DFR <- opt_aggregate_results(fold_path = DFOLDER)
+DFR <- opt_aggregate_results(path_data = DFOLDER)
 ```
 
 This data object can be visualized
@@ -159,8 +159,6 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
-#>          .
-#> 1 505fF03E
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -421,6 +419,29 @@ After first submission there are some notes on specific R flavors
 
 This question was addressed here but yet it’s not answered:
 <https://stackoverflow.com/questions/48487541/r-cmd-check-note-namespace-in-imports-field-not-imported>
+
+To search for specific function in the scripts one can do the following:
+
+``` r
+
+list_of_functions <- c(
+  "drop_na",
+  "fill",
+  "extract",
+  "gather",
+  "nest",
+  "separate"
+)
+
+for (FN in list_of_functions) {
+
+if(!exists("res")){
+ res <- BurStMisc::scriptSearch(FN)  
+} else {
+  res2 <- BurStMisc::scriptSearch(FN)  
+  res <- mapply(c, res, res2, SIMPLIFY=FALSE)}
+}
+```
 
 ### Define min R version
 
