@@ -159,6 +159,8 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
+#>          .
+#> 1 ae1643FE
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -508,6 +510,7 @@ spelling `devtools::spell_check()`
 checking on R hub `rhub::validate_email()` `rhub::check(
 platform="windows-x86_64-devel",
 env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always") )`
+
 `devtools::check_rhub(interactive = F)`
 
 checking with release `devtools::check_win_release()`

@@ -509,6 +509,13 @@ checking on R hub
   platform="windows-x86_64-devel",
   env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always")
 )`
+
+```{r eval=FALSE, include=FALSE}
+rhub::check_on_fedora(show_status = FALSE,
+                      env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
+```
+
+
 `devtools::check_rhub(interactive = F)`
 
 checking with release
