@@ -58,8 +58,8 @@ library(readr)
 library(magrittr)
 library(h2o)
 library(lazytrade)
-# start h2o engine (using all CPU's by default)
-h2o.init()
+# start h2o engine
+h2o.init(nthreads = 2)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")

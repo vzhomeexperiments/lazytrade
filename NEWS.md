@@ -3,10 +3,6 @@
 ## Planned Changes
 
 * Add folder generation function
-* Remove warnings:
-
-1: `as_data_frame()` is deprecated as of tibble 2.0.0. Please use `as_tibble()` instead.
-2: `data_frame()` is deprecated as of tibble 1.1.0. Please use `tibble()` instead.
 
 # lazytrade 0.4.1
 
@@ -19,9 +15,10 @@
 * added option to balance classes in mt_make_model function
 * add and delete depricated functions
 * change names of functions to reflect the purpose: mt - market type, rl- reinforcement learning, util - utility
+* change example methods to unify them across functions
+* align names of the variables across several functions
 * remove warnings caused by new dplyr functionalities .groups
-
-
+* remove tidyr from imports to solve Note
 
 # lazytrade 0.4.0
 

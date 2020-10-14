@@ -48,7 +48,7 @@
 #'                  path_data = path_data)
 #' # start h2o engine (using all CPU's by default)
 #'
-#' h2o.init()
+#' h2o.init(nthreads = 2)
 #'
 #'
 #' # performing Deep Learning Regression using the custom function
