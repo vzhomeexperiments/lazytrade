@@ -75,8 +75,8 @@ aml_collect_data(indicator_dataset = ind,
                  path_data = path_data)
 
 
-# start h2o engine (using all CPU's by default)
-h2o.init()
+# start h2o engine
+h2o.init(nthreads = 2)
 
 
 # performing Deep Learning Regression using the custom function

@@ -22,16 +22,21 @@
 #' library(readr)
 #' library(lubridate)
 #' library(lazytrade)
-#' DFT1 <- import_data(trade_log_file = system.file("extdata",
-#'                                                  "OrdersResultsT1.csv",
-#'                                                  package = "lazytrade"),
-#'                     demo_mode = TRUE)
 #'
-#' dir <- normalizePath(tempdir(),winslash = "/")
+#' path_sbxm <- normalizePath(tempdir(),winslash = "/")
+#'
+#' file.copy(from = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"),
+#'           to = file.path(path_sbxm, "OrdersResultsT1.csv"), overwrite = TRUE)
+#'
+#' DFT1 <- import_data(path_sbxm = path_sbxm,
+#'                     trade_log_file = "OrdersResultsT1.csv")
+#'
 #' DFT1 %>%
 #' group_by(MagicNumber) %>% select(MagicNumber) %>% mutate(IsEnabled = 0) %>%
+#' # head to shorten time of this example
+#' head(2) %>%
 #' # write commands to disable/enable systems
-#' write_command_via_csv(path_terminal = file.path(dir))
+#' write_command_via_csv(path_terminal = path_sbxm)
 #'
 #'
 #'

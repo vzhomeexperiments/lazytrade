@@ -68,7 +68,7 @@ util_generate_password <- function(salt = "something random",
     # generate 'draft' part
     draft <- paste(Sys.Date(), salt) %>%
       as.character.Date() %>%
-      sha512(key = as.character(Sys.time()))
+      openssl::sha512(key = as.character(Sys.time()))
 
     # take first part
     p1 <- draft %>%

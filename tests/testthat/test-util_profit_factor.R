@@ -2,7 +2,7 @@ library(testthat)
 library(magrittr)
 library(dplyr)
 
-context("profit_factor")
+context("util_profit_factor")
 
 test_that("test value of the calculation", {
 
@@ -12,7 +12,7 @@ test_that("test value of the calculation", {
     group_by(X1) %>%
     summarise(PnL = sum(X5),
               NumTrades = n(),
-              PrFact = profit_factor(X5)) %>%
+              PrFact = util_profit_factor(X5)) %>%
     select(PrFact) %>%
     head(1) %>%
     as.vector() %>%

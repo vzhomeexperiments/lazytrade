@@ -1,6 +1,7 @@
 library(testthat)
 library(readr)
 library(lubridate)
+library(lazytrade)
 
 
 context("import_data")
@@ -8,7 +9,14 @@ context("import_data")
 
 test_that("import works", {
 
-  DFT1 <- import_data(trade_log_file = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"), demo_mode = TRUE)
+  path_sbxm <- normalizePath(tempdir(),winslash = "/")
+
+  file.copy(from = system.file("extdata", "OrdersResultsT1.csv", package = "lazytrade"),
+            to = file.path(path_sbxm, "OrdersResultsT1.csv"), overwrite = TRUE)
+
+
+  DFT1 <- import_data(path_sbxm = path_sbxm,
+                      trade_log_file = "OrdersResultsT1.csv")
 
   expect_s3_class(DFT1, class = 'data.frame')
 

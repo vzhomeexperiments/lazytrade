@@ -14,16 +14,17 @@
 #'
 #' library(magrittr)
 #' library(dplyr)
+#' library(lazytrade)
 #' data(profit_factor_data)
 #' profit_factor_data %>%
 #'    group_by(X1) %>%
 #'    summarise(PnL = sum(X5),
 #'              NumTrades = n(),
-#'              PrFact = profit_factor(X5)) %>%
+#'              PrFact = util_profit_factor(X5)) %>%
 #'    select(PrFact) %>% head(1) %>% as.vector() %>% round(3)
 #'
 #'
-profit_factor <- function(x){
+util_profit_factor <- function(x){
 
   # calculate profit factor
   res <- sum(x[x>0])/(0.0001+sum(abs(x[x<0])))

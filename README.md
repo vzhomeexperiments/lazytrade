@@ -75,6 +75,9 @@ head(macd_m, 2)
 #> [2,]    35    36    37    38    39    40
 ```
 
+Why is it useful? It is possible to convert time-series data into matrix
+data to do make modeling
+
 ## Example - aggregate multiple log files and visualize results
 
 Multiple log files could be joined into one data object
@@ -102,7 +105,7 @@ library(lubridate)
 # files are located in the sample folders
 DFOLDER <- system.file("extdata/RES", package = "lazytrade")
 
-DFR <- opt_aggregate_results(fold_path = DFOLDER)
+DFR <- opt_aggregate_results(path_data = DFOLDER)
 ```
 
 This data object can be visualized
@@ -136,7 +139,7 @@ data(data_trades)
 states <- c("tradewin", "tradeloss")
 actions <- c("ON", "OFF")
 control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
-generate_RL_policy(data_trades, states, actions, control)
+rl_generate_policy(data_trades, states, actions, control)
 #>   TradeState Policy
 #> 1  tradeloss     ON
 #> 2   tradewin    OFF
@@ -157,7 +160,7 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 ce37D988
+#> 1 ae1643FE
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -302,7 +305,7 @@ test_that("test value of the calculation", {
     group_by(X1) %>%
     summarise(PnL = sum(X5),
               NumTrades = n(),
-              PrFact = profit_factor(X5)) %>%
+              PrFact = util_profit_factor(X5)) %>%
     select(PrFact) %>%
     head(1) %>%
     as.vector() %>%
@@ -419,6 +422,29 @@ After first submission there are some notes on specific R flavors
 This question was addressed here but yet it’s not answered:
 <https://stackoverflow.com/questions/48487541/r-cmd-check-note-namespace-in-imports-field-not-imported>
 
+To search for specific function in the scripts one can do the following:
+
+``` r
+
+list_of_functions <- c(
+  "drop_na",
+  "fill",
+  "extract",
+  "gather",
+  "nest",
+  "separate"
+)
+
+for (FN in list_of_functions) {
+
+if(!exists("res")){
+ res <- BurStMisc::scriptSearch(FN)  
+} else {
+  res2 <- BurStMisc::scriptSearch(FN)  
+  res <- mapply(c, res, res2, SIMPLIFY=FALSE)}
+}
+```
+
 ### Define min R version
 
 <https://stackoverflow.com/questions/38686427/determine-minimum-r-version-for-all-package-dependencies>
@@ -484,6 +510,7 @@ spelling `devtools::spell_check()`
 checking on R hub `rhub::validate_email()` `rhub::check(
 platform="windows-x86_64-devel",
 env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always") )`
+
 `devtools::check_rhub(interactive = F)`
 
 checking with release `devtools::check_win_release()`

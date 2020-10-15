@@ -22,17 +22,18 @@
 #' library(readr)
 #' library(ReinforcementLearning)
 #' library(magrittr)
+#' library(lazytrade)
 #' data(data_trades)
-#' write_control_parameters(data_trades, path_control_files = tempfile())
+#' rl_write_control_parameters(data_trades, path_control_files = tempfile())
 #'
 #' }
 #'
-write_control_parameters <- function(x, path_control_files){
+rl_write_control_parameters <- function(x, path_control_files){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
 
-# delete DF_RES if it is exist
+# delete DF_RES if it is exists
 if(exists("DF_RES")){rm(DF_RES)}
 
 # perform set of operations for every trading system
@@ -59,7 +60,7 @@ for (ALF in Alpha) {
       # EPS <- 0.1
       control <- list(alpha = ALF, gamma = GAM, epsilon = EPS)
       # retrieve RL model Q values progress
-      DF_RESEARCH <- lazytrade::log_RL_progress(x = x,states = states, actions = actions, control = control)
+      DF_RESEARCH <- lazytrade::rl_log_progress(x = x,states = states, actions = actions, control = control)
       # create object where all data can be aggregated
       if(!exists("DF_RES")){DF_RES <- DF_RESEARCH} else {
         DF_RES <- dplyr::bind_rows(DF_RES, DF_RESEARCH) }

@@ -23,10 +23,10 @@
 #' actions <- c("ON", "OFF") # 'ON' and 'OFF' are referring to decision to trade with Slave system
 #' control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 #'
-#' log_RL_progress_mt(x = x,states = states, actions = actions, control = control)
+#' rl_log_progress_mt(x = x,states = states, actions = actions, control = control)
 #'
 #'
-log_RL_progress_mt <- function(x, states, actions, control){
+rl_log_progress_mt <- function(x, states, actions, control){
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("ReinforcementLearning", quietly = TRUE)
 

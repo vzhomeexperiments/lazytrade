@@ -6,24 +6,23 @@
 \usage{
 check_if_optimize(
   x,
-  path_trading_robot = "",
+  system_list,
+  path_data,
   num_trades_to_consider = 3,
   profit_factor_limit = 0.7,
-  demo_mode = FALSE,
   write_mode = FALSE
 )
 }
 \arguments{
 \item{x}{- dataframe containing trading results}
 
-\item{path_trading_robot}{- path of trading robot repository. must contain folder TEST with file Setup.csv.
-File Setup.csv contains a table with magic numbers under test}
+\item{system_list}{- dataframe containing a table with magic numbers used by robots. Stored in file Setup.csv}
+
+\item{path_data}{- string, path to the folder where optimization file should be written}
 
 \item{num_trades_to_consider}{- Number of trades to calculate profit factor}
 
-\item{profit_factor_limit}{- Limit below which trading robot considered not working properly}
-
-\item{demo_mode}{- When true function uses package test dataset}
+\item{profit_factor_limit}{- Limit below which trading robot is considered not working properly}
 
 \item{write_mode}{- When true function will write result to the file located in the temporary directory}
 }
@@ -43,29 +42,31 @@ Whenever there will be not enough trades then empty file will be written to the 
 \examples{
 
 library(lazytrade)
+library(magrittr)
 library(dplyr)
 library(readr)
 library(lubridate)
-DFT1 <- import_data(trade_log_file = system.file("extdata",
-                                                 "OrdersResultsT1.csv",
-                                                 package = "lazytrade"),
-                    demo_mode = TRUE)
+
+path_data <- normalizePath(tempdir(),winslash = "/")
+
+file.copy(from = system.file("extdata", "Setup.csv", package = "lazytrade"),
+          to = file.path(path_data, "Setup.csv"), overwrite = TRUE)
+
+system_list <- read_csv(file.path(path_data, "Setup.csv"))
+
+data(profit_factorDF)
 
 
 # without writing to the file
-DFT1 \%>\% check_if_optimize(num_trades_to_consider = 3,
-                           profit_factor_limit = 1.2,
-                           demo_mode = TRUE,
-                           write_mode = FALSE)
-
-# function will write to the temporary file
-DFT1 \%>\% check_if_optimize(num_trades_to_consider = 3,
-                           profit_factor_limit = 1.2,
-                           demo_mode = TRUE,
-                           write_mode = TRUE)
+check_if_optimize(x = profit_factorDF,
+                  system_list = system_list,
+                  path_data,
+                  num_trades_to_consider = 3,
+                  profit_factor_limit = 0.8,
+                  write_mode = TRUE)
 
 
 }
 \author{
-(C) 2019 Vladimir Zhbanko
+(C) 2019,2020 Vladimir Zhbanko
 }

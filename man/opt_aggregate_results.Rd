@@ -4,16 +4,16 @@
 \alias{opt_aggregate_results}
 \title{Function to aggregate trading results from multiple folders and files}
 \usage{
-opt_aggregate_results(fold_path)
+opt_aggregate_results(path_data)
 }
 \arguments{
-\item{fold_path}{- path to the folder containing subfolders}
+\item{path_data}{- String, path to the folder containing subfolders}
 }
 \value{
 Dataframe with trading results
 }
 \description{
-PURPOSE: Read multiple files stored in different folders
+PURPOSE: Read multiple '.csv' files stored in different folders
 Store results to the intermediate dataframe.
 }
 \details{
@@ -28,9 +28,15 @@ Data object is sorted in descending order by order close time
  library(dplyr)
  library(magrittr)
  library(lubridate)
- DFOLDER <- system.file("extdata/RES", package = "lazytrade")
- #dir <- normalizePath(tempdir(),winslash = "/")
- opt_aggregate_results(fold_path = DFOLDER)
+
+ dir <- normalizePath(tempdir(),winslash = "/")
+
+ file.copy(from = system.file("extdata/RES", package = "lazytrade"),
+           to = dir, recursive = TRUE)
+
+
+
+ DF_RES <- opt_aggregate_results(path_data = file.path(dir, "RES"))
 
 
 }

@@ -35,8 +35,8 @@
 #' library(magrittr)
 #' library(h2o)
 #' library(lazytrade)
-#' # start h2o engine (using all CPU's by default)
-#' h2o.init()
+#' # start h2o engine
+#' h2o.init(nthreads = 2)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
@@ -71,7 +71,7 @@ self_learn_ai_R <- function(price_dataset, indicator_dataset, num_bars, timefram
                             setup_mode = FALSE,
                             research_mode = FALSE,
                             write_log = TRUE){
-
+  .Deprecated("self_learn_ai_R",msg = "This function is replaced by function aml_make_model")
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)

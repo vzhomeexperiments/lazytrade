@@ -14,7 +14,8 @@
 #' library(dplyr)
 #' library(magrittr)
 #' data(profit_factorDF)
-#' get_profit_factorDF(profit_factorDF, 10)
+#' get_profit_factorDF(x = profit_factorDF,
+#'                     num_orders = 10)
 #'
 #'
 #'
@@ -25,35 +26,36 @@ get_profit_factorDF <- function(x, num_orders){
   x <- x %>% ungroup() #ungroup to remove warning
 
   DF_L <- x %>%
-    group_by(MagicNumber) %>%
-    summarise(nOrders = n())%>%
-    filter(nOrders > num_orders)%>%
-    select(MagicNumber)%>%
+    dplyr::group_by(MagicNumber) %>%
+    dplyr::summarise(nOrders = n(), .groups = "drop_last") %>%
+
+    dplyr::filter(nOrders > num_orders) %>%
+    dplyr::select(MagicNumber) %>%
     # subset only rows that contans magic numbers from x
-    inner_join(x, by = "MagicNumber")%>%
-    group_by(MagicNumber)%>%
-    filter(Profit < 0) %>%
-    summarise(Loss = abs(sum(Profit)))
+    dplyr::inner_join(x, by = "MagicNumber") %>%
+    dplyr::group_by(MagicNumber) %>%
+    dplyr::filter(Profit < 0) %>%
+    dplyr::summarise(Loss = abs(sum(Profit)), .groups = "drop_last")
   # generate DF with only MagicNumbers when > 10 trades and all trades are profits
   DF_P <- x %>%
-    group_by(MagicNumber) %>%
-    summarise(nOrders = n())%>%
-    filter(nOrders > num_orders)%>%
-    select(MagicNumber)%>%
+    dplyr::group_by(MagicNumber) %>%
+    dplyr::summarise(nOrders = n(), .groups = "drop_last") %>%
+    dplyr::filter(nOrders > num_orders)%>%
+    dplyr::select(MagicNumber)%>%
     # subset only rows that contans magic numbers from x
-    inner_join(x, by = "MagicNumber")%>%
-    group_by(MagicNumber)%>%
-    filter(Profit > 0) %>%
-    summarise(Gain = abs(sum(Profit)))
+    dplyr::inner_join(x, by = "MagicNumber")%>%
+    dplyr::group_by(MagicNumber)%>%
+    dplyr::filter(Profit > 0) %>%
+    dplyr::summarise(Gain = abs(sum(Profit)), .groups = "drop_last")
   # generate DF containing profit factor of all systems
   DF <- DF_P %>%
-    full_join(DF_L, by = "MagicNumber")
+    dplyr::full_join(DF_L, by = "MagicNumber")
   # replace any NA with 1!
   DF[is.na(DF)] <- 1
   # calculate profit factors of the each system!
   DF_PF <- DF%>%
-    group_by(MagicNumber)%>%
-    mutate(PrFact = Gain/(0.001+Loss))%>%
-    select(MagicNumber, PrFact)
+    dplyr::group_by(MagicNumber)%>%
+    dplyr::mutate(PrFact = Gain/(0.001+Loss))%>%
+    dplyr::select(MagicNumber, PrFact)
   return(DF_PF)
 }

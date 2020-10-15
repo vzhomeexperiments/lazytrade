@@ -22,14 +22,15 @@
 #' library(readr)
 #' library(ReinforcementLearning)
 #' library(magrittr)
+#' library(lazytrade)
 #' data(trading_systemDF)
 #'
 #' # use optimal control parameters found by auxiliary function
-#' write_control_parameters_mt(trading_systemDF, path_control_files = tempfile())
+#' rl_write_control_parameters_mt(trading_systemDF, path_control_files = tempfile())
 #' }
 #'
 #'
-write_control_parameters_mt <- function(x, path_control_files){
+rl_write_control_parameters_mt <- function(x, path_control_files){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -62,7 +63,7 @@ for (ALF in Alpha) {
       # EPS <- 0.1
       control <- list(alpha = ALF, gamma = GAM, epsilon = EPS)
       # retrieve RL model Q values progress
-      DF_RESEARCH <- lazytrade::log_RL_progress_mt(x = x,states = states, actions = actions, control = control)
+      DF_RESEARCH <- lazytrade::rl_log_progress_mt(x = x,states = states, actions = actions, control = control)
       # create object where all data can be aggregated
       if(!exists("DF_RES")){DF_RES <- DF_RESEARCH} else {
         DF_RES <- dplyr::bind_rows(DF_RES, DF_RESEARCH) }
@@ -92,7 +93,7 @@ DF_RES1 <- DF_RES %>%
   # order
   dplyr::arrange(desc(Tot_pnlT3)) %>%
   # get the first one
-  head(1) %>%
+  utils::head(1) %>%
   # select only control parameters
   dplyr::select(alpha, gamma, epsilon) %>%
   # convert to list

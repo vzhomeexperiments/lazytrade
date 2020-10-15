@@ -23,7 +23,8 @@ library(lazytrade)
 library(dplyr)
 library(magrittr)
 data(profit_factorDF)
-get_profit_factorDF(profit_factorDF, 10)
+get_profit_factorDF(x = profit_factorDF,
+                    num_orders = 10)
 
 
 
