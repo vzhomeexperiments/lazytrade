@@ -21,6 +21,8 @@
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #' @param force_update        Boolean, by setting this to TRUE function will generate new model
 #'                            (useful after h2o engine update)
+#' @param num_nn_options      Integer, value from 1 to 20 or more. Used to change number of variants
+#'                            of the random neural network structures
 #'
 #' @return Function is writing a file object with the best Deep Learning Regression model
 #' @export
@@ -62,7 +64,8 @@
 #'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data,
-#'                force_update=FALSE)
+#'                force_update=FALSE,
+#'                num_nn_options = 2)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -75,7 +78,8 @@
 #'
 #'
 aml_make_model <- function(symbol, timeframe, path_model, path_data,
-                           force_update=FALSE){
+                           force_update=FALSE,
+                           num_nn_options = 24){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -129,7 +133,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   #h2o.init()
 
   ### random network structure
-  nn_sets <- sample.int(n = 100, 24) %>% matrix(ncol = 3)
+  nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
 
   ###
 

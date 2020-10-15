@@ -25,6 +25,8 @@
 #' @param path_model          String, Path where the models are be stored
 #' @param path_data           String, Path where the aggregated historical data is stored, if exists in rds format
 #' @param activate_balance    Boolean, option to choose if to balance market type classes or not, default TRUE
+#' @param num_nn_options      Integer, value from 1 to 20 or more. Used to change number of variants
+#'                            of the random neural network structures
 #'
 #' @return Function is writing file object with the model
 #' @export
@@ -56,7 +58,8 @@
 #'               timeframe = 60,
 #'               path_model = path_model,
 #'               path_data = path_data,
-#'               activate_balance = TRUE)
+#'               activate_balance = TRUE,
+#'               num_nn_options = 2)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -72,7 +75,8 @@ mt_make_model <- function(indicator_dataset,
                           num_bars,
                           timeframe = 60,
                           path_model, path_data,
-                          activate_balance = TRUE){
+                          activate_balance = TRUE,
+                          num_nn_options = 24){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -111,7 +115,7 @@ mt_make_model <- function(indicator_dataset,
 
   # try different models and choose the best one...
   ### random network structure
-  nn_sets <- sample.int(n = 100, 24) %>% matrix(ncol = 3)
+  nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
 
   for (i in 1:dim(nn_sets)[1]) {
 

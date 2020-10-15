@@ -4,7 +4,14 @@
 \alias{aml_make_model}
 \title{Function to train Deep Learning regression model for a single asset}
 \usage{
-aml_make_model(symbol, timeframe, path_model, path_data, force_update = FALSE)
+aml_make_model(
+  symbol,
+  timeframe,
+  path_model,
+  path_data,
+  force_update = FALSE,
+  num_nn_options = 24
+)
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which to train the model}
@@ -17,6 +24,9 @@ aml_make_model(symbol, timeframe, path_model, path_data, force_update = FALSE)
 
 \item{force_update}{Boolean, by setting this to TRUE function will generate new model
 (useful after h2o engine update)}
+
+\item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
+of the random neural network structures}
 }
 \value{
 Function is writing a file object with the best Deep Learning Regression model
@@ -73,7 +83,8 @@ aml_make_model(symbol = 'USDJPY',
                timeframe = 60,
                path_model = path_model,
                path_data = path_data,
-               force_update=FALSE)
+               force_update=FALSE,
+               num_nn_options = 2)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)
