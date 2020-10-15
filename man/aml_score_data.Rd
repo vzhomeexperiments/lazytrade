@@ -66,7 +66,9 @@ h2o.init(nthreads = 2)
 aml_make_model(symbol = 'USDJPY',
                timeframe = 60,
                path_model = path_model,
-               path_data = path_data)
+               path_data = path_data,
+               force_update=FALSE,
+               num_nn_options = 2)
 
 
 path_sbxm <- normalizePath(tempdir(),winslash = "/")

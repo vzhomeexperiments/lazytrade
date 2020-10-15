@@ -10,7 +10,8 @@ mt_make_model(
   timeframe = 60,
   path_model,
   path_data,
-  activate_balance = TRUE
+  activate_balance = TRUE,
+  num_nn_options = 24
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ mt_make_model(
 \item{path_data}{String, Path where the aggregated historical data is stored, if exists in rds format}
 
 \item{activate_balance}{Boolean, option to choose if to balance market type classes or not, default TRUE}
+
+\item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
+of the random neural network structures}
 }
 \value{
 Function is writing file object with the model
@@ -74,7 +78,8 @@ mt_make_model(indicator_dataset = macd_ML60M,
               timeframe = 60,
               path_model = path_model,
               path_data = path_data,
-              activate_balance = TRUE)
+              activate_balance = TRUE,
+              num_nn_options = 2)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)

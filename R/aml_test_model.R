@@ -63,7 +63,8 @@
 #'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data,
-#'                force_update=FALSE)
+#'                force_update=FALSE,
+#'                num_nn_options = 2)
 #'
 #' path_sbxm <- normalizePath(tempdir(),winslash = "/")
 #' path_sbxs <- normalizePath(tempdir(),winslash = "/")

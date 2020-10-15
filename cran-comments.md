@@ -12,5 +12,8 @@ There were no ERRORs or WARNINGs or NOTEs
 
 As of email from 07.10.2020 package was re-checked again
 
+- removed tidyr from imports
+- optimized code to allow faster and less CPU intensive calculations
+
 ## Downstream dependencies
 R version 3.6.3 (2020-02-29)
