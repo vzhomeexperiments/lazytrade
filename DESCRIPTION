@@ -1,7 +1,7 @@
 Package: lazytrade
 Type: Package
 Title: Learn Computer and Data Science using Algorithmic Trading
-Version: 0.4.1
+Version: 0.4.2
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
 Description: Provide sets of functions and methods to learn and practice data science using idea of algorithmic trading.
@@ -30,5 +30,7 @@ Imports:
 Suggests: 
     testthat (>= 2.1.0),
     covr,
-    magrittr
+    magrittr,
+    data.table,
+    bit64
 Depends: R (>= 3.4.0)

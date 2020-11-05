@@ -137,7 +137,7 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   # PREDICT the next period...
   result_R1 <- h2o::h2o.predict(ModelR, recent_ML) %>% as.data.frame()
 
-  ## Checking the trading strategy assuming we open and hold position for 3, 5, 10, 34 bars!
+  ## Checking the trading strategy assuming we open and hold position for 2 - 50 bars!
 
   NBars <- c(2:50)
   # trying different N of bars
