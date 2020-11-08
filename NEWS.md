@@ -11,6 +11,7 @@
 ## Changes
 
 * solving warnings
+* added parameter min_perf to adjust model performance
 
 # lazytrade 0.4.1
 

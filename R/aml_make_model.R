@@ -39,6 +39,7 @@
 #' library(h2o)
 #' library(lazytrade)
 #' library(lubridate)
+#' library(magrittr)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
@@ -67,7 +68,7 @@
 #'                path_model = path_model,
 #'                path_data = path_data,
 #'                force_update=FALSE,
-#'                num_nn_options = 2,
+#'                num_nn_options = 3,
 #'                min_perf = 0)
 #'
 #' # stop h2o engine
@@ -136,7 +137,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   ## ---------- Data Modelling  ---------------
   #h2o.init()
 
-  ### random network structure
+  ### random network structurenum_nn_options <- 24
   nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
 
   ###
