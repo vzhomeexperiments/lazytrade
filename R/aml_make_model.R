@@ -65,7 +65,7 @@
 #'                path_model = path_model,
 #'                path_data = path_data,
 #'                force_update=FALSE,
-#'                num_nn_options = 2)
+#'                num_nn_options = 3)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
