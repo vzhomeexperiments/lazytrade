@@ -11,7 +11,7 @@
 #' results of the function aml_test_model.R.
 #'
 #' @details Function is using the dataset prepared by the function aml_collect_data.R.
-#' Function will start to train the model as soon as there are more than 100 rows in the dataset
+#' Function will start to train the model as soon as there are more than 1000 rows in the dataset
 #'
 #' @author (C) 2020 Vladimir Zhbanko
 #'
@@ -23,6 +23,8 @@
 #'                            (useful after h2o engine update)
 #' @param num_nn_options      Integer, value from 1 to 20 or more. Used to change number of variants
 #'                            of the random neural network structures
+#' @param min_perf            Double, value greater than 0. Used to set minimum value of model performance.
+#'                            Higher value will increase computation time
 #'
 #' @return Function is writing a file object with the best Deep Learning Regression model
 #' @export
@@ -37,6 +39,7 @@
 #' library(h2o)
 #' library(lazytrade)
 #' library(lubridate)
+#' library(magrittr)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
@@ -65,7 +68,8 @@
 #'                path_model = path_model,
 #'                path_data = path_data,
 #'                force_update=FALSE,
-#'                num_nn_options = 2)
+#'                num_nn_options = 3,
+#'                min_perf = 0)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -79,7 +83,8 @@
 #'
 aml_make_model <- function(symbol, timeframe, path_model, path_data,
                            force_update=FALSE,
-                           num_nn_options = 24){
+                           num_nn_options = 24,
+                           min_perf = 0.3){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -113,7 +118,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   x <- try(readr::read_rds(full_path), silent = T)
 
   # proceed with further steps only if model status is < 0 and there are enough data in x
-  if((model_status <= 0 && nrow(x) > 1000) || (!file.exists(m_path) && nrow(x) > 1000)) {
+  if((model_status <= min_perf && nrow(x) > 1000) || (!file.exists(m_path) && nrow(x) > 1000)) {
 
     dat12 <- x %>%
       # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
@@ -132,7 +137,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   ## ---------- Data Modelling  ---------------
   #h2o.init()
 
-  ### random network structure
+  ### random network structurenum_nn_options <- 24
   nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
 
   ###

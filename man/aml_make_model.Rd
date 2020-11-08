@@ -10,7 +10,8 @@ aml_make_model(
   path_model,
   path_data,
   force_update = FALSE,
-  num_nn_options = 24
+  num_nn_options = 24,
+  min_perf = 0.3
 )
 }
 \arguments{
@@ -27,6 +28,9 @@ aml_make_model(
 
 \item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
 of the random neural network structures}
+
+\item{min_perf}{Double, value greater than 0. Used to set minimum value of model performance.
+Higher value will increase computation time}
 }
 \value{
 Function is writing a file object with the best Deep Learning Regression model
@@ -44,7 +48,7 @@ results of the function aml_test_model.R.
 }
 \details{
 Function is using the dataset prepared by the function aml_collect_data.R.
-Function will start to train the model as soon as there are more than 100 rows in the dataset
+Function will start to train the model as soon as there are more than 1000 rows in the dataset
 }
 \examples{
 
@@ -84,7 +88,8 @@ aml_make_model(symbol = 'USDJPY',
                path_model = path_model,
                path_data = path_data,
                force_update=FALSE,
-               num_nn_options = 2)
+               num_nn_options = 2,
+               min_perf = 0)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)

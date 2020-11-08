@@ -4,6 +4,15 @@
 
 * Add folder generation function
 
+# lazytrade 0.4.2
+
+# Version 0.4.2
+
+## Changes
+
+* solving warnings
+* added parameter min_perf to adjust model performance
+
 # lazytrade 0.4.1
 
 # Version 0.4.1
