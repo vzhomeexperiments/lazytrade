@@ -12,6 +12,7 @@
 
 * solving warnings
 * added parameter min_perf to adjust model performance
+* consider tick value in the calculations of strategy testing
 
 # lazytrade 0.4.1
 

@@ -66,7 +66,12 @@ ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
 
 ind$X1 <- ymd_hms(ind$X1)
 
+tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
+
 write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
+
+write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 # data transformation using the custom function for one symbol
 aml_collect_data(indicator_dataset = ind,

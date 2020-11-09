@@ -45,7 +45,12 @@
 #'
 #' ind$X1 <- ymd_hms(ind$X1)
 #'
+#' tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+#'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
+#'
 #' write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
+#'
+#' write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 #'
 #' # data transformation using the custom function for one symbol
 #' aml_collect_data(indicator_dataset = ind,
@@ -108,7 +113,8 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   # generate a file name to be able to read the right dataset
   f_name <- paste0("AI_RSIADX", symbol,timeframe, ".rds")
   full_path <- file.path(path_data,  f_name)
-
+  # file name with the tick data
+  path_tick <- file.path(path_data, "TickSize_AI_RSIADX.csv")
 
   ## !!!!!! TDL
   ## only select the latest 30% of data... or only last 2 month
@@ -125,6 +131,13 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
     dplyr::select(-X1, -X2, -X3, -LABEL) %>%
     # only keep last month for simulation
     utils::head(num_bars)
+
+  #dataset with tick data
+  z <- readr::read_csv(path_tick, col_names = FALSE) %>%
+    #filter line with a symbol we need
+    dplyr::filter(X1 == symbol) %$%
+    #value z will contain tick value for this symbol
+    X2
 
   # generate a file name for model
   m_name <- paste0("DL_Regression", "-", symbol,"-", timeframe)
@@ -176,7 +189,7 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
     # dplyr::mutate(dP_34 = X3-X2) %>%
     ## setup condition to enter the trade
     # create a risk column, use 20 pips as a trigger
-    dplyr::mutate(Risk = if_else(predict > TR, 1, if_else(predict < -TR, -1, 0))) %>%
+    dplyr::mutate(Risk = if_else(predict > TR, 1/z, if_else(predict < -TR, -1/z, 0))) %>%
     ## create a columns with shifted X2 price down:
     # value BR will indicate number of bars we will hold this position
     dplyr::mutate(X2_NB = lag(X2, NB)) %>%
