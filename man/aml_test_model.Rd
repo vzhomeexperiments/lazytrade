@@ -85,7 +85,7 @@ aml_make_model(symbol = 'USDJPY',
                path_model = path_model,
                path_data = path_data,
                force_update=FALSE,
-               num_nn_options = 2)
+               num_nn_options = 3)
 
 path_sbxm <- normalizePath(tempdir(),winslash = "/")
 path_sbxs <- normalizePath(tempdir(),winslash = "/")

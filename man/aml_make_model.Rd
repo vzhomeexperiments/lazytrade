@@ -60,6 +60,7 @@ library(readr)
 library(h2o)
 library(lazytrade)
 library(lubridate)
+library(magrittr)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
@@ -88,7 +89,7 @@ aml_make_model(symbol = 'USDJPY',
                path_model = path_model,
                path_data = path_data,
                force_update=FALSE,
-               num_nn_options = 2,
+               num_nn_options = 3,
                min_perf = 0)
 
 # stop h2o engine
