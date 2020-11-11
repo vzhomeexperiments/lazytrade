@@ -72,7 +72,7 @@ check_if_optimize <- function(x,
         dplyr::inner_join(y = system_list, by = c("MagicNumber" = "Magic"))
 
     if(write_mode){
-        readr::write_csv(y, path = file.path(path_data, paste0(Sys.Date(), "-Re-Train", ".csv")))
+        readr::write_csv(y, file = file.path(path_data, paste0(Sys.Date(), "-Re-Train", ".csv")))
     } else {return(y)}
 
 

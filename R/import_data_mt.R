@@ -24,7 +24,7 @@
 #'
 #'
 import_data_mt <- function(path_terminal, trade_log_file, system_number, demo_mode = FALSE){
-  .Deprecated("mt_import_data",msg = "using new function naming conventions")
+  .Deprecated("import_data_mt",msg = "This function is deprecated please use function mt_import_data instead.")
 
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("dplyr", quietly = TRUE)
