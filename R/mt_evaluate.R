@@ -35,7 +35,7 @@
 #' data(macd_ML60M)
 #'
 #' # start h2o engine (using all CPU's by default)
-#' h2o.init()
+#' h2o.init(nthreads = 2)
 #'
 #' # performing Deep Learning Regression using the custom function
 #' # this function stores model to the temp location
@@ -43,7 +43,9 @@
 #'               num_bars = 64,
 #'               timeframe = 60,
 #'               path_model = path_model,
-#'               path_data = path_data)
+#'               path_data = path_data,
+#'               activate_balance = TRUE,
+#'               num_nn_options = 3)
 #'
 #'
 #' # Use sample data
@@ -77,29 +79,10 @@ mt_evaluate <- function(x, path_model, num_cols, timeframe){
   # load models
   m1 <- h2o::h2o.loadModel(m_path)
 
-
-  if(class(m1)[1] == "H2ORegressionModel") {
-  # Convert to matrix
-  X_m <- lazytrade::to_m(x, num_cols) %>% as.data.frame()
-  colnames(X_m) <- c(paste("X",1:num_cols,sep=""))
-  # load the dataset to h2o
-  test  <- h2o::as.h2o(x = X_m, destination_frame = "test")
-
-  # retrieve the predicted market type value
-  e1 <- h2o::h2o.predict(m1, test)
-
-  # round the number to achieve class
-  result <- round(e1) %>% as.vector()
-
-  # manage negatives and/or bizzare numbers
-  if(result <= 0 || result > 6) {element <- -1} else {element <- result}
-
-  # output result of prediction from the function
-  return(element)
-
+  #normalize macd value if we are dealing with JPY pairs
+  if(stringr::str_detect(names(x), 'JPY')){
+    x <- x/100
   }
-
-  if(class(m1)[1] == "H2OMultinomialModel") {
 
     # Convert to matrix
     X_m <- lazytrade::to_m(x, num_cols) %>% as.data.frame()
@@ -117,6 +100,6 @@ mt_evaluate <- function(x, path_model, num_cols, timeframe){
     # output result of prediction from the function
     return(e1)
 
-  }
+
 
 }

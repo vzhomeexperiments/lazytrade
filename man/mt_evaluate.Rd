@@ -44,7 +44,7 @@ path_data <- normalizePath(tempdir(),winslash = "/")
 data(macd_ML60M)
 
 # start h2o engine (using all CPU's by default)
-h2o.init()
+h2o.init(nthreads = 2)
 
 # performing Deep Learning Regression using the custom function
 # this function stores model to the temp location
@@ -52,7 +52,9 @@ mt_make_model(indicator_dataset = macd_ML60M,
               num_bars = 64,
               timeframe = 60,
               path_model = path_model,
-              path_data = path_data)
+              path_data = path_data,
+              activate_balance = TRUE,
+              num_nn_options = 3)
 
 
 # Use sample data

@@ -4,6 +4,15 @@
 
 * Add folder generation function
 
+# lazytrade 0.4.3
+
+# Version 0.4.3
+
+## Changes
+
+* solving warnings by changing example in *mt_make_model* function
+* division of macd data by 100 for all jpy pairs in *mt_evaluate* function
+
 # lazytrade 0.4.2
 
 # Version 0.4.2
