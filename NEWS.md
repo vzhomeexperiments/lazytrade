@@ -11,7 +11,8 @@
 ## Changes
 
 * solving warnings by changing example in *mt_make_model* function
-* division of macd data by 100 for all jpy pairs in *mt_evaluate* function
+* conditional division of data by 100 in *mt_evaluate* function
+* change function *mt_make_model* to read manually checked dataset
 
 # lazytrade 0.4.2
 

@@ -88,18 +88,18 @@ mt_make_model <- function(indicator_dataset,
 
   ## check if the latest data is available
   # construct path to the new data
-  path_file_name <- paste0("macd_ai_classified_", timeframe, "M.rds")
+  path_file_name <- paste0("macd_checked_", timeframe, "M.rds")
   path_newdata <- file.path(path_data, path_file_name)
   if(file.exists(path_newdata)){
     # use new data...
-    macd_ML2 <- read_rds(path_newdata) %>%
+    macd_ML2 <- readr::read_rds(path_newdata) %>%
       # and add new data
-      bind_rows(indicator_dataset) %>%
+      dplyr::bind_rows(indicator_dataset) %>%
       # convert one column to factor
-      mutate_at("M_T", as.factor)
+      dplyr::mutate_at("M_T", as.factor)
   } else {
     # use input data and transform dataset column to factor
-    macd_ML2 <- indicator_dataset %>% mutate_at("M_T", as.factor)
+    macd_ML2 <- indicator_dataset %>% dplyr::mutate_at("M_T", as.factor)
   }
 
   # check if we don't have too much data
