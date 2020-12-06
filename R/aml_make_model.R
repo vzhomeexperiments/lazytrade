@@ -105,8 +105,8 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     model_status <- readr::read_csv(dec_file_path) %>% select(MaxPerf) %$% MaxPerf
   } else if(force_update == TRUE) {
     # delete the model and previous test results
-    remove(dec_file_path)
-    remove(m_path)
+    #try(remove(dec_file_path), silent = TRUE)
+    #try(remove(m_path),silent = TRUE)
     model_status <- -1
   } else { model_status <- 0 }
 

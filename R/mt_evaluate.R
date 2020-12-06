@@ -79,11 +79,6 @@ mt_evaluate <- function(x, path_model, num_cols, timeframe){
   # load models
   m1 <- h2o::h2o.loadModel(m_path)
 
-  #normalize macd value if we are dealing with JPY pairs
-  if(stringr::str_detect(names(x), 'JPY')){
-    x <- x/100
-  }
-
     # Convert to matrix
     X_m <- lazytrade::to_m(x, num_cols) %>% as.data.frame()
     colnames(X_m) <- c(paste("X",1:num_cols,sep=""))
