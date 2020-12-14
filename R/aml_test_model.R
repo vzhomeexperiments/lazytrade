@@ -16,14 +16,14 @@
 #' @author (C) 2020 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which to train the model
-#' @param num_bars            Number of bars used to test the model
-#' @param timeframe           Data timeframe e.g. 60 min
-#' @param path_model          Path where the models are be stored
-#' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
-#' @param path_sbxm           Path to the sandbox where file with strategy test results should be written (master terminal)
-#' @param path_sbxs           Path to the sandbox where file with strategy test results should be written (slave terminal)
+#' @param num_bars            Integer, Number of (rows) bars used to test the model
+#' @param timeframe           Integer, Data timeframe e.g. 60 min. This will be equal to 1 bar
+#' @param path_model          String, User path where the models are be stored
+#' @param path_data           String, User path where the aggregated historical data is stored, if exists in rds format
+#' @param path_sbxm           String, User path to the sandbox where file with strategy test results should be written (master terminal)
+#' @param path_sbxs           String, User path to the sandbox where file with strategy test results should be written (slave terminal)
 #'
-#' @return Function is writing file into Decision Support System folder
+#' @return Function is writing file into Decision Support System folders
 #' @export
 #'
 #' @examples
@@ -116,10 +116,6 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   # file name with the tick data
   path_tick <- file.path(path_data, "TickSize_AI_RSIADX.csv")
 
-  ## !!!!!! TDL
-  ## only select the latest 30% of data... or only last 2 month
-
-
   #dataset with date column X1
   y <- readr::read_rds(full_path) %>%
     # remove empty rows
@@ -139,6 +135,8 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
     #value z will contain tick value for this symbol
     X2
 
+  #TDL add fail safe mechanism for 'z'
+
   # generate a file name for model
   m_name <- paste0("DL_Regression", "-", symbol,"-", timeframe)
   m_path <- file.path(path_model, m_name)
@@ -156,9 +154,6 @@ aml_test_model <- function(symbol, num_bars, timeframe, path_model, path_data,
   # trying different N of bars
   for (NB in NBars) {
     #NB <- 3
-
-
-
 
 
   # To DO: Add ATR multiplier to simulate TP/SL
