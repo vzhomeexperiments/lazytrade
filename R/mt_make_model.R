@@ -25,8 +25,10 @@
 #' @param path_model          String, Path where the models are be stored
 #' @param path_data           String, Path where the aggregated historical data is stored, if exists in rds format
 #' @param activate_balance    Boolean, option to choose if to balance market type classes or not, default TRUE
-#' @param num_nn_options      Integer, value from 1 to 20 or more. Used to change number of variants
-#'                            of the random neural network structures
+#' @param num_nn_options      Integer, value from 3 to 24 or more. Used to change number of variants
+#'                            of the random neural network structures. Value 3 will mean that only one
+#'                            random structure will be used. To avoid warnings make sure to set this value
+#'                            multiple of 3. Higher values will increase computation time.
 #'
 #' @return Function is writing file object with the model
 #' @export
@@ -59,7 +61,7 @@
 #'               path_model = path_model,
 #'               path_data = path_data,
 #'               activate_balance = TRUE,
-#'               num_nn_options = 2)
+#'               num_nn_options = 3)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -86,18 +88,18 @@ mt_make_model <- function(indicator_dataset,
 
   ## check if the latest data is available
   # construct path to the new data
-  path_file_name <- paste0("macd_ai_classified_", timeframe, "M.rds")
+  path_file_name <- paste0("macd_checked_", timeframe, "M.rds")
   path_newdata <- file.path(path_data, path_file_name)
   if(file.exists(path_newdata)){
     # use new data...
-    macd_ML2 <- read_rds(path_newdata) %>%
+    macd_ML2 <- readr::read_rds(path_newdata) %>%
       # and add new data
-      bind_rows(indicator_dataset) %>%
+      dplyr::bind_rows(indicator_dataset) %>%
       # convert one column to factor
-      mutate_at("M_T", as.factor)
+      dplyr::mutate_at("M_T", as.factor)
   } else {
     # use input data and transform dataset column to factor
-    macd_ML2 <- indicator_dataset %>% mutate_at("M_T", as.factor)
+    macd_ML2 <- indicator_dataset %>% dplyr::mutate_at("M_T", as.factor)
   }
 
   # check if we don't have too much data

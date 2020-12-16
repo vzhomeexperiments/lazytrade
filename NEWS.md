@@ -3,6 +3,18 @@
 ## Planned Changes
 
 * Add folder generation function
+* Put option predict ahead as a parameter (now 34 bars)
+* aml_make_model use parameter to split data with specific n of rows e.g. n_rows
+
+# lazytrade 0.4.3
+
+# Version 0.4.3
+
+## Changes
+
+* solving warnings by changing example in *mt_make_model* function
+* change function *mt_make_model* to read manually checked dataset
+* update documentation
 
 # lazytrade 0.4.2
 

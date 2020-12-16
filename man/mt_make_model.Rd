@@ -27,8 +27,10 @@ mt_make_model(
 
 \item{activate_balance}{Boolean, option to choose if to balance market type classes or not, default TRUE}
 
-\item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
-of the random neural network structures}
+\item{num_nn_options}{Integer, value from 3 to 24 or more. Used to change number of variants
+of the random neural network structures. Value 3 will mean that only one
+random structure will be used. To avoid warnings make sure to set this value
+multiple of 3. Higher values will increase computation time.}
 }
 \value{
 Function is writing file object with the model
@@ -79,7 +81,7 @@ mt_make_model(indicator_dataset = macd_ML60M,
               path_model = path_model,
               path_data = path_data,
               activate_balance = TRUE,
-              num_nn_options = 2)
+              num_nn_options = 3)
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)

@@ -105,8 +105,8 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     model_status <- readr::read_csv(dec_file_path) %>% select(MaxPerf) %$% MaxPerf
   } else if(force_update == TRUE) {
     # delete the model and previous test results
-    remove(dec_file_path)
-    remove(m_path)
+    #try(remove(dec_file_path), silent = TRUE)
+    #try(remove(m_path),silent = TRUE)
     model_status <- -1
   } else { model_status <- 0 }
 
@@ -129,7 +129,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
 
 
   # split data to train and test blocks
-  # note: model will be tested on the PAST data and trained on the NEWEST data
+  # note: model will be trained on the OLDEST data
   test_ind  <- 1:round(0.3*(nrow(dat12))) #train indices 1:xxx
   dat21 <- dat12[test_ind, ]    #dataset to test the model using 30% of data
   dat22 <- dat12[-test_ind, ]   #dataset to train the model
