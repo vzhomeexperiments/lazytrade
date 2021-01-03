@@ -38,8 +38,8 @@ import_data <- function(path_sbxm, trade_log_file){
   requireNamespace("lubridate", quietly = TRUE)
 
 
-  DFT1 <- try(read_csv(file = file.path(path_sbxm, trade_log_file),
-                       col_names = c("MagicNumber", "TicketNumber", "OrderStartTime",
+  DFT1 <- try(readr::read_csv(file = file.path(path_sbxm, trade_log_file),
+                              col_names = c("MagicNumber", "TicketNumber", "OrderStartTime",
                                      "OrderCloseTime", "Profit", "Symbol", "OrderType"),
                        col_types = "iiccdci"),
               silent = TRUE)
