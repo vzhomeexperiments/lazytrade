@@ -6,6 +6,15 @@
 * Put option predict ahead as a parameter (now 34 bars)
 * aml_make_model use parameter to split data with specific n of rows e.g. n_rows
 
+# lazytrade 0.4.4
+
+# Version 0.4.4
+
+## Changes
+
+* added fail safe stops in function `check_if_optimize.R`
+* experimenting with time series statistical transformation
+
 # lazytrade 0.4.3
 
 # Version 0.4.3

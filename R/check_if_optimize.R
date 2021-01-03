@@ -58,6 +58,15 @@ check_if_optimize <- function(x,
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
 
+  if(class(system_list)[1] != "spec_tbl_df") {stop("Trading system list must be as spec_tbl_df",
+                                          call. = FALSE)}
+
+  if(num_trades_to_consider <= 2) {stop("parameter num_trades_to_consider must be at least 2",
+                                                   call. = FALSE)}
+
+  if(profit_factor_limit <= 0.1) {stop("parameter profit_factor_limit must be at least 0.1",
+                                        call. = FALSE)}
+
 
   y <- x %>%  # filtered to contain last 20 orders for each system
     dplyr::ungroup() %>%
