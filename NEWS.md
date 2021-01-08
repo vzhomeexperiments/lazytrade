@@ -13,7 +13,7 @@
 ## Changes
 
 * added fail safe stops in function `check_if_optimize.R`
-* experimenting with time series statistical transformation adding functions `mt_stat_transf` and `mt_stat_cluster`
+* experimenting with time series statistical transformation adding functions `mt_stat_transf` and `mt_stat_evaluate`. Learning opportunity around clustering for automatic market type generation
 
 # lazytrade 0.4.3
 
