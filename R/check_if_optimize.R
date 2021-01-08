@@ -17,7 +17,7 @@
 #'
 #' @return function returns a dataframe with systems that should be optimized
 #'
-#' @author (C) 2019,2020 Vladimir Zhbanko
+#' @author (C) 2019,2021 Vladimir Zhbanko
 #'
 #' @export
 #'

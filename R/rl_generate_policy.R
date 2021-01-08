@@ -16,7 +16,7 @@
 #' @return Function returns data frame with reinforcement learning model policy
 #' @export
 #'
-#' @author (C) 2019,2020 Vladimir Zhbanko
+#' @author (C) 2019,2021 Vladimir Zhbanko
 #'
 #' @examples
 #'
@@ -49,7 +49,7 @@ rl_generate_policy <- function(x, states, actions, control){
 
   # add rows of the x one by one to gradually update this model
   for (i in 2:nrow(x)) {
-    # i <- 2
+    # i <- 3
     # State
     State <- x[i-1,] %>% dplyr::mutate(State = ifelse(Profit>0, "tradewin", ifelse(Profit<0, "tradeloss", NA))) %$% State
 

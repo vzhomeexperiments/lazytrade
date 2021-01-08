@@ -45,5 +45,5 @@ However policy 'ON' value will only be generated once the Q value is greater tha
 
 }
 \author{
-(C) 2019,2020 Vladimir Zhbanko
+(C) 2019,2021 Vladimir Zhbanko
 }

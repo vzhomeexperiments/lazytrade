@@ -1,6 +1,6 @@
-#' Function to use statistical method for Market Type recognition
+#' Statistical Time-series transformation for Market Type recognition
 #'
-#' @description  Function is using log return distribution of financial asset's price.
+#' @description  Function to return return distribution of financial asset's price.
 #' Main idea is to estimate Market Type by solely relying on the current price pattern.
 #' Latest price is obtained from the file, typically AI_CP60-300.csv. Log returns are
 #' being calculated for each column
@@ -13,9 +13,11 @@
 #' 5. Sideways quiet, RAN
 #' 6. Sideways volatile, RAV
 #'
-#' @details Function is using arbitrary defined levels of distributions.
+#' ...will be automatically derived in a separate function by a clustering algorithm
 #'
-#' @author (C) 2020 Vladimir Zhbanko
+#' @details Function is using price dataset to create defined levels of distributions.
+#'
+#' @author (C) 2021 Vladimir Zhbanko
 #' @backref Market Type research of Van Tharp Institute: <https://www.vantharp.com/>
 #'
 #' @param indicator_dataset   Dataframe, One column containing indicator patterns to train the model
@@ -57,13 +59,13 @@
 #' ind1 <- select(ind, X2)
 #' #'
 #' # performing Deep Learning Regression using the custom function
-#' mt_use_stats(indicator_dataset = ind1,
-#'              symbol = 'EURUSD',
-#'              num_bars = 64,
-#'              timeframe = 60,
-#'              path_data = path_data,
-#'              path_sbxm = path_sbxm,
-#'              path_sbxs = path_sbxs)
+#' mt_stat_transf(indicator_dataset = ind1,
+#'                symbol = 'EURUSD',
+#'                num_bars = 64,
+#'                timeframe = 60,
+#'                path_data = path_data,
+#'                path_sbxm = path_sbxm,
+#'                path_sbxs = path_sbxs)
 #'
 #'
 #' #set delay to insure h2o unit closes properly before the next test
@@ -73,7 +75,7 @@
 #'
 #'
 #'
-mt_use_stats <- function(indicator_dataset,
+mt_stat_transf <- function(indicator_dataset,
                          symbol,
                          num_bars=64,
                          timeframe = 60,
@@ -83,6 +85,24 @@ mt_use_stats <- function(indicator_dataset,
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
+
+  #steps:
+  #grab as many price data as possible;
+  #calculate log return for 64 bars
+  #caracterize statistically (Q1, Q2, Q3, Kurtosis)
+  #repeat for other 64 bars
+  #output a big table with  (Q1, Q2, Q3, Kurtosis)
+  #scale data
+  #calculate 6 clusters with knn
+  #assign labels BUN, BEV, 1-6 etc
+  #'return' clustered dataset
+  #'
+  #' within a separate function:
+  #  make a classification model to explain data and label
+
+  # within a separate function
+  # use last 64 bars, calculate Q1, Q2, ... run the model and predict class...
+
 
   #construct the path to the data objects
   # generate a file name to be able to read the right dataset

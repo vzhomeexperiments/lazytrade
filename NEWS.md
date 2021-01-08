@@ -13,7 +13,7 @@
 ## Changes
 
 * added fail safe stops in function `check_if_optimize.R`
-* experimenting with time series statistical transformation
+* experimenting with time series statistical transformation adding functions `mt_stat_transf` and `mt_stat_cluster`
 
 # lazytrade 0.4.3
 
