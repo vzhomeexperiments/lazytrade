@@ -119,8 +119,9 @@ mt_stat_evaluate <- function(x, path_model, num_bars, timeframe){
       dfC <- data.frame(Q1 = q1,
                         Q2 = q2,
                         Q3 = q3,
-                        K1 = k1,
-                        S1 = s1)
+                        K1 = k1#,
+                        #S1 = s1
+                        )
 
 
 

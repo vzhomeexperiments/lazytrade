@@ -97,14 +97,15 @@ mt_stat_transf <- function(indicator_dataset,
       k1 <- apply(lg12, 2,moments::kurtosis)
 
       # vector with skewness
-      s1 <- apply(lg12, 2, moments::skewness)
+      #s1 <- apply(lg12, 2, moments::skewness)
 
       ## combine these vectors
       dfC <- data.frame(Q1 = q1,
                         Q2 = q2,
                         Q3 = q3,
-                        K1 = k1,
-                        S1 = s1)
+                        K1 = k1#,
+                        #S1 = s1,
+                        )
 
 
 
@@ -127,15 +128,16 @@ mt_stat_transf <- function(indicator_dataset,
       # vector with kurtosis
       k1 <- apply(lg12, 2,moments::kurtosis)
 
-      # vector with skewness
-      s1 <- apply(lg12, 2, moments::skewness)
+      # # vector with skewness
+      # s1 <- apply(lg12, 2, moments::skewness)
 
       ## combine these vectors
       dfC1 <- data.frame(Q1 = q1,
                         Q2 = q2,
                         Q3 = q3,
-                        K1 = k1,
-                        S1 = s1)
+                        K1 = k1#,
+                        #S1 = s1
+                        )
 
       dfC <- dfC %>% dplyr::bind_rows(dfC1)
     }
