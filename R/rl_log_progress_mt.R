@@ -1,15 +1,19 @@
-#' Function to log RL progress, dedicated to Market Types
+#' Function to retrieve and help to log Q values during RL progress. This function is dedicated to the situations when
+#' Market Types are used as a 'states' for the Environment.
 #'
-#' @description Function will record Q values during updating of the model. These values will be used by another function
+#' @description Function will record Q values during the model update. These values will be used by another function
+#' Function was developed to help to estimate best control parameters during optimisation process
 #'
 #' @param x - dataframe containing trading results
 #' @param states  - Selected states of the System
 #' @param actions - Selected actions executed under environment
 #' @param control - control parameters as defined in the Reinforcement Learning Package
 #'
-#' @return dataframe with log of RL model
+#' @return dataframe with log of RL model reward sequences during model update
 #'
 #' @export
+#'
+#' @author (C) 2020, 2021 Vladimir Zhbanko
 #'
 #' @examples
 #'
@@ -17,6 +21,7 @@
 #' library(ReinforcementLearning)
 #' library(dplyr)
 #' library(magrittr)
+#' library(lazytrade)
 #' data(trading_systemDF)
 #' x <- trading_systemDF
 #' states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
@@ -58,10 +63,10 @@ rl_log_progress_mt <- function(x, states, actions, control){
     # combine data as dataframe
     i_tupple <- data.frame(State,Action,Reward,NextState,row.names = i, stringsAsFactors = F) %>%
       # change factor column to as.character (required by RL function)
-      mutate_if(is.factor, as.character)
+      dplyr::mutate_if(is.factor, as.character)
     # join dummy tupple to current row in the new object
-    if(!exists("df_tupple")){df_tupple <- bind_rows(d_tupple, i_tupple)} else {
-      df_tupple <- bind_rows(df_tupple, i_tupple)
+    if(!exists("df_tupple")){df_tupple <- dplyr::bind_rows(d_tupple, i_tupple)} else {
+      df_tupple <- dplyr::bind_rows(df_tupple, i_tupple)
     }
 
     # update model with new data tupple
@@ -75,7 +80,7 @@ rl_log_progress_mt <- function(x, states, actions, control){
 
       # create dataframe that will append data to previous records
       if(!exists("df_Q")){df_Q <- df_q} else {
-        df_Q <- bind_rows(df_Q, df_q)
+        df_Q <- dplyr::bind_rows(df_Q, df_q)
       }
 
     #print(i)

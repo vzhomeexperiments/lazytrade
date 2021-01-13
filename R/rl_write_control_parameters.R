@@ -5,6 +5,7 @@
 #'
 #' @param x - dataset containing the trading results for one trading robot
 #' @param path_control_files - path where control parameters will be saved
+#' @param num_trades_to_consider - number of last trades to use for RL modeling simulations, default value 100
 #'
 #' @return Function writes best control parameters to be used by the Reinforcement Learning Function
 #'
@@ -17,6 +18,8 @@
 #' @examples
 #'
 #' \donttest{
+#'
+#' dir <- normalizePath(tempdir(),winslash = "/")
 #' #test lasts 15 sec:
 #' library(dplyr)
 #' library(readr)
@@ -24,11 +27,15 @@
 #' library(magrittr)
 #' library(lazytrade)
 #' data(data_trades)
-#' rl_write_control_parameters(data_trades, path_control_files = tempfile())
+#' x <- data_trades
+#' rl_write_control_parameters(x = data_trades,
+#'                             path_control_files = dir,
+#'                             num_trades_to_consider = 20)
 #'
 #' }
 #'
-rl_write_control_parameters <- function(x, path_control_files){
+rl_write_control_parameters <- function(x, path_control_files,
+                                        num_trades_to_consider = 100){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -36,7 +43,10 @@ rl_write_control_parameters <- function(x, path_control_files){
 # delete DF_RES if it is exists
 if(exists("DF_RES")){rm(DF_RES)}
 
-# perform set of operations for every trading system
+# only consider last 100 observations in the input dataset to make code running faster
+  x <- x %>%
+    dplyr::arrange(OrderCloseTime) %>%
+    tail(num_trades_to_consider)
 
 # sum(x$Profit)
 states <- c("tradewin", "tradeloss")
@@ -47,9 +57,9 @@ actions <- c("ON", "OFF") # 'ON' and 'OFF' are referring to decision to trade wi
 #control <- list(alpha = 0.3, gamma = 0.6, epsilon = 0.1)
 
 # Create RL models for all the space
-Alpha <- seq(from = 0.1, to = 0.9, by = 0.2)
-Gamma <- seq(from = 0.1, to = 0.9, by = 0.2)
-Epsyl <- seq(from = 0.1, to = 0.9, by = 0.2)
+Alpha <- seq(from = 0.1, to = 0.9, by = 0.4)
+Gamma <- seq(from = 0.1, to = 0.9, by = 0.4)
+Epsyl <- seq(from = 0.1, to = 0.9, by = 0.4)
 
 for (ALF in Alpha) {
   for (GAM in Gamma) {
@@ -102,10 +112,11 @@ DF_RES1 <- DF_RES %>%
 # record to file
 # recording control parameters for this system (this function is intended to run 1x week)
 
-  # create directory where to write files if not exists yet
-  if(!dir.exists(path_control_files)){
-    dir.create(path_control_files)
-  }
+# create directory where to write files if not exists yet
+path_control_files <- file.path(path_control_files, 'control')
+if(!dir.exists(path_control_files)){
+  dir.create(path_control_files)
+}
   # write the best control parameters, use magic number as name
   # extract current magic number to be used as a file name
   m_number <- x %$% MagicNumber %>% head(1)

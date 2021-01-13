@@ -1,13 +1,15 @@
-#' Function to log RL progress.
+#' Function to retrieve and help to log Q values during RL progress.
 #'
 #' @description Function will record Q values during the model update. These values will be used by another function
+#' Function was developed to help to estimate best control parameters during optimisation process
+#'
 #'
 #' @param x - dataframe containing trading results
 #' @param states  - Selected states of the System
 #' @param actions - Selected actions executed under environment
 #' @param control - control parameters as defined in the Reinforcement Learning Package
 #'
-#' @return dataframe with log of RL model
+#' @return dataframe with log of RL model reward sequences during model update
 #'
 #' @export
 #'
@@ -17,6 +19,7 @@
 #' library(ReinforcementLearning)
 #' library(dplyr)
 #' library(magrittr)
+#' library(lazytrade)
 #' data(data_trades)
 #' x <- data_trades
 #' states <- c("tradewin", "tradeloss")
@@ -43,7 +46,7 @@ rl_log_progress <- function(x, states, actions, control){
   for (i in 2:nrow(x)) {
     # i <- 2
     # State
-    State <- x[i-1,] %>% mutate(State = ifelse(Profit>0, "tradewin", ifelse(Profit<0, "tradeloss", NA))) %$% State
+    State <- x[i-1,] %>% dplyr::mutate(State = ifelse(Profit>0, "tradewin", ifelse(Profit<0, "tradeloss", NA))) %$% State
 
     # predict on i
     Action <- ReinforcementLearning::computePolicy(model)[State]
@@ -56,10 +59,10 @@ rl_log_progress <- function(x, states, actions, control){
     # combine data as dataframe
     i_tupple <- data.frame(State,Action,Reward,NextState,row.names = i, stringsAsFactors = F) %>%
       # change factor column to as.character (required by RL function)
-      mutate_if(is.factor, as.character)
+      dplyr::mutate_if(is.factor, as.character)
     # join dummy tupple to current row in the new object
-    if(!exists("df_tupple")){df_tupple <- bind_rows(d_tupple, i_tupple)} else {
-      df_tupple <- bind_rows(df_tupple, i_tupple)
+    if(!exists("df_tupple")){df_tupple <- dplyr::bind_rows(d_tupple, i_tupple)} else {
+      df_tupple <- dplyr::bind_rows(df_tupple, i_tupple)
     }
 
     # update model with new data tupple
