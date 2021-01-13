@@ -36,12 +36,16 @@ Each row is a time index, multiple columns are required but not strictly needed}
 Dataframe with statistically transformed and classified dataset for classification modeling
 }
 \description{
-Function to statistically transform and cluster price data.
-Multiple statistical properties are calculated for a defined time interval.
-Once combined unsupervised learning is performed to assign 6 classes
+Function features methods of statistical data transformation and clustering of the price data.
+Multiple statistical properties are calculated for a defined time interval. Once combined,
+unsupervised learning (clustering) is performed to assign several classes, see function `mt_make_model`.
+Function allows to fully automatize financial periods classification.
+It is possible to choose two clustering methods either kmeans or hierarchical clustering.
 }
 \details{
-Function will randomly assign Market Period labels based on Unsupervised Learning.
+User can define several market type classes names however function will randomly assign
+Market Period labels based on Unsupervised Learning. This is inconvenient however that should be compensated by
+automated way of doing such data classification
 }
 \examples{
 

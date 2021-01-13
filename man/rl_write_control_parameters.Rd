@@ -4,12 +4,18 @@
 \alias{rl_write_control_parameters}
 \title{Function to find and write the best control parameters.}
 \usage{
-rl_write_control_parameters(x, path_control_files)
+rl_write_control_parameters(
+  x,
+  path_control_files,
+  num_trades_to_consider = 100
+)
 }
 \arguments{
 \item{x}{- dataset containing the trading results for one trading robot}
 
 \item{path_control_files}{- path where control parameters will be saved}
+
+\item{num_trades_to_consider}{- number of last trades to use for RL modeling simulations, default value 100}
 }
 \value{
 Function writes best control parameters to be used by the Reinforcement Learning Function
@@ -24,6 +30,8 @@ Function is used by the R script Adapt_RL_control.R
 \examples{
 
 \donttest{
+
+dir <- normalizePath(tempdir(),winslash = "/")
 #test lasts 15 sec:
 library(dplyr)
 library(readr)
@@ -31,7 +39,10 @@ library(ReinforcementLearning)
 library(magrittr)
 library(lazytrade)
 data(data_trades)
-rl_write_control_parameters(data_trades, path_control_files = tempfile())
+x <- data_trades
+rl_write_control_parameters(x = data_trades,
+                            path_control_files = dir,
+                            num_trades_to_consider = 20)
 
 }
 

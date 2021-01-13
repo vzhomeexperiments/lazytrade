@@ -2,7 +2,8 @@
 % Please edit documentation in R/rl_log_progress_mt.R
 \name{rl_log_progress_mt}
 \alias{rl_log_progress_mt}
-\title{Function to log RL progress, dedicated to Market Types}
+\title{Function to retrieve and help to log Q values during RL progress. This function is dedicated to the situations when
+Market Types are used as a 'states' for the Environment.}
 \usage{
 rl_log_progress_mt(x, states, actions, control)
 }
@@ -16,10 +17,11 @@ rl_log_progress_mt(x, states, actions, control)
 \item{control}{- control parameters as defined in the Reinforcement Learning Package}
 }
 \value{
-dataframe with log of RL model
+dataframe with log of RL model reward sequences during model update
 }
 \description{
-Function will record Q values during updating of the model. These values will be used by another function
+Function will record Q values during the model update. These values will be used by another function
+Function was developed to help to estimate best control parameters during optimisation process
 }
 \examples{
 
@@ -27,6 +29,7 @@ Function will record Q values during updating of the model. These values will be
 library(ReinforcementLearning)
 library(dplyr)
 library(magrittr)
+library(lazytrade)
 data(trading_systemDF)
 x <- trading_systemDF
 states <- c("BUN", "BUV", "BEN", "BEV", "RAN", "RAV")
@@ -36,4 +39,7 @@ control <- list(alpha = 0.7, gamma = 0.3, epsilon = 0.1)
 rl_log_progress_mt(x = x,states = states, actions = actions, control = control)
 
 
+}
+\author{
+(C) 2020, 2021 Vladimir Zhbanko
 }
