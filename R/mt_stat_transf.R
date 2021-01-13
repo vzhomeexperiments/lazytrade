@@ -1,11 +1,14 @@
 #' Perform Statistical transformation and clustering of Market Types on the price data
 #'
-#' @description  Function to statistically transform and cluster price data.
-#' Multiple statistical properties are calculated for a defined time interval.
-#' Once combined unsupervised learning is performed to assign 6 classes
+#' @description  Function features methods of statistical data transformation and clustering of the price data.
+#' Multiple statistical properties are calculated for a defined time interval. Once combined,
+#' unsupervised learning (clustering) is performed to assign several classes, see function `mt_make_model`.
+#' Function allows to fully automatize financial periods classification.
+#' It is possible to choose two clustering methods either kmeans or hierarchical clustering.
 #'
-#'
-#' @details Function will randomly assign Market Period labels based on Unsupervised Learning.
+#' @details User can define several market type classes names however function will randomly assign
+#' Market Period labels based on Unsupervised Learning. This is inconvenient however that should be compensated by
+#' automated way of doing such data classification
 #'
 #' @author (C) 2021 Vladimir Zhbanko
 #' @backref Market Type research of Van Tharp Institute: <https://www.vantharp.com/>
@@ -16,6 +19,10 @@
 #' @param timeframe           Integer, Data timeframe in Minutes, only used for naming convention
 #' @param path_data           String, User path where the dataset could be stored for the future use by other function
 #' @param mt_classes          Character Vector, with 2 or more Market Type classes
+#' @param clust_method        Character, option to select which clustering method to choose. Could be either
+#'                            'kmeans' or 'hclust'. Default value is 'kmeans'
+#' @param clust_opt           Character, option to select how to perform h clustering
+#'                            "average", "single", "complete", "ward". Default value is 'complete'
 #'
 #' @return Dataframe with statistically transformed and classified dataset for classification modeling
 #' @export
@@ -34,11 +41,18 @@
 #'
 #' data(price_dataset_big)
 #'
+#' #option
+#' #mt_classes = c('BUN', 'BEN', 'RAN','BUV', 'BEV', 'RAV')
+#' #clust_method = 'hclust'
+#' #clust_opt = 'ward'
+#'
 #' mt_stat_transf(indicator_dataset = price_dataset_big,
 #'                num_bars = 64,
 #'                timeframe = 60,
 #'                path_data = path_data,
-#'                mt_classes = c('BUN', 'BEN', 'RAN'))
+#'                mt_classes = c('BUN', 'BEN', 'RAN'),
+#'                clust_method = 'kmeans',
+#'                clust_opt = 'complete')
 #'
 #'
 #'
@@ -46,7 +60,9 @@ mt_stat_transf <- function(indicator_dataset,
                            num_bars=64,
                            timeframe = 60,
                            path_data,
-                           mt_classes){
+                           mt_classes,
+                           clust_method = 'kmeans',
+                           clust_opt = 'complete'){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -56,19 +72,17 @@ mt_stat_transf <- function(indicator_dataset,
   #calculate properties for 28 columns
   #caracterize statistically (Q1, Q2, Q3, Kurtosis, etc)
   #scale data
-  #calculate 6 clusters with knn
-  #assign labels BUN, BEV, 1-6 etc
-  #return' clustered dataset
-  #  make a classification model to explain data and label
+  #find 6 clusters with unsupervised learning
+  #re-assign labels BUN, BEV, etc
+  #return clustered dataset
+  #further in a separate function to make a classification model to explain data and label
 
-  # within a separate function
-  # use last 64 bars, calculate Q1, Q2, ... run the model and predict class...
+  # within a separate function `mt_stat_evalute` use use last 64 bars,
+  # calculate statistical inputs, use the model and predict current class...
 
 
-  # transform data using code from another function create transposed data
-
+  # split data into several lists
   nr <- nrow(indicator_dataset)
-  namesdfr12 <- paste0("X", 1:num_bars) #generated names for dataset useful later in the code
   n <- num_bars
   dat11 <- indicator_dataset %>% dplyr::select(-1) %>% split(rep(1:ceiling(nr/n), each=n, length.out=nr)) #list
   dat11[length(dat11)] <- NULL
@@ -94,7 +108,7 @@ mt_stat_transf <- function(indicator_dataset,
       q3 <- apply(lg12, 2,stats::quantile, 0.75)
 
       # vector with kurtosis
-      k1 <- apply(lg12, 2,moments::kurtosis)
+      #k1 <- apply(lg12, 2,moments::kurtosis)
 
       # vector with skewness
       #s1 <- apply(lg12, 2, moments::skewness)
@@ -102,10 +116,10 @@ mt_stat_transf <- function(indicator_dataset,
       ## combine these vectors
       dfC <- data.frame(Q1 = q1,
                         Q2 = q2,
-                        Q3 = q3,
-                        K1 = k1#,
-                        #S1 = s1,
-                        )
+                        Q3 = q3)
+                        #K1 = k1,
+                        #S1 = s1
+                        #)
 
 
 
@@ -126,18 +140,20 @@ mt_stat_transf <- function(indicator_dataset,
       q3 <- apply(lg12, 2,stats::quantile, 0.75)
 
       # vector with kurtosis
-      k1 <- apply(lg12, 2,moments::kurtosis)
+      #k1 <- apply(lg12, 2,moments::kurtosis)
 
       # # vector with skewness
       # s1 <- apply(lg12, 2, moments::skewness)
 
       ## combine these vectors
-      dfC1 <- data.frame(Q1 = q1,
-                        Q2 = q2,
-                        Q3 = q3,
-                        K1 = k1#,
-                        #S1 = s1
-                        )
+      dfC1  <- data.frame(Q1 = q1,
+                          Q2 = q2,
+                          Q3 = q3)
+      #K1 = k1,
+      #S1 = s1
+      #)
+
+
 
       dfC <- dfC %>% dplyr::bind_rows(dfC1)
     }
@@ -147,16 +163,34 @@ mt_stat_transf <- function(indicator_dataset,
   ## performing clustering algorithm to classify this dataset into N classes
   # scale data
   dfCsc <- scale(dfC)
-  # kmeans with N clusters
-  N <- length(mt_classes)
-  km_6 <- stats::kmeans(dfCsc, centers = N, nstart = 20)
 
-  #plot(dfC, col = km_6$cluster)
+  # derive number of classes
+  N <- length(mt_classes)
+  # kmeans with N clusters
+  if(clust_method == 'kmeans'){
+
+    km_6 <- stats::kmeans(dfCsc, centers = N, nstart = 20)
+    #plot(dfC, col = km_6$cluster)
+    #join classes to the dataset
+    dfC$M_T <- km_6$cluster
+  }
+
+  # option hclust with N clusters
+  if(clust_method == 'hclust'){
+    d <- dist(dfCsc, method = 'euclidean')
+    hc_6 <- cluster::agnes(d, method = clust_opt)
+    #pltree(hc_6, cex = 0.6, hang = -1, main = "Dendrogram of agnes")
+    hc_cl <- cutree(hc_6, k = N)
+
+    dfC$M_T <- hc_cl
+  }
+
+
+
 
   ## TDL -> properly assign classes to labels
 
-  #join classes to the dataset
-  dfC$M_T <- km_6$cluster
+
 
   #rename clusters to be like desired (but classes will be unsupervised)
   dfC$M_T <- factor(dfC$M_T, labels=mt_classes)

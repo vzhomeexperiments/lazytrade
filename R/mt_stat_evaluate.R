@@ -110,18 +110,18 @@ mt_stat_evaluate <- function(x, path_model, num_bars, timeframe){
       q3 <- apply(lg12, 2,stats::quantile, 0.75)
 
       # vector with kurtosis
-      k1 <- apply(lg12, 2,moments::kurtosis)
+      #k1 <- apply(lg12, 2,moments::kurtosis)
 
       # vector with skewness
-      s1 <- apply(lg12, 2, moments::skewness)
+      #s1 <- apply(lg12, 2, moments::skewness)
 
       ## combine these vectors
       dfC <- data.frame(Q1 = q1,
                         Q2 = q2,
-                        Q3 = q3,
-                        K1 = k1#,
-                        #S1 = s1
-                        )
+                        Q3 = q3)
+      #K1 = k1,
+      #S1 = s1
+      #)
 
 
 

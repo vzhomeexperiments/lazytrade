@@ -9,7 +9,9 @@ mt_stat_transf(
   num_bars = 64,
   timeframe = 60,
   path_data,
-  mt_classes
+  mt_classes,
+  clust_method = "kmeans",
+  clust_opt = "complete"
 )
 }
 \arguments{
@@ -23,6 +25,12 @@ Each row is a time index, multiple columns are required but not strictly needed}
 \item{path_data}{String, User path where the dataset could be stored for the future use by other function}
 
 \item{mt_classes}{Character Vector, with 2 or more Market Type classes}
+
+\item{clust_method}{Character, option to select which clustering method to choose. Could be either
+'kmeans' or 'hclust'. Default value is 'kmeans'}
+
+\item{clust_opt}{Character, option to select how to perform h clustering
+"average", "single", "complete", "ward". Default value is 'complete'}
 }
 \value{
 Dataframe with statistically transformed and classified dataset for classification modeling
@@ -49,11 +57,18 @@ path_data <- normalizePath(tempdir(),winslash = "/")
 
 data(price_dataset_big)
 
+#option
+#mt_classes = c('BUN', 'BEN', 'RAN','BUV', 'BEV', 'RAV')
+#clust_method = 'hclust'
+#clust_opt = 'ward'
+
 mt_stat_transf(indicator_dataset = price_dataset_big,
                num_bars = 64,
                timeframe = 60,
                path_data = path_data,
-               mt_classes = c('BUN', 'BEN', 'RAN'))
+               mt_classes = c('BUN', 'BEN', 'RAN'),
+               clust_method = 'kmeans',
+               clust_opt = 'complete')
 
 
 
