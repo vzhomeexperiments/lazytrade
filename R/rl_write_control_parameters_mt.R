@@ -111,15 +111,7 @@ DF_RES1 <- DF_RES %>%
 
 ## We have the best control parameters
 
-# record to file
-# recording control parameters for this system (this function is intended to run 1x week)
-
-  # create directory where to write files if not exists yet
-  path_control_files <- file.path(path_control_files, 'control')
-  if(!dir.exists(path_control_files)){
-    dir.create(path_control_files)
-  }
-  # write the best control parameters, use magic number as name
+# record to file, use magic number as name
   # extract current magic number to be used as a file name
   m_number <- x %$% MagicNumber.x %>% head(1)
   # write rds file with control parameters
