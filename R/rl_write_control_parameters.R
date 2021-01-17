@@ -111,7 +111,7 @@ DF_RES1 <- DF_RES %>%
 
 # record to file, use magic number as name
 # extract current magic number to be used as a file name
-m_number <- x %$% MagicNumber.x %>% head(1)
+m_number <- x %$% MagicNumber %>% head(1)
 # write rds file with control parameters
 readr::write_rds(DF_RES1, paste0(path_control_files,"/", m_number, ".rds"))
 
