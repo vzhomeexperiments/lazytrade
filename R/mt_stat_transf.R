@@ -35,7 +35,6 @@
 #' library(magrittr)
 #' library(readr)
 #' library(lazytrade)
-#' library(moments)
 #'
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'

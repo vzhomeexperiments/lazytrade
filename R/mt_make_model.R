@@ -44,7 +44,6 @@
 #' library(h2o)
 #' library(lazytrade)
 #' library(stats)
-#' library(moments)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")

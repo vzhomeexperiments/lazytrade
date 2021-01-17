@@ -28,7 +28,6 @@ Imports:
     ReinforcementLearning,
     openssl,
     stats,
-    moments,
     cluster
 Suggests: 
     testthat (>= 2.1.0),
