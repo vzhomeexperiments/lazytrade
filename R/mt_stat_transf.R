@@ -177,15 +177,13 @@ mt_stat_transf <- function(indicator_dataset,
 
   # option hclust with N clusters
   if(clust_method == 'hclust'){
-    d <- dist(dfCsc, method = 'euclidean')
+    d <- stats::dist(dfCsc, method = 'euclidean')
     hc_6 <- cluster::agnes(d, method = clust_opt)
     #pltree(hc_6, cex = 0.6, hang = -1, main = "Dendrogram of agnes")
-    hc_cl <- cutree(hc_6, k = N)
+    hc_cl <- stats::cutree(hc_6, k = N)
 
     dfC$M_T <- hc_cl
   }
-
-
 
 
   ## TDL -> properly assign classes to labels

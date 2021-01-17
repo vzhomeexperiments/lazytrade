@@ -27,7 +27,9 @@ Imports:
     h2o,
     ReinforcementLearning,
     openssl,
-    stats
+    stats,
+    moments,
+    cluster
 Suggests: 
     testthat (>= 2.1.0),
     covr,
