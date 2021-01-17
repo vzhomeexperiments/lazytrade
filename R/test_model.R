@@ -33,6 +33,7 @@
 #'
 #'
 test_model <- function(test_dataset, predictor_dataset, test_type){
+  .Deprecated("test_model",msg = "This function is replaced by function aml_test_model")
   requireNamespace("dplyr", quietly = TRUE)
   # arguments for debugging for regression
 

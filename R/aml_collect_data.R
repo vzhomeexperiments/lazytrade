@@ -6,8 +6,7 @@
 #' Price change will be in the column 'LABEL', column X1 will keep the time index
 #' Result will be written to a new or aggregated to the existing '.rds' file
 #'
-#' Function is also checking that generated dataset is not too big.
-#' Should the dataset is too big (e.g. > 50000 rows), then only latest 40000 rows will be used.
+#' Function is keeping generated dataset to be not larger than specified by the user
 #'
 #' @details Function is not handling shift of the price and indicator datasets.
 #'
@@ -20,6 +19,7 @@
 #' @param symbol              Character symbol of the asset for which to train the model
 #' @param timeframe           Data timeframe e.g. 1 min
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
+#' @param max_nrows           Integer, Maximum number of rows to collect
 #'
 #' @return Function is writing files into Decision Support System folder, mainly file object with the model
 #' @export
@@ -50,7 +50,8 @@
 #'                  path_data = path_data)
 #'
 #'
-aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
+aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data,
+                             max_nrows = 2500){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -95,27 +96,14 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data){
       dplyr::distinct() %>%
       # arrange by date in a descending order
       dplyr::arrange(desc(X1)) %>%
+      # use only last N rows, that is to avoid this code to run so often...
+      utils::head(max_nrows) %>%
       # write data back
       readr::write_rds(full_path)
     #verify generated data
     # x1 <- read_rds(full_path)
   }
 
-  # add module of code that limit the data amount (e.g. delete too old data, leave max 50000 rows)
-  # ---
-  # check number of rows
-  x1_nrows <- readr::read_rds(full_path) %>% nrow()
-  # what to do if too much rows?
-  if(x1_nrows > 50000){
-    # read all the data
-    readr::read_rds(full_path) %>%
-      # arrange date descending order
-      dplyr::arrange(desc(X1)) %>%
-      # use only last 40000 rows, 40000 is to avoid this code to run so often...
-      utils::head(40000) %>%
-      # write them back
-      readr::write_rds(full_path)
-  }
 
   # ---
 
