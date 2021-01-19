@@ -11,7 +11,8 @@ mt_make_model(
   path_model,
   path_data,
   activate_balance = TRUE,
-  num_nn_options = 24
+  num_nn_options = 24,
+  is_cluster = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ mt_make_model(
 of the random neural network structures. Value 3 will mean that only one
 random structure will be used. To avoid warnings make sure to set this value
 multiple of 3. Higher values will increase computation time.}
+
+\item{is_cluster}{Boolean, set TRUE to use automatically clustered data}
 }
 \value{
 Function is writing file object with the model
@@ -62,6 +65,7 @@ library(magrittr)
 library(readr)
 library(h2o)
 library(lazytrade)
+library(stats)
 
 path_model <- normalizePath(tempdir(),winslash = "/")
 path_data <- normalizePath(tempdir(),winslash = "/")
@@ -74,7 +78,7 @@ Sys.sleep(5)
 h2o.init(nthreads = 2)
 
 
-# performing Deep Learning Regression using the custom function
+# performing Deep Learning Classification using the custom function manually prepared data
 mt_make_model(indicator_dataset = macd_ML60M,
               num_bars = 64,
               timeframe = 60,
@@ -82,6 +86,26 @@ mt_make_model(indicator_dataset = macd_ML60M,
               path_data = path_data,
               activate_balance = TRUE,
               num_nn_options = 3)
+
+data(price_dataset_big)
+data <- head(price_dataset_big, 500) #reduce computational time
+
+ai_class <- mt_stat_transf(indicator_dataset = data,
+                      num_bars = 64,
+                      timeframe = 60,
+                      path_data = path_data,
+                      mt_classes = c('BUN', 'BEN', 'RAN'))
+
+# performing Deep Learning Classification using the custom function auto clustered data
+mt_make_model(indicator_dataset = ai_class,
+              num_bars = 64,
+              timeframe = 60,
+              path_model = path_model,
+              path_data = path_data,
+              activate_balance = TRUE,
+              num_nn_options = 3,
+              is_cluster = TRUE)
+
 
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)

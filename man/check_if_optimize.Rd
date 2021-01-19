@@ -68,5 +68,5 @@ check_if_optimize(x = profit_factorDF,
 
 }
 \author{
-(C) 2019,2020 Vladimir Zhbanko
+(C) 2019,2021 Vladimir Zhbanko
 }

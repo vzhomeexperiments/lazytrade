@@ -5,7 +5,13 @@
 \title{Function to read new data, transform, aggregate and save data for further retraining of regression model
 for a single currency pair}
 \usage{
-aml_collect_data(indicator_dataset, symbol, timeframe, path_data)
+aml_collect_data(
+  indicator_dataset,
+  symbol,
+  timeframe,
+  path_data,
+  max_nrows = 2500
+)
 }
 \arguments{
 \item{indicator_dataset}{Dataset containing assets indicator which pattern will be used as predictor}
@@ -15,6 +21,8 @@ aml_collect_data(indicator_dataset, symbol, timeframe, path_data)
 \item{timeframe}{Data timeframe e.g. 1 min}
 
 \item{path_data}{Path where the aggregated historical data is stored, if exists in rds format}
+
+\item{max_nrows}{Integer, Maximum number of rows to collect}
 }
 \value{
 Function is writing files into Decision Support System folder, mainly file object with the model
@@ -25,8 +33,7 @@ Data objects are transformed to be suitable for Regression Modelling.
 Price change will be in the column 'LABEL', column X1 will keep the time index
 Result will be written to a new or aggregated to the existing '.rds' file
 
-Function is also checking that generated dataset is not too big.
-Should the dataset is too big (e.g. > 50000 rows), then only latest 40000 rows will be used.
+Function is keeping generated dataset to be not larger than specified by the user
 }
 \details{
 Function is not handling shift of the price and indicator datasets.

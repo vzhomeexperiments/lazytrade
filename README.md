@@ -159,8 +159,6 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
-#>          .
-#> 1 ae1643FE
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -230,6 +228,9 @@ Run this code to add data to the folder `data/` `x <- sample(1000)`
 
 To update this data: `x <- sample(2000)` `usethis::use_data(x, overwrite
 = T)`
+
+To convert character into time: `mutate(across('X1', ~ as.POSIXct(.x,
+format = "%Y.%m.%d %H:%M:%S")))`
 
 Note: use option ’LazyLoad\` to make data available only when user wants
 it always include LazyData: true in your DESCRIPTION. Note: to document
@@ -314,6 +315,7 @@ test_that("test value of the calculation", {
   expect_equal(DF_Stats$PrFact, 0.68)
 
 })
+#> Test passed
 ```
 
 ### Test of the coverage for the script

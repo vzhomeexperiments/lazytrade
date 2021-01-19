@@ -48,3 +48,6 @@ rl_record_policy(x = TradeStatePolicy,
 
 
 }
+\author{
+(C) 2019,2021 Vladimir Zhbanko
+}

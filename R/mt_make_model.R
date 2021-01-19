@@ -29,6 +29,7 @@
 #'                            of the random neural network structures. Value 3 will mean that only one
 #'                            random structure will be used. To avoid warnings make sure to set this value
 #'                            multiple of 3. Higher values will increase computation time.
+#' @param is_cluster          Boolean, set TRUE to use automatically clustered data
 #'
 #' @return Function is writing file object with the model
 #' @export
@@ -42,6 +43,7 @@
 #' library(readr)
 #' library(h2o)
 #' library(lazytrade)
+#' library(stats)
 #'
 #' path_model <- normalizePath(tempdir(),winslash = "/")
 #' path_data <- normalizePath(tempdir(),winslash = "/")
@@ -54,7 +56,7 @@
 #' h2o.init(nthreads = 2)
 #'
 #'
-#' # performing Deep Learning Regression using the custom function
+#' # performing Deep Learning Classification using the custom function manually prepared data
 #' mt_make_model(indicator_dataset = macd_ML60M,
 #'               num_bars = 64,
 #'               timeframe = 60,
@@ -62,6 +64,26 @@
 #'               path_data = path_data,
 #'               activate_balance = TRUE,
 #'               num_nn_options = 3)
+#'
+#' data(price_dataset_big)
+#' data <- head(price_dataset_big, 500) #reduce computational time
+#'
+#' ai_class <- mt_stat_transf(indicator_dataset = data,
+#'                       num_bars = 64,
+#'                       timeframe = 60,
+#'                       path_data = path_data,
+#'                       mt_classes = c('BUN', 'BEN', 'RAN'))
+#'
+#' # performing Deep Learning Classification using the custom function auto clustered data
+#' mt_make_model(indicator_dataset = ai_class,
+#'               num_bars = 64,
+#'               timeframe = 60,
+#'               path_model = path_model,
+#'               path_data = path_data,
+#'               activate_balance = TRUE,
+#'               num_nn_options = 3,
+#'               is_cluster = TRUE)
+#'
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -78,29 +100,18 @@ mt_make_model <- function(indicator_dataset,
                           timeframe = 60,
                           path_model, path_data,
                           activate_balance = TRUE,
-                          num_nn_options = 24){
+                          num_nn_options = 24,
+                          is_cluster = FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("h2o", quietly = TRUE)
 
-
-
-  ## check if the latest data is available
-  # construct path to the new data
-  path_file_name <- paste0("macd_checked_", timeframe, "M.rds")
-  path_newdata <- file.path(path_data, path_file_name)
-  if(file.exists(path_newdata)){
-    # use new data...
-    macd_ML2 <- readr::read_rds(path_newdata) %>%
-      # and add new data
-      dplyr::bind_rows(indicator_dataset) %>%
-      # convert one column to factor
-      dplyr::mutate_at("M_T", as.factor)
-  } else {
-    # use input data and transform dataset column to factor
-    macd_ML2 <- indicator_dataset %>% dplyr::mutate_at("M_T", as.factor)
+  if(is_cluster == TRUE){
+    num_bars <- ncol(indicator_dataset)-1
   }
+
+  macd_ML2 <- indicator_dataset %>% dplyr::mutate_at("M_T", as.factor)
 
   # check if we don't have too much data
   x1_nrows <- macd_ML2 %>% nrow()

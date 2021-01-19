@@ -186,6 +186,9 @@ To update this data:
 `x <- sample(2000)`
 `usethis::use_data(x, overwrite = T)`
 
+To convert character into time:
+`mutate(across('X1', ~ as.POSIXct(.x, format = "%Y.%m.%d %H:%M:%S")))`
+
 Note: use option 'LazyLoad` to make data available only when user wants it
 always include LazyData: true in your DESCRIPTION. 
 Note: to document dataset see https://stackoverflow.com/questions/2310409/how-can-i-document-data-sets-with-roxygen

@@ -13,6 +13,8 @@
 #'
 #' @export
 #'
+#' @author (C) 2019,2021 Vladimir Zhbanko
+#'
 #' @examples
 #'
 #'

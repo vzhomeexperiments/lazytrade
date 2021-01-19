@@ -6,6 +6,16 @@
 * Put option predict ahead as a parameter (now 34 bars)
 * aml_make_model use parameter to split data with specific n of rows e.g. n_rows
 
+# lazytrade 0.4.4
+
+# Version 0.4.4
+
+## Changes
+
+* added fail safe stops in function `check_if_optimize.R`
+* experimenting with time series statistical transformation adding functions `mt_stat_transf` and `mt_stat_evaluate`. Learning opportunity around clustering for automatic market type generation
+* added fail safe and change the way how to find control parameters for Reinforcement Learning to avoid slow code execution
+
 # lazytrade 0.4.3
 
 # Version 0.4.3
