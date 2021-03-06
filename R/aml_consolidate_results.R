@@ -14,6 +14,8 @@
 #' @param used_symbols        Vector, containing several financial instruments that were previously used
 #'                            to test the model
 #' @param min_quality         Double, value typically from 0.25 to 0.9 to select the min threshold value
+#' @param get_quantile        Bool, whether or not function should return an overal value of model performances
+#'                            this will be used to conditionally update only weak models
 #'
 #' @return Function is writing files into Decision Support System folders
 #' @export
@@ -53,9 +55,17 @@
 #'                         path_model = path_model,
 #'                         path_sbxm = path_sbxm,
 #'                         path_sbxs = path_sbxs,
-#'                         min_quality = 0.75)
+#'                         min_quality = 0.75,
+#'                         get_quantile = FALSE)
 #'
 #'
+#' aml_consolidate_results(timeframe = 15,
+#'                         used_symbols = Pairs,
+#'                         path_model = path_model,
+#'                         path_sbxm = path_sbxm,
+#'                         path_sbxs = path_sbxs,
+#'                         min_quality = 0.75,
+#'                         get_quantile = TRUE)
 #'
 #'
 aml_consolidate_results <- function(timeframe = 15,
@@ -63,7 +73,8 @@ aml_consolidate_results <- function(timeframe = 15,
                                     path_model,
                                     path_sbxm,
                                     path_sbxs,
-                                    min_quality = 0.75){
+                                    min_quality = 0.75,
+                                    get_quantile = FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -94,8 +105,14 @@ aml_consolidate_results <- function(timeframe = 15,
 
   # find the 1st quantile by sampling 25% of the data see ?quantile
   df <- dfres1 %>%
-    dplyr::mutate(qrtl = quantile(MaxPerf, min_quality)) %>%
+    dplyr::mutate(qrtl = stats::quantile(MaxPerf, min_quality)) %>%
     head(1) %$% qrtl %>% as_tibble() %>% rename(FrstQntlPerf = value)
+
+ #if option get_quantile is TRUE then we return obtained value
+  if(get_quantile){
+    res <- df %$% FrstQntlPerf
+    return(res)
+  }
 
 
   # write the value of the 1st quantile into all files

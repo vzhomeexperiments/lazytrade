@@ -2,7 +2,6 @@
 #'
 #' @description Function will write a policy 'decision' to the csv file specific for each Expert Advisor
 #'
-#'
 #' @param x - Dataframe containing columns MarketType and Policy
 #' @param trading_system - character vector of length 1 with Trading System Magic Number information
 #' @param path_terminal - path to the sandbox where this Policy/Decision must be written
@@ -40,7 +39,7 @@ rl_record_policy <- function(x, last_result, trading_system, path_terminal, file
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
   is_T3 <- str_detect(path_terminal, "Terminal3")
   is_T4 <- str_detect(path_terminal, "Terminal4")
-  if(is_T3 == TRUE) { addition <- 200 } else if(is_T4 == TRUE) { addition <- 300 } else { addition <- 0 }
+  if(is_T3 == TRUE) { addition <- 200 } else if(is_T4 == TRUE) { addition <- 300 } else { addition <- 200 }
 
   # analyse latest result and extract action based on the RL policy
     y <- x %>% dplyr::filter(TradeState == last_result) %$% Policy

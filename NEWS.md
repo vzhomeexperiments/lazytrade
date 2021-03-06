@@ -6,6 +6,16 @@
 * Put option predict ahead as a parameter (now 34 bars)
 * aml_make_model use parameter to split data with specific n of rows e.g. n_rows
 
+# lazytrade 0.4.5
+
+# Version 0.4.5
+
+## Changes
+
+* add option in function `aml_consolidateresults.R`to help understand overall model performances
+
+
+
 # lazytrade 0.4.4
 
 # Version 0.4.4

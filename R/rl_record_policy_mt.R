@@ -31,7 +31,7 @@ rl_record_policy_mt <- function(x, trading_system, path_terminal, fileName = "Sy
 # derive which terminal should be enabled (using path to sandbox) and using variable 'addition'
   is_T3 <- stringr::str_detect(path_terminal, "Terminal3")
   is_T4 <- stringr::str_detect(path_terminal, "Terminal4")
-  if(is_T3 == TRUE) { addition <- 200 } else if(is_T4 == TRUE) { addition <- 300 } else { addition <- 0 }
+  if(is_T3 == TRUE) { addition <- 200 } else if(is_T4 == TRUE) { addition <- 300 } else { addition <- 200 }
 
   # -------------------------
   # Write Decision/Update Policy

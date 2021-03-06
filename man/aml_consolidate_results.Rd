@@ -10,7 +10,8 @@ aml_consolidate_results(
   path_model,
   path_sbxm,
   path_sbxs,
-  min_quality = 0.75
+  min_quality = 0.75,
+  get_quantile = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,9 @@ to test the model}
 \item{path_sbxs}{String, User path to the sandbox where file with strategy test results should be written (slave terminal)}
 
 \item{min_quality}{Double, value typically from 0.25 to 0.9 to select the min threshold value}
+
+\item{get_quantile}{Bool, whether or not function should return an overal value of model performances
+this will be used to conditionally update only weak models}
 }
 \value{
 Function is writing files into Decision Support System folders
@@ -72,9 +76,17 @@ aml_consolidate_results(timeframe = 15,
                         path_model = path_model,
                         path_sbxm = path_sbxm,
                         path_sbxs = path_sbxs,
-                        min_quality = 0.75)
+                        min_quality = 0.75,
+                        get_quantile = FALSE)
 
 
+aml_consolidate_results(timeframe = 15,
+                        used_symbols = Pairs,
+                        path_model = path_model,
+                        path_sbxm = path_sbxm,
+                        path_sbxs = path_sbxs,
+                        min_quality = 0.75,
+                        get_quantile = TRUE)
 
 
 }
