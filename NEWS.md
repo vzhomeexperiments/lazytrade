@@ -12,7 +12,7 @@
 
 ## Changes
 
-* add option in function `aml_consolidateresults.R`to help understand overall model performances
+* add option in function `aml_consolidateresults.R`to help understand overall model performances and log results
 
 
 

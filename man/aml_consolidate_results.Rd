@@ -11,7 +11,9 @@ aml_consolidate_results(
   path_sbxm,
   path_sbxs,
   min_quality = 0.75,
-  get_quantile = FALSE
+  get_quantile = FALSE,
+  log_results = FALSE,
+  path_logs = NULL
 )
 }
 \arguments{
@@ -30,6 +32,10 @@ to test the model}
 
 \item{get_quantile}{Bool, whether or not function should return an overal value of model performances
 this will be used to conditionally update only weak models}
+
+\item{log_results}{Bool, option to write logs for all models}
+
+\item{path_logs}{String, User path to the log folder}
 }
 \value{
 Function is writing files into Decision Support System folders
@@ -53,9 +59,11 @@ testpath <- normalizePath(tempdir(),winslash = "/")
 path_model <- file.path(testpath, "_Model")
 path_sbxm <- file.path(testpath, "_T1")
 path_sbxs <- file.path(testpath, "_T3")
+path_logs <- file.path(testpath, "_LOGS")
 dir.create(path_model)
 dir.create(path_sbxm)
 dir.create(path_sbxs)
+dir.create(path_logs)
 
 file.copy(from = system.file("extdata", "StrTest-EURGBPM15.csv", package = "lazytrade"),
           to = file.path(path_model, "StrTest-EURGBPM15.csv"), overwrite = TRUE)
@@ -87,6 +95,17 @@ aml_consolidate_results(timeframe = 15,
                         path_sbxs = path_sbxs,
                         min_quality = 0.75,
                         get_quantile = TRUE)
+
+
+aml_consolidate_results(timeframe = 15,
+                        used_symbols = Pairs,
+                        path_model = path_model,
+                        path_sbxm = path_sbxm,
+                        path_sbxs = path_sbxs,
+                        min_quality = 0.75,
+                        get_quantile = FALSE,
+                        log_results = TRUE,
+                        path_logs = path_logs)
 
 
 }
