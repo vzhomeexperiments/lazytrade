@@ -8,6 +8,8 @@
 #'
 #' Function is keeping generated dataset to be not larger than specified by the user
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details Function is not handling shift of the price and indicator datasets.
 #'
 #' This function is relying on the data collection from the dedicated data robot

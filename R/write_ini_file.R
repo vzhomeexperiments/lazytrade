@@ -7,6 +7,8 @@
 #' Option 'opt' will generate file needed for the robot optimization
 #' Option 'full' allows to specify any desired parameter
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details added value of this function is the ability to generate multiple files to backtest several robots
 #' for several timeframes. For example it is solves the problem of doing repetitive tasks to 'backtest'
 #' robots for several currencies and repeat this procedure over time.

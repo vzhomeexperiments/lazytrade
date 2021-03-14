@@ -40,6 +40,8 @@ Function is training h2o deep learning model to match future prices of the asset
 Main idea is to be able to predict future prices by solely relying on the recently retrieved indicator pattern.
 This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
 
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Deep learning model structure is obtained from the 8 random combinations of neurons within 3 hidden layers of the network,
 the most accurate model configuration will be automatically selected
 

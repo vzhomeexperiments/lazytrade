@@ -4,6 +4,8 @@
 #' In order to use function simply provide a string with an API key.
 #' In addition provide the path to the .ssh folder and names of the private and public keys
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details Make sure to clean the history of the R session
 #'
 #' @references for more info on how to use RSA cryptography in R check my course

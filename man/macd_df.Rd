@@ -7,7 +7,7 @@
 \format{
 A dataframe with one column
 \describe{
-  \item{CADCHF}{Indicator values of the asset}
+\item{CADCHF}{Indicator values of the asset}
 }
 }
 \usage{

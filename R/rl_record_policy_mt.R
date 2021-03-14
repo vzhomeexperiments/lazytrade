@@ -2,6 +2,10 @@
 #'
 #' @description Function will write a policy 'decision' to the csv file specific for each Expert Advisor
 #'
+#' `r lifecycle::badge('stable')`
+#'
+#' @details It is imperative that terminal path contains exact word Terminal3
+#'
 #' @param x - Dataframe containing columns MarketType and Policy
 #' @param trading_system - numeric vector of length 1 with Trading System Magic Number information
 #' @param path_terminal - string, path to the terminal where this Policy/Decision must be written

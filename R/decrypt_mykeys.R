@@ -1,5 +1,9 @@
 #' Function that decrypt encrypted content
 #'
+#' @description Cryptography facility
+#'
+#' `r lifecycle::badge('stable')`
+#'
 #' @param path_encrypted_content - path to the encrypted content of the API key
 #' @param path_private_key - path to the private RSA key, should be without password
 #'

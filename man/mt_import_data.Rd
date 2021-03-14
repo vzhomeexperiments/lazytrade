@@ -7,15 +7,21 @@
 mt_import_data(path_sbxm, system_number)
 }
 \arguments{
-\item{path_sbxm}{- String, Path to the sandbox with the log file (master terminal)}
+\item{path_sbxm}{\itemize{
+\item String, Path to the sandbox with the log file (master terminal)
+}}
 
-\item{system_number}{- magic number id of the trading system}
+\item{system_number}{\itemize{
+\item magic number id of the trading system
+}}
 }
 \value{
 function returns the data frame with 5 columns including market type code
 }
 \description{
 Function imports file from the MetaTrader sandbox. Function performs necessary cleansing of the data column types
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
 

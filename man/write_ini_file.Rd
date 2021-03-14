@@ -55,7 +55,7 @@ If this parameter is not specified, the current login will be used.}
 
 \item{mt4_Password}{string, the password that allows entering the system.
 This parameter will be ignored if the client terminal stores personal data on the disk
- and the account to be connected is in the list}
+and the account to be connected is in the list}
 
 \item{mt4_Server}{string,  the name of the trade server to be connected to.
 The server name is the same as the name of the corresponding .srv file stored in the /config directory}
@@ -116,7 +116,7 @@ If this parameter had not been specified, the "false" value is used.}
 
 \item{mt4_TestDateEnable}{string, enable/disable the "Use date" flag.
 The values that can be taken are "true" or "false".
- If this parameter had not been specified, the "false" value is used.}
+If this parameter had not been specified, the "false" value is used.}
 
 \item{mt4_TestFromDate}{string, the date, from which to start testing, appeared as YYYY.MM.DD.
 If this parameter has not been specified, this date is 1970.01.01.}
@@ -155,6 +155,8 @@ Option 'prod' will just use existing profile and connect to the broker server
 Option 'backtest' will generate file for the robot backtest
 Option 'opt' will generate file needed for the robot optimization
 Option 'full' allows to specify any desired parameter
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 added value of this function is the ability to generate multiple files to backtest several robots

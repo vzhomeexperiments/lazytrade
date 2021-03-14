@@ -12,21 +12,33 @@ load_asset_data(
 )
 }
 \arguments{
-\item{path_terminal}{- path to the MT4 terminal, string}
+\item{path_terminal}{\itemize{
+\item path to the MT4 terminal, string
+}}
 
-\item{trade_log_file}{- csv file name where the data is stored, without ".csv"}
+\item{trade_log_file}{\itemize{
+\item csv file name where the data is stored, without ".csv"
+}}
 
-\item{time_period}{- data periodicity in minutes, can be 1, 15, 60}
+\item{time_period}{\itemize{
+\item data periodicity in minutes, can be 1, 15, 60
+}}
 
-\item{data_deepth}{- collected data deepth in rows. describe how many rows in original file to read}
+\item{data_deepth}{\itemize{
+\item collected data deepth in rows. describe how many rows in original file to read
+}}
 }
 \value{
-- dataframe with asset data in columns where X1 column is in a POSIXct format
+\itemize{
+\item dataframe with asset data in columns where X1 column is in a POSIXct format
+}
 }
 \description{
 Function imports file with financial asset data. Each column represent one asset, rows represent observations.
 Values in specific columns will be normalized by dividing them by 100. This is specifically done for pairs with JPY.
 In addition, X1 column will be converted to the ymd_hms format
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
 Works for both price and indicator values, function parameters allowing to import different files.

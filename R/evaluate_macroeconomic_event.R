@@ -7,7 +7,8 @@
 #' Function will also read magic number of the trading robots. This is indicated in the file 'Setup.csv'.
 #' Final outcome of the function is the series of files written to the destination directories.
 #' These files will either enable or disable opening of new positions in the trading robots
-#'#'
+#'
+#' `r lifecycle::badge('stable')`
 #'
 #' @details This function is used exclusively with Market Type recognition system.
 #'

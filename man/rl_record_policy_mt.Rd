@@ -12,19 +12,32 @@ rl_record_policy_mt(
 )
 }
 \arguments{
-\item{x}{- Dataframe containing columns MarketType and Policy}
+\item{x}{\itemize{
+\item Dataframe containing columns MarketType and Policy
+}}
 
-\item{trading_system}{- numeric vector of length 1 with Trading System Magic Number information}
+\item{trading_system}{\itemize{
+\item numeric vector of length 1 with Trading System Magic Number information
+}}
 
-\item{path_terminal}{- string, path to the terminal where this Policy/Decision must be written}
+\item{path_terminal}{\itemize{
+\item string, path to the terminal where this Policy/Decision must be written
+}}
 
-\item{fileName}{- string, desired control file prefix e.g. 'SystemControlMT'}
+\item{fileName}{\itemize{
+\item string, desired control file prefix e.g. 'SystemControlMT'
+}}
 }
 \value{
 nothing is returned but function will write csv file to the supplied directory
 }
 \description{
 Function will write a policy 'decision' to the csv file specific for each Expert Advisor
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+}
+\details{
+It is imperative that terminal path contains exact word Terminal3
 }
 \examples{
 

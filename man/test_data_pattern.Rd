@@ -7,8 +7,8 @@
 \format{
 A dataframe with several columns
 \describe{
-  \item{LABEL}{Asset values as were recorded in the future}
-  \item{V1-V49}{Transposed values of the indicator}
+\item{LABEL}{Asset values as were recorded in the future}
+\item{V1-V49}{Transposed values of the indicator}
 }
 }
 \usage{

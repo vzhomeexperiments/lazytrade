@@ -25,6 +25,8 @@ Function is writing file into Decision Support System folder, mainly file with p
 \description{
 Function is using the latest data from the financial assets indicator pattern and deep learning model.
 Prediction is a price change in the future for that asset will be used by the trading system
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Performs fresh data reading from the rds file

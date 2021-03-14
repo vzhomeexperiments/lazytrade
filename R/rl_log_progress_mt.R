@@ -4,6 +4,8 @@
 #' @description Function will record Q values during the model update. These values will be used by another function
 #' Function was developed to help to estimate best control parameters during optimisation process
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @param x - dataframe containing trading results
 #' @param states  - Selected states of the System
 #' @param actions - Selected actions executed under environment

@@ -3,7 +3,7 @@
 #' @description PURPOSE: function gets indicator data in each column.
 #' Goal is to splitting this data into periods and transpose the data.
 #'
-#' Learn by example how to manipulate data
+#' `r lifecycle::badge('superseded')`
 #'
 #' @details each column contains records of the indicator value of the assets
 #' every column will be split into chunks of n observations and transposed into rows

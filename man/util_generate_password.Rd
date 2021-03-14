@@ -34,6 +34,8 @@ By default function just output randomly generated 8 symbol password suitable fo
 It is also possible to create other passwords and include special symbols.
 When required, it's possible to write resulting password to the txt file.
 Once generated, password is written to the destination supplied by the user.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Passwords are generated using sha512 cryptographic function from openssl package.
@@ -66,5 +68,5 @@ util_generate_password(salt = 'random text', pass_len = 10, special_symbols = TR
 
 }
 \author{
-(C) 2019 Vladimir Zhbanko
+(C) 2019, 2021 Vladimir Zhbanko
 }

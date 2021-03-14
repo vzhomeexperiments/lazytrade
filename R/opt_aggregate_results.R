@@ -3,6 +3,8 @@
 #' @description PURPOSE: Read multiple '.csv' files stored in different folders
 #' Store results to the intermediate dataframe.
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details user must provide the path to the files in the folders
 #' all files in subfolders are read and aggregated into one data object.
 #' Data object is sorted in descending order by order close time

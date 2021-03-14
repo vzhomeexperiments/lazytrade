@@ -1,6 +1,9 @@
 #' Write csv files with indicated commands to the external system
 #'
-#' @description Function is capable to read the data and  writing multiple files e.g. 'SystemControl8139124.csv'
+#' @description Function is capable to read the data and  writing multiple files
+#' e.g. 'SystemControl8139124.csv'
+#'
+#' `r lifecycle::badge('stable')`
 #'
 #' @param x - dataframe object with resulting command e.g. 1 - enable; 0 - disable
 #' @param path_terminal - path to the terminal
@@ -14,7 +17,7 @@
 #'
 #' @export
 #'
-#' @author (C) 2019 Vladimir Zhbanko
+#' @author (C) 2019, 2021 Vladimir Zhbanko
 #'
 #' @examples
 #'

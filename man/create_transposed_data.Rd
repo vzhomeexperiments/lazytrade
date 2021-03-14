@@ -7,9 +7,13 @@
 create_transposed_data(x, n = 50)
 }
 \arguments{
-\item{x}{- data set containing a table where 1st column is a Time index and other columns containing financial asset indicator values}
+\item{x}{\itemize{
+\item data set containing a table where 1st column is a Time index and other columns containing financial asset indicator values
+}}
 
-\item{n}{- number of rows we intend to split and transpose the data}
+\item{n}{\itemize{
+\item number of rows we intend to split and transpose the data
+}}
 }
 \value{
 function returns transposed data. Transposed values from every column are stacked one to each other
@@ -18,7 +22,7 @@ function returns transposed data. Transposed values from every column are stacke
 PURPOSE: function gets indicator data in each column.
 Goal is to splitting this data into periods and transpose the data.
 
-Learn by example how to manipulate data
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 }
 \details{
 each column contains records of the indicator value of the assets

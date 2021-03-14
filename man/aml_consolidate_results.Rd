@@ -2,7 +2,7 @@
 % Please edit documentation in R/aml_consolidate_results.R
 \name{aml_consolidate_results}
 \alias{aml_consolidate_results}
-\title{Function to consolidate model test results for several models}
+\title{Function to consolidate model test results}
 \usage{
 aml_consolidate_results(
   timeframe = 15,
@@ -17,7 +17,7 @@ aml_consolidate_results(
 )
 }
 \arguments{
-\item{timeframe}{Integer, Data timeframe e.g. 60 min. This will be equal to 1 bar}
+\item{timeframe}{Integer, Data timeframe interval in minutes e.g. 60 min}
 
 \item{used_symbols}{Vector, containing several financial instruments that were previously used
 to test the model}
@@ -28,24 +28,27 @@ to test the model}
 
 \item{path_sbxs}{String, User path to the sandbox where file with strategy test results should be written (slave terminal)}
 
-\item{min_quality}{Double, value typically from 0.25 to 0.9 to select the min threshold value}
+\item{min_quality}{Double, value typically from 0.25 to 0.95 to select the min threshold value}
 
-\item{get_quantile}{Bool, whether or not function should return an overal value of model performances
-this will be used to conditionally update only weak models}
+\item{get_quantile}{Bool, whether or not function should return an overall value of model performances
+this will be used to conditionally update only less performant models}
 
-\item{log_results}{Bool, option to write logs for all models}
+\item{log_results}{Bool, option to write logs with cumulative results obtained for all models}
 
-\item{path_logs}{String, User path to the log folder}
+\item{path_logs}{String, User path to the folder where to log results}
 }
 \value{
 Function is writing files into Decision Support System folders
 }
 \description{
 Function is designed to evaluate test results of multiple models.
-This is done to select only group of best models
+This is done to select only group of models with the best performance. In addition,
+function will provide facility to generate logs hence to allow tracking of long term model performance
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
-Provide a modular facility to aggregate and update files
+Provide a modular facility to aggregate and update files, write performance logs.
 }
 \examples{
 

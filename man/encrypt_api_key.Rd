@@ -30,6 +30,8 @@ Writes a file with encrypted key
 Provide easy interface to encrypt the api key.
 In order to use function simply provide a string with an API key.
 In addition provide the path to the .ssh folder and names of the private and public keys
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Make sure to clean the history of the R session

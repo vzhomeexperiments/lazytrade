@@ -28,7 +28,8 @@ Imports:
     ReinforcementLearning,
     openssl,
     stats,
-    cluster
+    cluster,
+    lifecycle
 Suggests: 
     testthat (>= 2.1.0),
     covr,
@@ -36,3 +37,4 @@ Suggests:
     data.table,
     bit64
 Depends: R (>= 3.4.0)
+Roxygen: list(markdown = TRUE)

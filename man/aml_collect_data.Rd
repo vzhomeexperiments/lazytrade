@@ -34,6 +34,8 @@ Price change will be in the column 'LABEL', column X1 will keep the time index
 Result will be written to a new or aggregated to the existing '.rds' file
 
 Function is keeping generated dataset to be not larger than specified by the user
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Function is not handling shift of the price and indicator datasets.

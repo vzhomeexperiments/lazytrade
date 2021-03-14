@@ -2,6 +2,8 @@
 #'
 #' @description Calculate profit factor using a data vector with the trading results
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @param x column vector with profit or loss of the orders for one system
 #'
 #' @return function should calculate profit factor for this vector and return one value also as vector

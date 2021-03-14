@@ -7,17 +7,25 @@
 opt_create_graphs(x, outp_path, graph_type = "pdf")
 }
 \arguments{
-\item{x}{- dataframe with aggregated trading results}
+\item{x}{\itemize{
+\item dataframe with aggregated trading results
+}}
 
-\item{outp_path}{- path to the folder where to write file}
+\item{outp_path}{\itemize{
+\item path to the folder where to write file
+}}
 
-\item{graph_type}{- character, one of the options c('ts', 'bars', 'pdf')}
+\item{graph_type}{\itemize{
+\item character, one of the options c('ts', 'bars', 'pdf')
+}}
 }
 \value{
 graphic output
 }
 \description{
 Create graphs and store them into pdf file
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 bar graph and time series optionally written to the pdf file.

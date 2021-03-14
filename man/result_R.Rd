@@ -7,7 +7,7 @@
 \format{
 A dataframe with one column
 \describe{
-  \item{predict}{predicted future price change}
+\item{predict}{predicted future price change}
 
 }
 }

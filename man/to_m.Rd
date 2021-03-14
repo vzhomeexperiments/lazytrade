@@ -7,16 +7,24 @@
 to_m(x, n_cols)
 }
 \arguments{
-\item{x}{- dataframe with one column}
+\item{x}{\itemize{
+\item dataframe with one column
+}}
 
-\item{n_cols}{- number of columns in the matrix}
+\item{n_cols}{\itemize{
+\item number of columns in the matrix
+}}
 }
 \value{
-- matrix with specified amount of rows
+\itemize{
+\item matrix with specified amount of rows
+}
 }
 \description{
 Transforms Time Series Column of the dataframe to the matrix with specified number of columns.
 Number of rows will be automatically found. Eventually not complete last row will be discarded
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 }
 \examples{
 

@@ -11,11 +11,17 @@ rl_write_control_parameters_mt(
 )
 }
 \arguments{
-\item{x}{- dataset containing the trading results for one trading robot}
+\item{x}{\itemize{
+\item dataset containing the trading results for one trading robot
+}}
 
-\item{path_control_files}{- path where control parameters will be saved}
+\item{path_control_files}{\itemize{
+\item path where control parameters will be saved
+}}
 
-\item{num_trades_to_consider}{- number of last trades to use for RL modeling simulations, default value 100}
+\item{num_trades_to_consider}{\itemize{
+\item number of last trades to use for RL modeling simulations, default value 100
+}}
 }
 \value{
 Function writes best control parameters to be used by the Reinforcement Learning Function
@@ -23,6 +29,8 @@ Function writes best control parameters to be used by the Reinforcement Learning
 \description{
 This function is supposed to run on a weekly basis. Purpose of this function is to perform RL and
 trading simulation and find out the best possible control parameters for the RL function.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Function is used by the R script Adapt_RL_MT_control.R

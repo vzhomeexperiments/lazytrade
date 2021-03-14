@@ -5,6 +5,7 @@
 #' Function is capable to import file with executed trades log.
 #' Files do not have column headers hence function will take care to name columns as well as to perform relevant cleansing
 #'
+#' `r lifecycle::badge('stable')`
 #'
 #' @param path_sbxm - String, Path to the sandbox with the log file where the file with data is written
 #' @param trade_log_file - String, File name where the order results are written

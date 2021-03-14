@@ -13,6 +13,8 @@
 ## Changes
 
 * add option in function `aml_consolidateresults.R`to help understand overall model performances and log results
+* removed unused functions and datasets
+* add lifecycle badges
 
 
 

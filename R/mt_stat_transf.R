@@ -6,6 +6,8 @@
 #' Function allows to fully automatize financial periods classification.
 #' It is possible to choose two clustering methods either kmeans or hierarchical clustering.
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details User can define several market type classes names however function will randomly assign
 #' Market Period labels based on Unsupervised Learning. This is inconvenient however that should be compensated by
 #' automated way of doing such data classification

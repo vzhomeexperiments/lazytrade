@@ -2,6 +2,8 @@
 #'
 #' @description Create graphs and store them into pdf file
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details bar graph and time series optionally written to the pdf file.
 #' File is named with a date of analysis to the location specified by the user
 #'

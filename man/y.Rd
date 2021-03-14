@@ -7,11 +7,11 @@
 \format{
 A dataframe with several columns
 \describe{
-  \item{X1}{Time index}
-  \item{X2}{Closed price now}
-  \item{X3}{Closed price 34 bars ago}
-  \item{X4-X19}{Series of Indicator values}
-  \item{LABEL}{Price difference, difference between X3 and X2}
+\item{X1}{Time index}
+\item{X2}{Closed price now}
+\item{X3}{Closed price 34 bars ago}
+\item{X4-X19}{Series of Indicator values}
+\item{LABEL}{Price difference, difference between X3 and X2}
 }
 }
 \usage{

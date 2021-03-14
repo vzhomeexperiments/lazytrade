@@ -4,6 +4,8 @@
 #' It will suggest whether or not it is better to keep using trading systems or not.
 #' Function is just using results of the past performance to generate the recommendation (not a holy grail).
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details Initial policy is generated using a dummy zero values.
 #' This way function starts working directly from the first observation.
 #' However policy 'ON' value will only be generated once the Q value is greater than zero
