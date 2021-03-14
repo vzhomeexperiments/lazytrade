@@ -158,8 +158,6 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
-#>          .
-#> 1 e16d039F
 ```
 
 ## Example - generate initialization files for MT4 platform

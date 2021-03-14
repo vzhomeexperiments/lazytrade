@@ -186,7 +186,7 @@
 #' }
 "x_test_model"
 
-#' Table with predicte price change
+#' Table with predicted price change
 #'
 #' @docType data
 #' @keywords datasets

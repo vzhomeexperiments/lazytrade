@@ -5,6 +5,9 @@
 * Add folder generation function
 * Put option predict ahead as a parameter (now 34 bars)
 * aml_make_model use parameter to split data with specific n of rows e.g. n_rows
+* cleanup of deprecated functions
+* create option to set fixed structure of the neural network
+* make a major release
 
 # lazytrade 0.4.5
 
@@ -57,7 +60,7 @@
 ### Implemented
 
 * added option to balance classes in mt_make_model function
-* add and delete depricated functions
+* add and delete deprecated functions
 * change names of functions to reflect the purpose: mt - market type, rl- reinforcement learning, util - utility
 * change example methods to unify them across functions
 * align names of the variables across several functions

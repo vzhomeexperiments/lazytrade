@@ -3,7 +3,7 @@
 \docType{data}
 \name{result_R}
 \alias{result_R}
-\title{Table with predicte price change}
+\title{Table with predicted price change}
 \format{
 A dataframe with one column
 \describe{
@@ -15,6 +15,6 @@ A dataframe with one column
 result_R
 }
 \description{
-Table with predicte price change
+Table with predicted price change
 }
 \keyword{datasets}

@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/vzhomeexperiments/lazytrade/workflows/R-CMD-check/badge.svg)](https://github.com/vzhomeexperiments/lazytrade/actions)
 <!-- badges: end -->
 
-The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading. Please kindly not that *this project was created for Educational Purposes only*!
+The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading. Please kindly not that *this project was created for Educational Purposes only*! 
 
 ## Installation
 
