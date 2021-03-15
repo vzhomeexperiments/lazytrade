@@ -7,8 +7,10 @@
 mt_evaluate(x, path_model, num_cols, timeframe)
 }
 \arguments{
-\item{x}{- dataframe with one column containing asset indicator in the time descending order,
-typically 64 or more values}
+\item{x}{\itemize{
+\item dataframe with one column containing asset indicator in the time descending order,
+typically 64 or more values
+}}
 
 \item{path_model}{String, path to the model}
 
@@ -21,8 +23,8 @@ dataframe with predicted value of the market type
 }
 \description{
 PURPOSE: Function that uses Deep Learning model and Time Series Column of the dataframe
-                      to find out specific market type of the financial asset
-                      it will also discard bad result outputting -1 if it is the case
+to find out specific market type of the financial asset
+it will also discard bad result outputting -1 if it is the case
 }
 \details{
 it is mandatory to switch on the virtual h2o machine with h2o.init()

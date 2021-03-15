@@ -6,6 +6,8 @@
 #'
 #' Learn by example how to manipulate data
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details Whenever there will be not enough trades then empty file will be written to the destination
 #'
 #' @param x - dataframe containing trading results

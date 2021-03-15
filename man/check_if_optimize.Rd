@@ -14,17 +14,29 @@ check_if_optimize(
 )
 }
 \arguments{
-\item{x}{- dataframe containing trading results}
+\item{x}{\itemize{
+\item dataframe containing trading results
+}}
 
-\item{system_list}{- dataframe containing a table with magic numbers used by robots. Stored in file Setup.csv}
+\item{system_list}{\itemize{
+\item dataframe containing a table with magic numbers used by robots. Stored in file Setup.csv
+}}
 
-\item{path_data}{- string, path to the folder where optimization file should be written}
+\item{path_data}{\itemize{
+\item string, path to the folder where optimization file should be written
+}}
 
-\item{num_trades_to_consider}{- Number of trades to calculate profit factor}
+\item{num_trades_to_consider}{\itemize{
+\item Number of trades to calculate profit factor
+}}
 
-\item{profit_factor_limit}{- Limit below which trading robot is considered not working properly}
+\item{profit_factor_limit}{\itemize{
+\item Limit below which trading robot is considered not working properly
+}}
 
-\item{write_mode}{- When true function will write result to the file located in the temporary directory}
+\item{write_mode}{\itemize{
+\item When true function will write result to the file located in the temporary directory
+}}
 }
 \value{
 function returns a dataframe with systems that should be optimized
@@ -35,6 +47,8 @@ profit factor on the last trades. Whenever trading robot has profit factor value
 function will write a file log indicating which trading systems need to be maintained.
 
 Learn by example how to manipulate data
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Whenever there will be not enough trades then empty file will be written to the destination

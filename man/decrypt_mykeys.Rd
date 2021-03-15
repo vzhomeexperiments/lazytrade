@@ -7,15 +7,23 @@
 decrypt_mykeys(path_encrypted_content, path_private_key)
 }
 \arguments{
-\item{path_encrypted_content}{- path to the encrypted content of the API key}
+\item{path_encrypted_content}{\itemize{
+\item path to the encrypted content of the API key
+}}
 
-\item{path_private_key}{- path to the private RSA key, should be without password}
+\item{path_private_key}{\itemize{
+\item path to the private RSA key, should be without password
+}}
 }
 \value{
-- a string with decrypted key
+\itemize{
+\item a string with decrypted key
+}
 }
 \description{
-Function that decrypt encrypted content
+Cryptography facility
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 It is possible to generate private/public key pair using R-Studio Project Options Menu.

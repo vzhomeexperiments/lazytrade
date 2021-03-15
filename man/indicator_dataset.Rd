@@ -7,8 +7,8 @@
 \format{
 A dataframe with several columns
 \describe{
-  \item{X1}{Date and time of the indicator sample}
-  \item{X2-X29}{Values of the assets}
+\item{X1}{Date and time of the indicator sample}
+\item{X2-X29}{Values of the assets}
 }
 }
 \usage{

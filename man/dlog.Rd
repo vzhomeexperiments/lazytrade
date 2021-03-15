@@ -7,13 +7,19 @@
 dlog(x)
 }
 \arguments{
-\item{x}{- matrix with one or more column}
+\item{x}{\itemize{
+\item matrix with one or more column
+}}
 }
 \value{
-- dataframe
+\itemize{
+\item dataframe
+}
 }
 \description{
-Transforms dataframe to the matrix
+Calculate log distribution and calculate difference within rows
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
 

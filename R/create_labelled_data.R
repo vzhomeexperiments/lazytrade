@@ -9,6 +9,8 @@
 #'
 #' Learn by example how to manipulate data
 #'
+#' `r lifecycle::badge('superseded')`
+#'
 #' @details see more info in the udemy course self-learning-trading-robot
 #'
 #' @param x - data set containing a table where 1st column is a Time index and other columns containing financial asset price values

@@ -13,6 +13,8 @@
 #' 5. Sideways quiet, RAN
 #' 6. Sideways volatile, RAV
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details Function is using manually prepared dataset and tries several different random neural network structures.
 #' Once the best neural network is found then the better model is trained and stored.
 #'

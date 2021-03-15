@@ -4,6 +4,8 @@
 #' Main idea is to be able to predict future prices by solely relying on the recently retrieved indicator pattern.
 #' This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' Deep learning model structure is obtained from the 8 random combinations of neurons within 3 hidden layers of the network,
 #' the most accurate model configuration will be automatically selected
 #'

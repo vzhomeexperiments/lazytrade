@@ -7,13 +7,21 @@
 rl_generate_policy(x, states, actions, control)
 }
 \arguments{
-\item{x}{- Dataframe containing trading data}
+\item{x}{\itemize{
+\item Dataframe containing trading data
+}}
 
-\item{states}{- Character vector, Selected states of the System}
+\item{states}{\itemize{
+\item Character vector, Selected states of the System
+}}
 
-\item{actions}{- Character vector, Selected actions executed under environment}
+\item{actions}{\itemize{
+\item Character vector, Selected actions executed under environment
+}}
 
-\item{control}{- List, control parameters as defined in the Reinforcement Learning Package}
+\item{control}{\itemize{
+\item List, control parameters as defined in the Reinforcement Learning Package
+}}
 }
 \value{
 Function returns data frame with reinforcement learning model policy
@@ -22,6 +30,8 @@ Function returns data frame with reinforcement learning model policy
 This function will perform Reinforcement Learning using Trading Data.
 It will suggest whether or not it is better to keep using trading systems or not.
 Function is just using results of the past performance to generate the recommendation (not a holy grail).
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Initial policy is generated using a dummy zero values.

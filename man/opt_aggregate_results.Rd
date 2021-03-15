@@ -7,7 +7,9 @@
 opt_aggregate_results(path_data)
 }
 \arguments{
-\item{path_data}{- String, path to the folder containing subfolders}
+\item{path_data}{\itemize{
+\item String, path to the folder containing subfolders
+}}
 }
 \value{
 Dataframe with trading results
@@ -15,6 +17,8 @@ Dataframe with trading results
 \description{
 PURPOSE: Read multiple '.csv' files stored in different folders
 Store results to the intermediate dataframe.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 user must provide the path to the files in the folders

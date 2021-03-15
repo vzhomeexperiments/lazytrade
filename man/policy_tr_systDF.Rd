@@ -7,8 +7,8 @@
 \format{
 A dataframe with 2 columns:
 \describe{
-  \item{MarketType}{Current Market Type status}
-  \item{Policy}{Policy choice}
+\item{MarketType}{Current Market Type status}
+\item{Policy}{Policy choice}
 }
 }
 \usage{

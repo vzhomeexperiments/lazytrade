@@ -1,6 +1,8 @@
 #' Create log difference distribution
 #'
-#' @description Transforms dataframe to the matrix
+#' @description Calculate log distribution and calculate difference within rows
+#'
+#' `r lifecycle::badge('stable')`
 #'
 #' @param x - matrix with one or more column
 #'

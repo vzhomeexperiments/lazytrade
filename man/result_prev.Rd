@@ -7,7 +7,7 @@
 \format{
 A dataframe with one column
 \describe{
-  \item{predict}{Predicted values from the model}
+\item{predict}{Predicted values from the model}
 }
 }
 \usage{

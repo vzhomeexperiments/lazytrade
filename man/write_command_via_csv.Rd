@@ -7,11 +7,17 @@
 write_command_via_csv(x, path_terminal = "", fileName = "SystemControl")
 }
 \arguments{
-\item{x}{- dataframe object with resulting command e.g. 1 - enable; 0 - disable}
+\item{x}{\itemize{
+\item dataframe object with resulting command e.g. 1 - enable; 0 - disable
+}}
 
-\item{path_terminal}{- path to the terminal}
+\item{path_terminal}{\itemize{
+\item path to the terminal
+}}
 
-\item{fileName}{- desired control file prefix e.g. 'SystemControl'}
+\item{fileName}{\itemize{
+\item desired control file prefix e.g. 'SystemControl'
+}}
 }
 \value{
 Function is writing multiple files e.g. 'SystemControl8139124.csv' to the Sandbox
@@ -21,7 +27,10 @@ typical content of the file:
 8139124,1
 }
 \description{
-Function is capable to read the data and  writing multiple files e.g. 'SystemControl8139124.csv'
+Function is capable to read the data and  writing multiple files
+e.g. 'SystemControl8139124.csv'
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
 
@@ -50,5 +59,5 @@ write_command_via_csv(path_terminal = path_sbxm)
 
 }
 \author{
-(C) 2019 Vladimir Zhbanko
+(C) 2019, 2021 Vladimir Zhbanko
 }

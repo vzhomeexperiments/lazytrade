@@ -38,9 +38,11 @@ Dataframe with statistically transformed and classified dataset for classificati
 \description{
 Function features methods of statistical data transformation and clustering of the price data.
 Multiple statistical properties are calculated for a defined time interval. Once combined,
-unsupervised learning (clustering) is performed to assign several classes, see function `mt_make_model`.
+unsupervised learning (clustering) is performed to assign several classes, see function \code{mt_make_model}.
 Function allows to fully automatize financial periods classification.
 It is possible to choose two clustering methods either kmeans or hierarchical clustering.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 User can define several market type classes names however function will randomly assign

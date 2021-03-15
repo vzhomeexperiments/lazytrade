@@ -3,6 +3,8 @@
 #' @description Transforms Time Series Column of the dataframe to the matrix with specified number of columns.
 #' Number of rows will be automatically found. Eventually not complete last row will be discarded
 #'
+#' `r lifecycle::badge('superseded')`
+#'
 #' @param x - dataframe with one column
 #' @param n_cols - number of columns in the matrix
 #'

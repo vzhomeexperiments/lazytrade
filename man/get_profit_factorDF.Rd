@@ -7,15 +7,23 @@
 get_profit_factorDF(x, num_orders)
 }
 \arguments{
-\item{x}{- data frame with orders. Note x must contain MagicNumber and Profit columns!}
+\item{x}{\itemize{
+\item data frame with orders. Note x must contain MagicNumber and Profit columns!
+}}
 
-\item{num_orders}{- desired number of orders to base profit factor calculation}
+\item{num_orders}{\itemize{
+\item desired number of orders to base profit factor calculation
+}}
 }
 \value{
-- Function returns dataframe with column PrFact with calculated profit factor value for each trading robot
+\itemize{
+\item Function returns dataframe with column PrFact with calculated profit factor value for each trading robot
+}
 }
 \description{
-Function that returns the profit factors of the systems in a form of a DataFrame
+Calculation of profit factor using dplyr verbs
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 }
 \examples{
 

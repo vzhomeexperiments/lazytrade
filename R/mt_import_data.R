@@ -2,6 +2,8 @@
 #'
 #' @description Function imports file from the MetaTrader sandbox. Function performs necessary cleansing of the data column types
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @param path_sbxm - String, Path to the sandbox with the log file (master terminal)
 #' @param system_number - magic number id of the trading system
 #'

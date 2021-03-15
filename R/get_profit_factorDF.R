@@ -1,6 +1,8 @@
 #' Function that returns the profit factors of the systems in a form of a DataFrame
 #'
+#' @description Calculation of profit factor using dplyr verbs
 #'
+#' `r lifecycle::badge('superseded')`
 #'
 #' @param x - data frame with orders. Note x must contain MagicNumber and Profit columns!
 #' @param num_orders - desired number of orders to base profit factor calculation

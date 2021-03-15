@@ -15,13 +15,13 @@ knitr::opts_chunk$set(
 # lazytrade
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/vzhomeexperiments/lazytrade.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/lazytrade)
 [![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](https://www.r-pkg.org/badges/version/lazytrade)](https://CRAN.R-project.org/package=lazytrade)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/vzhomeexperiments/lazytrade/workflows/R-CMD-check/badge.svg)](https://github.com/vzhomeexperiments/lazytrade/actions)
 <!-- badges: end -->
 
-The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading. Please kindly not that *this project was created for Educational Purposes only*!
+The goal of lazytrade is to keep all functions and scripts of the lazytrade educational project on [UDEMY](https://vladdsm.github.io/myblog_attempt/topics/lazy%20trading/). Functions are providing an opportunity to learn Computer and Data Science using example of Algorithmic Trading. Please kindly not that *this project was created for Educational Purposes only*! 
 
 ## Installation
 
@@ -158,6 +158,23 @@ summary(cars)
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
 taken from https://r-pkgs.org/intro.html
+
+## Communicate about lifecycle changes
+
+taken from https://lifecycle.r-lib.org/articles/communicate.html
+
+Run Once:
+
+`usethis::use_lifecycle()`
+
+To insert badge:
+
+Add badges in documentation topics by inserting one of:
+
+  #' `r lifecycle::badge('experimental')`
+  #' `r lifecycle::badge('stable')`
+  #' `r lifecycle::badge('deprecated')`
+
 
 ## Generating Documentation
 

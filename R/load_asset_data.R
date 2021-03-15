@@ -4,6 +4,8 @@
 #' Values in specific columns will be normalized by dividing them by 100. This is specifically done for pairs with JPY.
 #' In addition, X1 column will be converted to the ymd_hms format
 #'
+#' `r lifecycle::badge('deprecated')`
+#'
 #' @details Works for both price and indicator values, function parameters allowing to import different files.
 #' File names are selected to account different time periodicity and amount of the data
 #'
@@ -40,6 +42,14 @@ load_asset_data <- function(path_terminal, trade_log_file, time_period = 1, data
 
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
+
+  lifecycle::deprecate_warn(
+    "0.4.5",
+    "load_asset_data()",
+    details = "This function is not used."
+  )
+
+
   DFT1 <- try(readr::read_csv(file = file.path(path_terminal, paste0(trade_log_file, time_period, "-", data_deepth, ".csv")),
                        col_names = F),
               silent = TRUE)

@@ -14,6 +14,8 @@ function should calculate profit factor for this vector and return one value als
 }
 \description{
 Calculate profit factor using a data vector with the trading results
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
 

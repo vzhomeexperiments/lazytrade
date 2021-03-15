@@ -7,9 +7,13 @@
 import_data(path_sbxm, trade_log_file)
 }
 \arguments{
-\item{path_sbxm}{- String, Path to the sandbox with the log file where the file with data is written}
+\item{path_sbxm}{\itemize{
+\item String, Path to the sandbox with the log file where the file with data is written
+}}
 
-\item{trade_log_file}{- String, File name where the order results are written}
+\item{trade_log_file}{\itemize{
+\item String, File name where the order results are written
+}}
 }
 \value{
 Function will return the dataframe with trade data and automatically set proper column types
@@ -17,6 +21,8 @@ Function will return the dataframe with trade data and automatically set proper 
 \description{
 Function is capable to import file with executed trades log.
 Files do not have column headers hence function will take care to name columns as well as to perform relevant cleansing
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
 

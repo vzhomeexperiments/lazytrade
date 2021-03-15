@@ -8,14 +8,15 @@
 #' When required, it's possible to write resulting password to the txt file.
 #' Once generated, password is written to the destination supplied by the user.
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @details Passwords are generated using sha512 cryptographic function from openssl package.
 #' System date and user 'salt' is used to supply initial text for cryptographic function.
 #' Hashing function is using additional 'salt' which will be based on the current System time.
 #' Additionally, only a part of generated string is selected and used for password.
 #' Some letters of generated string are converted from lower to upper case.
 #'
-#' @author (C) 2019 Vladimir Zhbanko
-#'
+#' @author (C) 2019, 2021 Vladimir Zhbanko
 #'
 #' @param salt string, random text supplied by the user
 #' @param pass_len integer, number specifying how long should the password be

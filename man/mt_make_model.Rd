@@ -45,12 +45,16 @@ This is in the attempt to evaluate current market type and to use proper trading
 Function will always try to gather mode data to update the model.
 
 Selected Market Periods according to the theory from Van K. Tharp:
-1. Bull normal, BUN
-2. Bull volatile, BUV
-3. Bear normal, BEN
-4. Bear volatile, BEV
-5. Sideways quiet, RAN
-6. Sideways volatile, RAV
+\enumerate{
+\item Bull normal, BUN
+\item Bull volatile, BUV
+\item Bear normal, BEN
+\item Bear volatile, BEV
+\item Sideways quiet, RAN
+\item Sideways volatile, RAV
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Function is using manually prepared dataset and tries several different random neural network structures.

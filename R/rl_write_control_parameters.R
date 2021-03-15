@@ -3,6 +3,8 @@
 #' @description This function is supposed to run on a weekly basis. Purpose of this function is to perform RL and
 #' trading simulation and find out the best possible control parameters for the RL function.
 #'
+#' `r lifecycle::badge('stable')`
+#'
 #' @param x - dataset containing the trading results for one trading robot
 #' @param path_control_files - path where control parameters will be saved
 #' @param num_trades_to_consider - number of last trades to use for RL modeling simulations, default value 100

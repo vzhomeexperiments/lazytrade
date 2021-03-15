@@ -7,13 +7,19 @@
 create_labelled_data(x, n = 50, type = "regression")
 }
 \arguments{
-\item{x}{- data set containing a table where 1st column is a Time index and other columns containing financial asset price values}
+\item{x}{\itemize{
+\item data set containing a table where 1st column is a Time index and other columns containing financial asset price values
+}}
 
-\item{n}{- number of rows we intend to split and transpose the data to}
+\item{n}{\itemize{
+\item number of rows we intend to split and transpose the data to
+}}
 
-\item{type}{- type of the label required. Can be either "classification" or "regression".
+\item{type}{\itemize{
+\item type of the label required. Can be either "classification" or "regression".
 "classification" will return either "BU" or "BE",
-"regression" will return the difference between first value and the last value in each row (in pips)}
+"regression" will return the difference between first value and the last value in each row (in pips)
+}}
 }
 \value{
 function returns transposed data. One column called 'LABEL' indicate achieved value of the label.
@@ -28,6 +34,8 @@ Each row will be assigned into 2 categories based on the difference between begi
 Finally all data will be stacked on top and joined into the table
 
 Learn by example how to manipulate data
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 }
 \details{
 see more info in the udemy course self-learning-trading-robot
