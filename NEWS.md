@@ -7,7 +7,15 @@
 * aml_make_model use parameter to split data with specific n of rows e.g. n_rows
 * cleanup of deprecated functions
 * create option to set fixed structure of the neural network
-* make a major release
+
+# lazytrade 0.5.1
+
+# Version 0.5.1
+
+## Changes
+
+* add simulation function
+
 
 # lazytrade 0.4.5
 
