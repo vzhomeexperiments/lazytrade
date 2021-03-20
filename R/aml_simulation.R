@@ -13,6 +13,8 @@
 #' @param path_sim_input      String, Path to the folder where csv files will be placed, typically AI_RSIADXAUDCAD60.csv
 #'
 #' @param path_sim_result     String, Path to the folder where all results from simulations shall be written
+#' @param par_simulate        Integer, Parameter that can be used in simulation
+#' @param demo_mode           Boolean, Simplify function test. When TRUE no simulation will be made
 #'
 #' @return Function is writing file into Decision Support System folders
 #' @export
@@ -34,20 +36,17 @@
 #'
 #' file.copy(from = system.file("extdata", "AI_RSIADXCADCHF60.csv", package = "lazytrade"),
 #'           to = file.path(path_sim_input, "AI_RSIADXCADCHF60.csv"), overwrite = TRUE)
-#'
 #' file.copy(from = system.file("extdata", "AI_RSIADXEURNZD60.csv", package = "lazytrade"),
 #'           to = file.path(path_sim_input, "AI_RSIADXEURNZD60.csv"), overwrite = TRUE)
-#' file.copy(from = system.file("extdata", "AI_RSIADXEURUSD60.csv", package = "lazytrade"),
-#'           to = file.path(path_sim_input, "AI_RSIADXEURUSD60.csv"), overwrite = TRUE)
-#' file.copy(from = system.file("extdata", "AI_RSIADXGBPAUD60.csv", package = "lazytrade"),
-#'           to = file.path(path_sim_input, "AI_RSIADXGBPAUD60.csv"), overwrite = TRUE)
 #'
 #' # start h2o engine
 #' h2o.init(nthreads = 2)
 #'
 #' # data transformation using the custom function for one symbol
 #' aml_simulation(timeframe = 60, path_sim_input = path_sim_input,
-#'                path_sim_result = path_sim_result)
+#'                path_sim_result = path_sim_result,
+#'                par_simulate = 3,
+#'                demo_mode = FALSE)
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
@@ -59,7 +58,8 @@
 #'
 #'
 #'
-aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
+aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
+                           par_simulate = 12, demo_mode = FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -115,7 +115,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
 
   }
 
-
+  if(!demo_mode){
   # =================================
   # force model update
   # =================================
@@ -131,7 +131,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
                               path_model = path_sim_models,
                               path_data = path_sim_data,
                               force_update = TRUE,
-                              num_nn_options = 3)
+                              num_nn_options = par_simulate)
 
   }
   # =================================
@@ -142,6 +142,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
   tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
                      package = "lazytrade") %>% read_csv(col_names = FALSE)
   write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+
 
 
   # Performing Testing => Building -> Testing...
@@ -178,13 +179,16 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
                                      log_results = TRUE,
                                      path_logs = path_sim_result)
 
+
+
+
   for (PAIR in mySymbols) {
     lazytrade::aml_make_model(symbol = PAIR,
                    timeframe = timeframeHP,
                    path_model = path_sim_models,
                    path_data = path_sim_data,
                    force_update=FALSE,
-                   num_nn_options = 12,
+                   num_nn_options = par_simulate,
                    min_perf = perf)
 
     lazytrade::aml_test_model(symbol = PAIR,
@@ -220,7 +224,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
                    path_model = path_sim_models,
                    path_data = path_sim_data,
                    force_update=FALSE,
-                   num_nn_options = 12,
+                   num_nn_options = par_simulate,
                    min_perf = perf)
 
     lazytrade::aml_test_model(symbol = PAIR,
@@ -256,7 +260,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
                    path_model = path_sim_models,
                    path_data = path_sim_data,
                    force_update=FALSE,
-                   num_nn_options = 12,
+                   num_nn_options = par_simulate,
                    min_perf = perf)
 
     lazytrade::aml_test_model(symbol = PAIR,
@@ -321,7 +325,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result){
       write_rds(file.path(path_sim_result, 'all_results.rds'))
   }
 
-
+  } #end of test bypass with demo_mode
 
 
 }

@@ -23,6 +23,7 @@
 #' library(dplyr)
 #' library(lubridate)
 #' library(magrittr)
+#' library(lazytrade)
 #' path_terminal <- system.file("extdata", package = "lazytrade")
 #'
 #' # load and prepare prices data

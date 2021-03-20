@@ -29,6 +29,7 @@ Number of rows will be automatically found. Eventually not complete last row wil
 \examples{
 
 library(magrittr)
+library(lazytrade)
 macd_m <- seq(1:1000) \%>\% as.data.frame() \%>\% to_m(64)
 
 

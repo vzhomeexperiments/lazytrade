@@ -14,6 +14,7 @@
 #' @examples
 #'
 #' library(magrittr)
+#' library(lazytrade)
 #' macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(64)
 #'
 #'
