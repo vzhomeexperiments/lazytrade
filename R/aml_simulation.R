@@ -189,7 +189,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    path_data = path_sim_data,
                    force_update=FALSE,
                    num_nn_options = par_simulate,
-                   min_perf = perf)
+                   min_perf = 100000)
 
     lazytrade::aml_test_model(symbol = PAIR,
                    num_bars = 600,
@@ -225,7 +225,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    path_data = path_sim_data,
                    force_update=FALSE,
                    num_nn_options = par_simulate,
-                   min_perf = perf)
+                   min_perf = 50000)
 
     lazytrade::aml_test_model(symbol = PAIR,
                    num_bars = 600,
@@ -261,7 +261,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    path_data = path_sim_data,
                    force_update=FALSE,
                    num_nn_options = par_simulate,
-                   min_perf = perf)
+                   min_perf = 10000)
 
     lazytrade::aml_test_model(symbol = PAIR,
                    num_bars = 600,
