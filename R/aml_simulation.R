@@ -107,7 +107,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                 symbol = PAIR,
                                 timeframe = timeframeHP,
                                 path_data = path_sim_data,
-                                max_nrows = 5000)
+                                max_nrows = 15000)
 
     #full_path <- file.path(path_data, 'AI_RSIADXEURUSD60.rds')
 
@@ -179,7 +179,39 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                      log_results = TRUE,
                                      path_logs = path_sim_result)
 
+  # Performing Testing => Building -> Testing...
+  for (PAIR in mySymbols) {
+    ## PAIR <- mySymbols[1]
 
+    # repeat testing and training several times
+
+    lazytrade::aml_test_model(symbol = PAIR,
+                              num_bars = 300,
+                              timeframe = timeframeHP,
+                              path_model = path_sim_models,
+                              path_data = path_sim_data,
+                              path_sbxm = path_sim_sbxm,
+                              path_sbxs = path_sim_sbxs)
+
+  }
+
+  perf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
+                                             used_symbols = mySymbols,
+                                             path_model = path_sim_models,
+                                             path_sbxm = path_sim_sbxm,
+                                             path_sbxs = path_sim_sbxs,
+                                             min_quality = 0.8,
+                                             get_quantile = TRUE)
+  # function to write log to the _LOG folder
+  lazytrade::aml_consolidate_results(timeframe = timeframeHP,
+                                     used_symbols = mySymbols,
+                                     path_model = path_sim_models,
+                                     path_sbxm = path_sim_sbxm,
+                                     path_sbxs = path_sim_sbxs,
+                                     min_quality = 0.75,
+                                     get_quantile = FALSE,
+                                     log_results = TRUE,
+                                     path_logs = path_sim_result)
 
 
   for (PAIR in mySymbols) {
@@ -218,6 +250,43 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                      get_quantile = FALSE,
                                      log_results = TRUE,
                                      path_logs = path_sim_result)
+
+
+  for (PAIR in mySymbols) {
+    ## PAIR <- mySymbols[1]
+
+    # repeat testing and training several times
+
+    lazytrade::aml_test_model(symbol = PAIR,
+                              num_bars = 300,
+                              timeframe = timeframeHP,
+                              path_model = path_sim_models,
+                              path_data = path_sim_data,
+                              path_sbxm = path_sim_sbxm,
+                              path_sbxs = path_sim_sbxs)
+
+  }
+
+  perf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
+                                             used_symbols = mySymbols,
+                                             path_model = path_sim_models,
+                                             path_sbxm = path_sim_sbxm,
+                                             path_sbxs = path_sim_sbxs,
+                                             min_quality = 0.8,
+                                             get_quantile = TRUE)
+  # function to write log to the _LOG folder
+  lazytrade::aml_consolidate_results(timeframe = timeframeHP,
+                                     used_symbols = mySymbols,
+                                     path_model = path_sim_models,
+                                     path_sbxm = path_sim_sbxm,
+                                     path_sbxs = path_sim_sbxs,
+                                     min_quality = 0.75,
+                                     get_quantile = FALSE,
+                                     log_results = TRUE,
+                                     path_logs = path_sim_result)
+
+
+
   for (PAIR in mySymbols) {
     lazytrade::aml_make_model(symbol = PAIR,
                    timeframe = timeframeHP,
@@ -238,12 +307,12 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
   }
 
   perf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
-                                  used_symbols = mySymbols,
-                                  path_model = path_sim_models,
-                                  path_sbxm = path_sim_sbxm,
-                                  path_sbxs = path_sim_sbxs,
-                                  min_quality = 0.8,
-                                  get_quantile = TRUE)
+                                             used_symbols = mySymbols,
+                                             path_model = path_sim_models,
+                                             path_sbxm = path_sim_sbxm,
+                                             path_sbxs = path_sim_sbxs,
+                                             min_quality = 0.8,
+                                             get_quantile = TRUE)
   # function to write log to the _LOG folder
   lazytrade::aml_consolidate_results(timeframe = timeframeHP,
                                      used_symbols = mySymbols,
@@ -254,38 +323,37 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                      get_quantile = FALSE,
                                      log_results = TRUE,
                                      path_logs = path_sim_result)
+
+
+
   for (PAIR in mySymbols) {
-    lazytrade::aml_make_model(symbol = PAIR,
-                   timeframe = timeframeHP,
-                   path_model = path_sim_models,
-                   path_data = path_sim_data,
-                   force_update=FALSE,
-                   num_nn_options = par_simulate,
-                   min_perf = 10000)
+    ## PAIR <- mySymbols[1]
+
+    # repeat testing and training several times
 
     lazytrade::aml_test_model(symbol = PAIR,
-                   num_bars = 600,
-                   timeframe = timeframeHP,
-                   path_model = path_sim_models,
-                   path_data = path_sim_data,
-                   path_sbxm = path_sim_sbxm,
-                   path_sbxs = path_sim_sbxs)
+                              num_bars = 300,
+                              timeframe = timeframeHP,
+                              path_model = path_sim_models,
+                              path_data = path_sim_data,
+                              path_sbxm = path_sim_sbxm,
+                              path_sbxs = path_sim_sbxs)
 
   }
 
+  perf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
+                                             used_symbols = mySymbols,
+                                             path_model = path_sim_models,
+                                             path_sbxm = path_sim_sbxm,
+                                             path_sbxs = path_sim_sbxs,
+                                             min_quality = 0.8,
+                                             get_quantile = TRUE)
 
 
   # stop h2o engine
   #h2o.shutdown(prompt = F)
 
 
-  # function to consolidate results and write that to the files
-  lazytrade::aml_consolidate_results(timeframe = timeframeHP,
-                          used_symbols = mySymbols,
-                          path_model = path_sim_models,
-                          path_sbxm = path_sim_sbxm,
-                          path_sbxs = path_sim_sbxs,
-                          min_quality = 0.75)
 
   AverPerf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
                                              used_symbols = mySymbols,
