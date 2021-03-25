@@ -5,13 +5,12 @@
 #' `r lifecycle::badge('experimental')`
 #'
 #' @details  Function is using several other functions to perform sets of operations
-#' designed to test several inputs
+#' designed to test several inputs.
 #'
 #' @author (C) 2021 Vladimir Zhbanko
 #'
 #' @param timeframe           Integer, Data timeframe e.g. 60 min. This will be equal to 1 bar
 #' @param path_sim_input      String, Path to the folder where csv files will be placed, typically AI_RSIADXAUDCAD60.csv
-#'
 #' @param path_sim_result     String, Path to the folder where all results from simulations shall be written
 #' @param par_simulate        Integer, Parameter that can be used in simulation
 #' @param demo_mode           Boolean, Simplify function test. When TRUE no simulation will be made
@@ -31,8 +30,11 @@
 #' library(lubridate)
 #' library(stats)
 #'
-#' path_sim_input <- normalizePath(tempdir(),winslash = "/")
-#' path_sim_result <- normalizePath(tempdir(),winslash = "/")
+#' path_input <- normalizePath(tempdir(),winslash = "/")
+#' path_sim_input <- file.path(path_input, "path_sim_input")
+#' dir.create(path_sim_input)
+#' path_sim_result <- file.path(path_input, "path_sim_result")
+#' dir.create(path_sim_result)
 #'
 #' file.copy(from = system.file("extdata", "AI_RSIADXCADCHF60.csv", package = "lazytrade"),
 #'           to = file.path(path_sim_input, "AI_RSIADXCADCHF60.csv"), overwrite = TRUE)
@@ -42,12 +44,13 @@
 #' # start h2o engine
 #' h2o.init(nthreads = 2)
 #'
-#' # data transformation using the custom function for one symbol
+#' # simulation with random structures
 #' aml_simulation(timeframe = 60, path_sim_input = path_sim_input,
 #'                path_sim_result = path_sim_result,
 #'                par_simulate = 3,
-#'                demo_mode = FALSE)
+#'                demo_mode = TRUE)
 #'
+#' Sys.sleep(5)
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
 #'

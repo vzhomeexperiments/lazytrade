@@ -24,7 +24,9 @@
 #' @param force_update        Boolean, by setting this to TRUE function will generate new model
 #'                            (useful after h2o engine update)
 #' @param num_nn_options      Integer, value from 1 to 20 or more. Used to change number of variants
-#'                            of the random neural network structures
+#'                            of the random neural network structures, when value is 0 uses fixed structure
+#' @param num_bars_test       Integer, value of bars used for model testing
+#' @param num_bars_ahead      Integer, value to specify how far should the function predict. Default 34 bars.
 #' @param min_perf            Double, value greater than 0. Used to set minimum value of model performance.
 #'                            Higher value will increase computation time
 #'
@@ -73,6 +75,15 @@
 #'                num_nn_options = 3,
 #'                min_perf = 0)
 #'
+#' # performing Deep Learning Regression, fixed mode
+#' aml_make_model(symbol = 'USDJPY',
+#'                timeframe = 60,
+#'                path_model = path_model,
+#'                path_data = path_data,
+#'                force_update=FALSE,
+#'                num_nn_options = 0,
+#'                min_perf = 0)
+#'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
 #'
@@ -86,6 +97,8 @@
 aml_make_model <- function(symbol, timeframe, path_model, path_data,
                            force_update=FALSE,
                            num_nn_options = 24,
+                           num_bars_test = 600,
+                           num_bars_ahead = 34,
                            min_perf = 0.3){
 
   requireNamespace("dplyr", quietly = TRUE)
@@ -124,7 +137,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
 
     dat12 <- x %>%
       # lagging the dataset:    %>% mutate_all(~lag(., n = 28))
-      dplyr::mutate(dplyr::across(LABEL, ~lag(., n = 34))) %>%
+      dplyr::mutate(dplyr::across(LABEL, ~lag(., n = num_bars_ahead))) %>%
       # remove empty rows
       na.omit() %>% filter_all(any_vars(. != 0))  %>%
       select(-X1, -X2, -X3)
@@ -132,23 +145,33 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
 
   # split data to train and test blocks
   # note: model will be trained on the OLDEST data
-  test_ind  <- 1:round(0.3*(nrow(dat12))) #train indices 1:xxx
+  test_ind  <- 1:num_bars_test #round(0.3*(nrow(dat12))) #train indices 1:xxx
   dat21 <- dat12[test_ind, ]    #dataset to test the model using 30% of data
   dat22 <- dat12[-test_ind, ]   #dataset to train the model
+
+  # find number of columns
+  dat22_ncol <- ncol(dat22)
 
   ## ---------- Data Modelling  ---------------
   #h2o.init()
 
-  ### random network structurenum_nn_options <- 24
-  nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
-
-  ###
-
-  # load data into h2o environment
+# load data into h2o environment
   #macd_ML  <- as.h2o(x = dat22, destination_frame = "macd_ML")
   macd_ML  <- h2o::as.h2o(x = dat22, destination_frame = "macd_ML")
   recent_ML  <- h2o::as.h2o(x = dat21, destination_frame = "recent_ML")
+
   # for loop to select the best neural network structure
+  ### random network structure num_nn_options <- 24
+  if(num_nn_options == 0){
+    nn_sets <- c(100, 200, 50) %>% matrix(ncol = 3)
+  } else {
+    nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
+  }
+
+
+  ###
+
+
 
   for (i in 1:dim(nn_sets)[1]) {
 
@@ -156,9 +179,10 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     # fit models from simplest to more complex
   ModelC <- h2o::h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", timeframe),
-    x = names(macd_ML[,1:16]),
+    x = names(macd_ML[,1:dat22_ncol]),
     y = "LABEL",
     training_frame = macd_ML,
+    validation_frame = recent_ML,
     activation = "Tanh",
     overwrite_with_best_model = TRUE,
     autoencoder = FALSE,
@@ -198,9 +222,10 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   # train the model again:
   ModelC <- h2o::h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", timeframe),
-    x = names(macd_ML[,1:16]),
+    x = names(macd_ML[,1:dat22_ncol]),
     y = "LABEL",
     training_frame = macd_ML,
+    validation_frame = recent_ML,
     activation = "Tanh",
     overwrite_with_best_model = TRUE,
     autoencoder = FALSE,

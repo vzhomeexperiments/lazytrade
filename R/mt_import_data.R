@@ -10,7 +10,7 @@
 #' @return function returns the data frame with 5 columns including market type code
 #' @export
 #'
-#' @author (C) 2020 Vladimir Zhbanko
+#' @author (C) 2020, 2021 Vladimir Zhbanko
 #'
 #' @examples
 #'

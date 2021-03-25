@@ -18,7 +18,7 @@
 #' @details Function is using manually prepared dataset and tries several different random neural network structures.
 #' Once the best neural network is found then the better model is trained and stored.
 #'
-#' @author (C) 2020 Vladimir Zhbanko
+#' @author (C) 2020, 2021 Vladimir Zhbanko
 #' @backref Market Type research of Van Tharp Institute: <https://www.vantharp.com/>
 #'
 #' @param indicator_dataset   Dataframe, Dataset containing indicator patterns to train the model

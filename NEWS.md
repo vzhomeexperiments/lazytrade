@@ -3,10 +3,7 @@
 ## Planned Changes
 
 * Add folder generation function
-* Put option predict ahead as a parameter (now 34 bars)
-* aml_make_model use parameter to split data with specific n of rows e.g. n_rows
 * cleanup of deprecated functions
-* create option to set fixed structure of the neural network
 * setup github actions
 
 # lazytrade 0.5.1
@@ -15,8 +12,10 @@
 
 ## Changes
 
-* add simulation function
-
+* add simulation function `aml_simulation` designed to test different inputs
+* fix bug in `aml_make_model` and create new option with fix neural network structure
+* `aml_make_model` use parameter to split data with specific n of rows
+* `aml_make_model` new parameter num_bars_ahead, default is 34 bars
 
 # lazytrade 0.4.5
 

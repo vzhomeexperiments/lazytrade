@@ -6,8 +6,6 @@
 #'
 #' `r lifecycle::badge('stable')`
 #'
-#' @details it is mandatory to switch on the virtual h2o machine with h2o.init()
-#' also to shut it down with h2o.shutdown(prompt = F)
 #'
 #' @author (C) 2021 Vladimir Zhbanko
 #'

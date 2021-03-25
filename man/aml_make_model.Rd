@@ -11,6 +11,7 @@ aml_make_model(
   path_data,
   force_update = FALSE,
   num_nn_options = 24,
+  num_bars_test = 600,
   min_perf = 0.3
 )
 }
@@ -27,7 +28,9 @@ aml_make_model(
 (useful after h2o engine update)}
 
 \item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
-of the random neural network structures}
+of the random neural network structures, when value is 0 uses fixed structure}
+
+\item{num_bars_test}{Integer, value of bars used for model testing}
 
 \item{min_perf}{Double, value greater than 0. Used to set minimum value of model performance.
 Higher value will increase computation time}
@@ -92,6 +95,15 @@ aml_make_model(symbol = 'USDJPY',
                path_data = path_data,
                force_update=FALSE,
                num_nn_options = 3,
+               min_perf = 0)
+
+# performing Deep Learning Regression, fixed mode
+aml_make_model(symbol = 'USDJPY',
+               timeframe = 60,
+               path_model = path_model,
+               path_data = path_data,
+               force_update=FALSE,
+               num_nn_options = 0,
                min_perf = 0)
 
 # stop h2o engine
