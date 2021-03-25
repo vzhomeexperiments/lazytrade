@@ -12,6 +12,7 @@ aml_make_model(
   force_update = FALSE,
   num_nn_options = 24,
   num_bars_test = 600,
+  num_bars_ahead = 34,
   min_perf = 0.3
 )
 }
@@ -31,6 +32,8 @@ aml_make_model(
 of the random neural network structures, when value is 0 uses fixed structure}
 
 \item{num_bars_test}{Integer, value of bars used for model testing}
+
+\item{num_bars_ahead}{Integer, value to specify how far should the function predict. Default 34 bars.}
 
 \item{min_perf}{Double, value greater than 0. Used to set minimum value of model performance.
 Higher value will increase computation time}

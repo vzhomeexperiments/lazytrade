@@ -33,7 +33,7 @@ Function is designed to evaluate several different inputs.
 }
 \details{
 Function is using several other functions to perform sets of operations
-designed to test several inputs
+designed to test several inputs.
 }
 \examples{
 
@@ -61,7 +61,7 @@ file.copy(from = system.file("extdata", "AI_RSIADXEURNZD60.csv", package = "lazy
 # start h2o engine
 h2o.init(nthreads = 2)
 
-# data transformation using the custom function for one symbol
+# simulation with random structures
 aml_simulation(timeframe = 60, path_sim_input = path_sim_input,
                path_sim_result = path_sim_result,
                par_simulate = 3,

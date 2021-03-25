@@ -22,7 +22,7 @@ to_m(x, n_cols)
 }
 \description{
 Transforms Time Series Column of the dataframe to the matrix with specified number of columns.
-Number of rows will be automatically found. Eventually not complete last row will be discarded
+Number of rows will be automatically found. Eventually not complete last row will be discarded.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 }
