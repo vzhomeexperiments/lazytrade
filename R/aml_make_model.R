@@ -15,7 +15,9 @@
 #' @details Function is using the dataset prepared by the function aml_collect_data.R.
 #' Function will start to train the model as soon as there are more than 1000 rows in the dataset
 #'
-#' @author (C) 2020 Vladimir Zhbanko
+#' @concept see https://docs.h2o.ai/h2o-tutorials/latest-stable/tutorials/deeplearning/index.html
+#'
+#' @author (C) 2020, 2021 Vladimir Zhbanko
 #'
 #' @param symbol              Character symbol of the asset for which to train the model
 #' @param timeframe           Data timeframe e.g. 1 min
@@ -29,6 +31,7 @@
 #' @param num_bars_ahead      Integer, value to specify how far should the function predict. Default 34 bars.
 #' @param min_perf            Double, value greater than 0. Used to set minimum value of model performance.
 #'                            Higher value will increase computation time
+#' @param num_cols_used       Integer, number of columns to use for training the model, defaults to 16
 #'
 #' @return Function is writing a file object with the best Deep Learning Regression model
 #' @export
@@ -73,14 +76,17 @@
 #'                path_data = path_data,
 #'                force_update=FALSE,
 #'                num_nn_options = 3,
-#'                min_perf = 0)
+#'                min_perf = 0,
+#'                num_bars_test = 600,
+#'                num_bars_ahead = 34,
+#'                num_cols_used = 16)
 #'
 #' # performing Deep Learning Regression, fixed mode
 #' aml_make_model(symbol = 'USDJPY',
 #'                timeframe = 60,
 #'                path_model = path_model,
 #'                path_data = path_data,
-#'                force_update=FALSE,
+#'                force_update=TRUE,
 #'                num_nn_options = 0,
 #'                min_perf = 0)
 #'
@@ -96,9 +102,10 @@
 #'
 aml_make_model <- function(symbol, timeframe, path_model, path_data,
                            force_update=FALSE,
-                           num_nn_options = 24,
+                           num_nn_options = 12,
                            num_bars_test = 600,
                            num_bars_ahead = 34,
+                           num_cols_used = 16,
                            min_perf = 0.3){
 
   requireNamespace("dplyr", quietly = TRUE)
@@ -150,7 +157,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   dat22 <- dat12[-test_ind, ]   #dataset to train the model
 
   # find number of columns
-  dat22_ncol <- ncol(dat22)
+  dat22_ncol <- ncol(dat22)-1
 
   ## ---------- Data Modelling  ---------------
   #h2o.init()
@@ -179,12 +186,10 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     # fit models from simplest to more complex
   ModelC <- h2o::h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", timeframe),
-    x = names(macd_ML[,1:dat22_ncol]),
+    x = names(macd_ML[,1:num_cols_used]),
     y = "LABEL",
     training_frame = macd_ML,
-    validation_frame = recent_ML,
     activation = "Tanh",
-    overwrite_with_best_model = TRUE,
     autoencoder = FALSE,
     hidden = nn_sets[i, ],
     loss = "Automatic",
@@ -222,12 +227,10 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   # train the model again:
   ModelC <- h2o::h2o.deeplearning(
     model_id = paste0("DL_Regression", "-", symbol, "-", timeframe),
-    x = names(macd_ML[,1:dat22_ncol]),
+    x = names(macd_ML[,1:num_cols_used]),
     y = "LABEL",
     training_frame = macd_ML,
-    validation_frame = recent_ML,
     activation = "Tanh",
-    overwrite_with_best_model = TRUE,
     autoencoder = FALSE,
     hidden = lowest_RMSE,
     loss = "Automatic",

@@ -8,7 +8,7 @@ aml_simulation(
   timeframe = 60,
   path_sim_input,
   path_sim_result,
-  par_simulate = 12,
+  par_simulate = 16,
   demo_mode = FALSE
 )
 }
