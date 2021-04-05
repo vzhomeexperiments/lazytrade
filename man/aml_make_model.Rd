@@ -11,6 +11,8 @@ aml_make_model(
   path_data,
   force_update = FALSE,
   num_nn_options = 12,
+  fixed_nn_struct = c(100, 100),
+  num_epoch = 100,
   num_bars_test = 600,
   num_bars_ahead = 34,
   num_cols_used = 16,
@@ -29,8 +31,15 @@ aml_make_model(
 \item{force_update}{Boolean, by setting this to TRUE function will generate new model
 (useful after h2o engine update)}
 
-\item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
-of the random neural network structures, when value is 0 uses fixed structure}
+\item{num_nn_options}{Integer, value from 0 to 24 or more. Used to change number of variants
+of the random neural network structures, when value is 0 uses fixed structure
+Higher number may lead to long code execution}
+
+\item{fixed_nn_struct}{Integer vector with numeric elements, see par hidden in ?h2o.deeplearning,
+default value is c(200,200). Note this will only work if num_nn_options is 0}
+
+\item{num_epoch}{Integer, see parameter epochs in ?h2o.deeplearning, default value is 100
+Higher number may lead to long code execution}
 
 \item{num_bars_test}{Integer, value of bars used for model testing}
 
@@ -101,6 +110,7 @@ aml_make_model(symbol = 'USDJPY',
                path_data = path_data,
                force_update=FALSE,
                num_nn_options = 3,
+               num_epoch = 10,
                min_perf = 0,
                num_bars_test = 600,
                num_bars_ahead = 34,
@@ -113,6 +123,8 @@ aml_make_model(symbol = 'USDJPY',
                path_data = path_data,
                force_update=TRUE,
                num_nn_options = 0,
+               fixed_nn_struct = c(100, 100),
+               num_epoch = 10,
                min_perf = 0)
 
 # stop h2o engine

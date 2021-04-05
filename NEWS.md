@@ -16,6 +16,7 @@
 * fix bug in `aml_make_model` and create new option with fix neural network structure
 * `aml_make_model` use parameter to split data with specific n of rows
 * `aml_make_model` new parameter num_bars_ahead, default is 34 bars
+* `aml_make_model` add options for deep learning function parameters search, `num_epochs`, `fixed_nn_struct`
 
 # lazytrade 0.4.5
 

@@ -25,8 +25,13 @@
 #' @param path_data           Path where the aggregated historical data is stored, if exists in rds format
 #' @param force_update        Boolean, by setting this to TRUE function will generate new model
 #'                            (useful after h2o engine update)
-#' @param num_nn_options      Integer, value from 1 to 20 or more. Used to change number of variants
+#' @param num_nn_options      Integer, value from 0 to 24 or more. Used to change number of variants
 #'                            of the random neural network structures, when value is 0 uses fixed structure
+#'                            Higher number may lead to long code execution
+#' @param fixed_nn_struct     Integer vector with numeric elements, see par hidden in ?h2o.deeplearning,
+#'                            default value is c(200,200). Note this will only work if num_nn_options is 0
+#' @param num_epoch           Integer, see parameter epochs in ?h2o.deeplearning, default value is 100
+#'                            Higher number may lead to long code execution
 #' @param num_bars_test       Integer, value of bars used for model testing
 #' @param num_bars_ahead      Integer, value to specify how far should the function predict. Default 34 bars.
 #' @param min_perf            Double, value greater than 0. Used to set minimum value of model performance.
@@ -76,6 +81,7 @@
 #'                path_data = path_data,
 #'                force_update=FALSE,
 #'                num_nn_options = 3,
+#'                num_epoch = 10,
 #'                min_perf = 0,
 #'                num_bars_test = 600,
 #'                num_bars_ahead = 34,
@@ -88,6 +94,8 @@
 #'                path_data = path_data,
 #'                force_update=TRUE,
 #'                num_nn_options = 0,
+#'                fixed_nn_struct = c(100, 100),
+#'                num_epoch = 10,
 #'                min_perf = 0)
 #'
 #' # stop h2o engine
@@ -103,6 +111,8 @@
 aml_make_model <- function(symbol, timeframe, path_model, path_data,
                            force_update=FALSE,
                            num_nn_options = 12,
+                           fixed_nn_struct = c(100, 100),
+                           num_epoch = 100,
                            num_bars_test = 600,
                            num_bars_ahead = 34,
                            num_cols_used = 16,
@@ -168,9 +178,12 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
   recent_ML  <- h2o::as.h2o(x = dat21, destination_frame = "recent_ML")
 
   # for loop to select the best neural network structure
-  ### random network structure num_nn_options <- 24
+  ### fix or random network structure num_nn_options <- 24
+  ###
+  n_layers <- length(fixed_nn_struct)
+
   if(num_nn_options == 0){
-    nn_sets <- c(100, 200, 50) %>% matrix(ncol = 3)
+    nn_sets <- fixed_nn_struct %>% matrix(ncol = n_layers)
   } else {
     nn_sets <- sample.int(n = 100, num_nn_options) %>% matrix(ncol = 3)
   }
@@ -198,7 +211,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     distribution = "AUTO",
     stopping_metric = "MSE",
     #balance_classes = F,
-    epochs = 100)
+    epochs = num_epoch)
 
   #ModelC
   #summary(ModelC)
@@ -239,7 +252,7 @@ aml_make_model <- function(symbol, timeframe, path_model, path_data,
     distribution = "AUTO",
     stopping_metric = "MSE",
     #balance_classes = F,
-    epochs = 100)
+    epochs = num_epoch)
 
 
   # save model object

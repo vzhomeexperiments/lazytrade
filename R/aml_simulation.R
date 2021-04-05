@@ -62,7 +62,7 @@
 #'
 #'
 aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
-                           par_simulate = 16, demo_mode = FALSE){
+                           par_simulate = 100, demo_mode = FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -135,9 +135,10 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                               path_data = path_sim_data,
                               force_update = TRUE,
                               num_nn_options = 12,
+                              num_epoch = par_simulate,
                               num_bars_test = 600,
                               num_bars_ahead = 34,
-                              num_cols_used = par_simulate)
+                              num_cols_used = 40)
 
   }
   # =================================
@@ -195,9 +196,10 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    force_update=FALSE,
                    min_perf = perf,
                    num_nn_options = 12,
+                   num_epoch = par_simulate,
                    num_bars_test = 600,
                    num_bars_ahead = 34,
-                   num_cols_used = par_simulate)
+                   num_cols_used = 40)
 
     lazytrade::aml_test_model(symbol = PAIR,
                    num_bars = 600,
@@ -236,9 +238,10 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    path_data = path_sim_data,
                    force_update=FALSE,
                    num_nn_options = 12,
+                   num_epoch = par_simulate,
                    num_bars_test = 600,
                    num_bars_ahead = 34,
-                   num_cols_used = par_simulate,
+                   num_cols_used = 40,
                    min_perf = perf)
 
     lazytrade::aml_test_model(symbol = PAIR,
