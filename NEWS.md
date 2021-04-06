@@ -2,7 +2,6 @@
 
 ## Planned Changes
 
-* Add folder generation function
 * cleanup of deprecated functions
 * setup github actions
 
@@ -13,10 +12,14 @@
 ## Changes
 
 * add simulation function `aml_simulation` designed to test different inputs
-* fix bug in `aml_make_model` and create new option with fix neural network structure
-* `aml_make_model` use parameter to split data with specific n of rows
-* `aml_make_model` new parameter num_bars_ahead, default is 34 bars
-* `aml_make_model` add options for deep learning function parameters search, `num_epochs`, `fixed_nn_struct`
+
+### Function `aml_make_model`
+* fix bug in not allowing use of full input to the model
+* create new option with fix neural network structure
+* add parameter to split data with specific n of rows
+* add parameter num_bars_ahead, default is 34 bars
+* add options for deep learning function parameters search, `num_epochs`, `fixed_nn_struct`
+* add option `objective_test` to allow strategy test inside the function to select best model
 
 # lazytrade 0.4.5
 

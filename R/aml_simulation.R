@@ -44,8 +44,9 @@
 #' # start h2o engine
 #' h2o.init(nthreads = 2)
 #'
-#' # simulation with random structures
-#' aml_simulation(timeframe = 60, path_sim_input = path_sim_input,
+#' # simulation of different epoch values
+#' aml_simulation(timeframe = 60,
+#'                path_sim_input = path_sim_input,
 #'                path_sim_result = path_sim_result,
 #'                par_simulate = 3,
 #'                demo_mode = TRUE)
@@ -118,6 +119,12 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
 
   }
 
+  #copy file with tick size info
+  tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                     package = "lazytrade") %>% read_csv(col_names = FALSE)
+  write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+
+
   if(!demo_mode){
   # =================================
   # force model update
@@ -134,21 +141,19 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                               path_model = path_sim_models,
                               path_data = path_sim_data,
                               force_update = TRUE,
-                              num_nn_options = 12,
+                              objective_test = TRUE,
+                              num_nn_options = 48,
                               num_epoch = par_simulate,
                               num_bars_test = 600,
                               num_bars_ahead = 34,
-                              num_cols_used = 40)
+                              num_cols_used = 10)
 
   }
   # =================================
   # test build test...
   # =================================
 
-  #copy file with tick size info
-  tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
-                     package = "lazytrade") %>% read_csv(col_names = FALSE)
-  write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+
 
 
 
@@ -194,12 +199,13 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    path_model = path_sim_models,
                    path_data = path_sim_data,
                    force_update=FALSE,
+                   objective_test = TRUE,
                    min_perf = perf,
-                   num_nn_options = 12,
+                   num_nn_options = 24,
                    num_epoch = par_simulate,
                    num_bars_test = 600,
                    num_bars_ahead = 34,
-                   num_cols_used = 40)
+                   num_cols_used = 10)
 
     lazytrade::aml_test_model(symbol = PAIR,
                    num_bars = 600,
@@ -237,11 +243,12 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                    path_model = path_sim_models,
                    path_data = path_sim_data,
                    force_update=FALSE,
-                   num_nn_options = 12,
+                   objective_test = TRUE,
+                   num_nn_options = 24,
                    num_epoch = par_simulate,
                    num_bars_test = 600,
                    num_bars_ahead = 34,
-                   num_cols_used = 40,
+                   num_cols_used = 10,
                    min_perf = perf)
 
     lazytrade::aml_test_model(symbol = PAIR,

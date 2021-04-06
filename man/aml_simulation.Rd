@@ -61,8 +61,9 @@ file.copy(from = system.file("extdata", "AI_RSIADXEURNZD60.csv", package = "lazy
 # start h2o engine
 h2o.init(nthreads = 2)
 
-# simulation with random structures
-aml_simulation(timeframe = 60, path_sim_input = path_sim_input,
+# simulation of different epoch values
+aml_simulation(timeframe = 60,
+               path_sim_input = path_sim_input,
                path_sim_result = path_sim_result,
                par_simulate = 3,
                demo_mode = TRUE)
