@@ -141,7 +141,7 @@ aml_consolidate_results <- function(timeframe = 15,
   for (VAR in filesToAnalyse1) {
     # VAR <- filesToAnalyse1[1]
     df1 <- readr::read_csv(VAR)
-    if(ncol(df1) == 4){
+    if(ncol(df1) == 4 || ncol(df1) == 5){
       df1$FrstQntlPerf <- df$FrstQntlPerf
       readr::write_csv(df1, VAR)
     }

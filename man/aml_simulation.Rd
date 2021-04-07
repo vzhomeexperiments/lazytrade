@@ -33,7 +33,7 @@ Function is designed to evaluate several different inputs.
 }
 \details{
 Function is using several other functions to perform sets of operations
-designed to test several inputs.
+designed to test several inputs. Designed to validate model settings
 }
 \examples{
 

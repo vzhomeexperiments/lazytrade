@@ -23,8 +23,9 @@ aml_score_data(symbol, timeframe, path_model, path_data, path_sbxm, path_sbxs)
 Function is writing file into Decision Support System folder, mainly file with price change prediction in pips
 }
 \description{
-Function is using the latest data from the financial assets indicator pattern and deep learning model.
-Prediction is a price change in the future for that asset will be used by the trading system
+Function is using the latest data from the financial assets
+indicator pattern and deep learning model.
+Prediction is a future price change for that asset
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
@@ -53,6 +54,11 @@ ind$X1 <- ymd_hms(ind$X1)
 
 write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
 
+# add tick data to the folder
+tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
+
+write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 # data transformation using the custom function for one symbol
 aml_collect_data(indicator_dataset = ind,

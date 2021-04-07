@@ -1,7 +1,8 @@
 #' Function to score new data and predict change for each single currency pair
 #'
-#' @description  Function is using the latest data from the financial assets indicator pattern and deep learning model.
-#' Prediction is a price change in the future for that asset will be used by the trading system
+#' @description  Function is using the latest data from the financial assets
+#' indicator pattern and deep learning model.
+#' Prediction is a future price change for that asset
 #'
 #' `r lifecycle::badge('stable')`
 #'
@@ -42,6 +43,11 @@
 #'
 #' write_csv(ind, file.path(path_data, "AI_RSIADXUSDJPY60.csv"), col_names = FALSE)
 #'
+#' # add tick data to the folder
+#' tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+#'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
+#'
+#' write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 #'
 #' # data transformation using the custom function for one symbol
 #' aml_collect_data(indicator_dataset = ind,

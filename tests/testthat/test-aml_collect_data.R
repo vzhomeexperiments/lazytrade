@@ -15,6 +15,11 @@ test_that("collect data works", {
 
   path_data <- normalizePath(tempdir(),winslash = "/")
 
+  tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                     package = "lazytrade") %>% read_csv(col_names = FALSE)
+
+  write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+
   aml_collect_data(indicator_dataset = ind,
                     symbol = 'USDJPY',
                     timeframe = 60,
@@ -44,7 +49,7 @@ test_that("data trimming works", {
   if(x1_nrows > 8){
     # read all the data
     readr::read_rds(full_path) %>%
-      # use only last 9500 rows, 9500 is to avoid this code to run so often...
+      # use only last rows, to avoid this code to run so often...
       utils::head(6) %>%
       # write them back
       readr::write_rds(full_path)
@@ -52,6 +57,7 @@ test_that("data trimming works", {
 
   AI_RSIADXUSDJPY60 <- read_rds(full_path)
   # ---
+
 
   expect_equal(nrow(AI_RSIADXUSDJPY60), 6)
 

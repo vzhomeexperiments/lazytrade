@@ -5,7 +5,7 @@
 #' `r lifecycle::badge('experimental')`
 #'
 #' @details  Function is using several other functions to perform sets of operations
-#' designed to test several inputs.
+#' designed to test several inputs. Designed to validate model settings
 #'
 #' @author (C) 2021 Vladimir Zhbanko
 #'
@@ -95,6 +95,10 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
   #time frames used
   timeframeHP <- timeframe
 
+  #copy file with tick size info
+  tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                     package = "lazytrade") %>% read_csv(col_names = FALSE)
+  write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 
   # Writing indicator and price change to the file
@@ -105,6 +109,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
       readr::read_csv(col_names = FALSE)
 
     indHP$X1 <- lubridate::ymd_hms(indHP$X1)
+
 
     # data transformation using the custom function for one symbol
     lazytrade::aml_collect_data(indicator_dataset = indHP,
@@ -118,11 +123,6 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
     #x1 <- read_rds(full_path)
 
   }
-
-  #copy file with tick size info
-  tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
-                     package = "lazytrade") %>% read_csv(col_names = FALSE)
-  write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 
   if(!demo_mode){

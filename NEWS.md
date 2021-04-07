@@ -12,14 +12,21 @@
 ## Changes
 
 * add simulation function `aml_simulation` designed to test different inputs
+* some other minor changes
 
 ### Function `aml_make_model`
+
 * fix bug in not allowing use of full input to the model
 * create new option with fix neural network structure
 * add parameter to split data with specific n of rows
 * add parameter num_bars_ahead, default is 34 bars
 * add options for deep learning function parameters search, `num_epochs`, `fixed_nn_struct`
 * add option `objective_test` to allow strategy test inside the function to select best model
+
+### Function `aml_collect_data`
+
+* more accurate calculation of Label column
+* added fail safe scenarios
 
 # lazytrade 0.4.5
 
