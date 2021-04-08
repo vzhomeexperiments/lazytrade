@@ -1,9 +1,9 @@
 #' Function to aggregate trading results from multiple folders and files
 #'
-#' @description PURPOSE: Read multiple '.csv' files stored in different folders
+#' @description Read multiple '.csv' files stored in different folders
 #' Store results to the intermediate dataframe.
 #'
-#' `r lifecycle::badge('stable')`
+#' `r lifecycle::badge('deprecated')`
 #'
 #' @details user must provide the path to the files in the folders
 #' all files in subfolders are read and aggregated into one data object.
@@ -28,12 +28,16 @@
 #'  file.copy(from = system.file("extdata/RES", package = "lazytrade"),
 #'            to = dir, recursive = TRUE)
 #'
-#'
-#'
 #'  DF_RES <- opt_aggregate_results(path_data = file.path(dir, "RES"))
 #'
 #'
 opt_aggregate_results <- function(path_data){
+
+
+  lifecycle::deprecate_warn(when = "0.5.1",
+                            what = "opt_aggregate_results()",
+                            details = "This function is not used."
+  )
 
   # folders with results
     # join paths into a vector

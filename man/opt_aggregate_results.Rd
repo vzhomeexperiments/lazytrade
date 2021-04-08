@@ -15,10 +15,10 @@ opt_aggregate_results(path_data)
 Dataframe with trading results
 }
 \description{
-PURPOSE: Read multiple '.csv' files stored in different folders
+Read multiple '.csv' files stored in different folders
 Store results to the intermediate dataframe.
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
 user must provide the path to the files in the folders
@@ -37,8 +37,6 @@ Data object is sorted in descending order by order close time
 
  file.copy(from = system.file("extdata/RES", package = "lazytrade"),
            to = dir, recursive = TRUE)
-
-
 
  DF_RES <- opt_aggregate_results(path_data = file.path(dir, "RES"))
 
