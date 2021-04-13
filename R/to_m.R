@@ -1,7 +1,7 @@
 #' Convert time series data to matrix with defined number of columns
 #'
 #' @description Transforms Time Series Column of the dataframe to the matrix with specified number of columns.
-#' Number of rows will be automatically found. Eventually not complete last row will be discarded
+#' Number of rows will be automatically found. Eventually not complete last row will be discarded.
 #'
 #' `r lifecycle::badge('superseded')`
 #'
@@ -14,6 +14,7 @@
 #' @examples
 #'
 #' library(magrittr)
+#' library(lazytrade)
 #' macd_m <- seq(1:1000) %>% as.data.frame() %>% to_m(64)
 #'
 #'

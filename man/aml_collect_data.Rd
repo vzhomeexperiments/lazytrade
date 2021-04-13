@@ -2,13 +2,13 @@
 % Please edit documentation in R/aml_collect_data.R
 \name{aml_collect_data}
 \alias{aml_collect_data}
-\title{Function to read new data, transform, aggregate and save data for further retraining of regression model
-for a single currency pair}
+\title{Function to read, transform, aggregate and save data for further retraining
+of regression model for a single asset}
 \usage{
 aml_collect_data(
   indicator_dataset,
   symbol,
-  timeframe,
+  timeframe = 60,
   path_data,
   max_nrows = 2500
 )
@@ -62,6 +62,13 @@ ind$X1 <- ymd_hms(ind$X1)
 # create temporary path (check output of tempdir() to check the result)
 path_data <- normalizePath(tempdir(),winslash = "/")
 
+# add tick data to the folder
+tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
+
+write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+
+
 # data transformation using the custom function for one symbol
 aml_collect_data(indicator_dataset = ind,
                  symbol = 'USDJPY',
@@ -71,5 +78,5 @@ aml_collect_data(indicator_dataset = ind,
 
 }
 \author{
-(C) 2020 Vladimir Zhbanko
+(C) 2020, 2021 Vladimir Zhbanko
 }

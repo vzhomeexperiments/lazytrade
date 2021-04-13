@@ -32,6 +32,7 @@
 #' library(magrittr)
 #' library(readr)
 #' library(lazytrade)
+#' library(stats)
 #'
 #' testpath <- normalizePath(tempdir(),winslash = "/")
 #' path_model <- file.path(testpath, "_Model")
@@ -98,6 +99,7 @@ aml_consolidate_results <- function(timeframe = 15,
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
+  requireNamespace("stats", quietly = TRUE)
 
   #failsafe
   if(min_quality <= 0.1) {stop("parameter min_quality must be greater than 0.1",
@@ -139,11 +141,9 @@ aml_consolidate_results <- function(timeframe = 15,
   for (VAR in filesToAnalyse1) {
     # VAR <- filesToAnalyse1[1]
     df1 <- readr::read_csv(VAR)
-    if(ncol(df1) >= 5){
+    if(ncol(df1) == 4 || ncol(df1) == 5){
       df1$FrstQntlPerf <- df$FrstQntlPerf
       readr::write_csv(df1, VAR)
-    } else {
-      readr::read_csv(VAR)%>% dplyr::bind_cols(df) %>% readr::write_csv(VAR)
     }
 
   }
@@ -156,9 +156,9 @@ aml_consolidate_results <- function(timeframe = 15,
 
     ###======== summarize performance of all models
     df_rec <- dfres1 %>%
-      summarise(TimeTest = Sys.time(),
+      dplyr::summarise(TimeTest = Sys.time(),
                 MeanPerf = mean(MaxPerf),
-                Quantil = mean(FrstQntlPerf))
+                Quantil = stats::quantile(MaxPerf, min_quality))
 
     #save this logs
     path_logs <- file.path(path_logs, paste0("perf_logs",timeframe,".rds"))

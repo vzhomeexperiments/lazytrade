@@ -6,18 +6,24 @@
 \usage{
 aml_make_model(
   symbol,
-  timeframe,
+  timeframe = 60,
   path_model,
   path_data,
   force_update = FALSE,
-  num_nn_options = 24,
+  objective_test = FALSE,
+  num_nn_options = 12,
+  fixed_nn_struct = c(100, 100),
+  num_epoch = 100,
+  num_bars_test = 600,
+  num_bars_ahead = 34,
+  num_cols_used = 16,
   min_perf = 0.3
 )
 }
 \arguments{
 \item{symbol}{Character symbol of the asset for which to train the model}
 
-\item{timeframe}{Data timeframe e.g. 1 min}
+\item{timeframe}{Integer, value in minutes, e.g. 60 min}
 
 \item{path_model}{Path where the models shall be stored}
 
@@ -26,8 +32,25 @@ aml_make_model(
 \item{force_update}{Boolean, by setting this to TRUE function will generate new model
 (useful after h2o engine update)}
 
-\item{num_nn_options}{Integer, value from 1 to 20 or more. Used to change number of variants
-of the random neural network structures}
+\item{objective_test}{Boolean, option to use trading objective test as a parameter to validate best model,
+defaults to FALSE}
+
+\item{num_nn_options}{Integer, value from 0 to 24 or more. Used to change number of variants
+of the random neural network structures, when value is 0 uses fixed structure
+Higher number may lead to long code execution. Select value multiple of 3 otherwise
+function will generate warning. E.g. 12, 24, 48, etc}
+
+\item{fixed_nn_struct}{Integer vector with numeric elements, see par hidden in ?h2o.deeplearning,
+default value is c(100,100). Note this will only work if num_nn_options is 0}
+
+\item{num_epoch}{Integer, see parameter epochs in ?h2o.deeplearning, default value is 100
+Higher number may lead to long code execution}
+
+\item{num_bars_test}{Integer, value of bars used for model testing}
+
+\item{num_bars_ahead}{Integer, value to specify how far should the function predict. Default 34 bars.}
+
+\item{num_cols_used}{Integer, number of columns to use for training the model, defaults to 16}
 
 \item{min_perf}{Double, value greater than 0. Used to set minimum value of model performance.
 Higher value will increase computation time}
@@ -36,21 +59,25 @@ Higher value will increase computation time}
 Function is writing a file object with the best Deep Learning Regression model
 }
 \description{
-Function is training h2o deep learning model to match future prices of the asset to the indicator pattern.
-Main idea is to be able to predict future prices by solely relying on the recently retrieved indicator pattern.
-This is to mimic traditional algorithmic systems based on the indicator rule attempting to automate optimization process with AI.
+Function is training h2o deep learning model to match future
+prices of the asset to the indicator pattern. Main idea is to be able
+to predict future prices by solely relying on the recently retrieved
+indicator pattern. This is to mimic traditional algorithmic systems
+based on the indicator rule and to attempt automated optimization with AI.
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-
-Deep learning model structure is obtained from the 8 random combinations of neurons within 3 hidden layers of the network,
-the most accurate model configuration will be automatically selected
-
-In addition, the function will check if there is a need to update the model. To do that function will check
-results of the function aml_test_model.R.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
+Deep learning model structure is obtained from several random
+combinations of neurons within 3 hidden layers of the network.
+The most accurate model configuration will be automatically selected
+based either RMSE or Objective Test. In addition, the function will
+check if there is a need to update the model. To do that function will check
+results of the function aml_test_model.R.
+
 Function is using the dataset prepared by the function aml_collect_data.R.
-Function will start to train the model as soon as there are more than 1000 rows in the dataset
+Note that function will start to train the model as soon as there are more
+than 1000 rows in the dataset
 }
 \examples{
 
@@ -72,6 +99,10 @@ ind = system.file("extdata", "AI_RSIADXUSDJPY60.csv",
 
 ind$X1 <- ymd_hms(ind$X1)
 
+tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+                  package = "lazytrade") \%>\% read_csv(col_names = FALSE)
+
+write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 # data transformation using the custom function for one symbol
 aml_collect_data(indicator_dataset = ind,
@@ -85,13 +116,43 @@ aml_collect_data(indicator_dataset = ind,
 h2o.init(nthreads = 2)
 
 
+# performing Deep Learning Regression using 2 random neural network structures and objective test
+aml_make_model(symbol = 'USDJPY',
+               timeframe = 60,
+               path_model = path_model,
+               path_data = path_data,
+               force_update=FALSE,
+               objective_test = TRUE,
+               num_nn_options = 6,
+               num_epoch = 10,
+               min_perf = 0,
+               num_bars_test = 600,
+               num_bars_ahead = 34,
+               num_cols_used = 16)
+
 # performing Deep Learning Regression using the custom function
 aml_make_model(symbol = 'USDJPY',
                timeframe = 60,
                path_model = path_model,
                path_data = path_data,
                force_update=FALSE,
-               num_nn_options = 3,
+               objective_test = FALSE,
+               num_nn_options = 6,
+               num_epoch = 10,
+               min_perf = 0,
+               num_bars_test = 600,
+               num_bars_ahead = 34,
+               num_cols_used = 16)
+
+# performing Deep Learning Regression, fixed mode
+aml_make_model(symbol = 'USDJPY',
+               timeframe = 60,
+               path_model = path_model,
+               path_data = path_data,
+               force_update=TRUE,
+               num_nn_options = 0,
+               fixed_nn_struct = c(100, 100),
+               num_epoch = 10,
                min_perf = 0)
 
 # stop h2o engine
@@ -106,5 +167,6 @@ Sys.sleep(5)
 
 }
 \author{
-(C) 2020 Vladimir Zhbanko
+(C) 2020, 2021 Vladimir Zhbanko
 }
+\concept{see https://docs.h2o.ai/h2o-tutorials/latest-stable/tutorials/deeplearning/index.html}

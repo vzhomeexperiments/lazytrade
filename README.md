@@ -158,6 +158,8 @@ library(readr)
 
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
+#>          .
+#> 1 8a289ED5
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -423,6 +425,16 @@ and we check that there is nothing more remained:
 dir("/tmp/*.csv")
 ```
 
+### Delete deprecate functions
+
+To remove function from the package we can use:
+
+-   Delete function from the folder (careful not to break other
+    functions)
+-   Build -&gt; More -&gt; Document
+-   Build -&gt; More -&gt; Clean and Rebuild
+-   Build -&gt; Check
+
 ## CRAN Submission Tips and Tricks
 
 ### Many notes while using global variables:
@@ -471,10 +483,15 @@ It’s important to avoid that function write to the directory other then
 function as follow:
 
 ``` r
+# use plane temp directory
 dir_name <- normalizePath(tempdir(),winslash = "/")
 file_name <- paste0('my_file', 1, '.csv')
 # this needs to be used in the function
 full_path <- file.path(dir_name, file_name)
+
+# when using sub-directory
+sub_dir <- file.path(dir_name, "_SUB")
+if(!dir.exists(sub_dir)){dir.create(sub_dir)}
 ```
 
 ## Versioning of the package
@@ -500,9 +517,11 @@ Clone package from GitHub and test check it in Docker Container
 
 `usethis::use_readme_rmd()`
 
-## Automatic check with Travis
+## Automatic check with GitHub Actions
 
-`usethis::use_travis()`
+`usethis::use_github_action()`
+
+To be elaborated
 
 ## Upload package to CRAN
 
@@ -522,21 +541,30 @@ then:
 
 spelling `devtools::spell_check()`
 
-checking on R hub `rhub::validate_email()`
-`rhub::check(   platform="windows-x86_64-devel",   env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always") )`
+#### checking on R hub
 
-`devtools::check_rhub(interactive = F)`
+<https://builder.r-hub.io/>
 
-checking with release `devtools::check_win_release()`
+#### checking with release
 
-checking win devel `devtools::check_win_devel()`
+`devtools::check_win_release()`
 
-checking win old devel `devtools::check_win_oldrelease()`
+#### checking win devel
 
-check with rocker R in container - use docker image with R Studio, -
-clone repo, build, check package…
+`devtools::check_win_devel()`
 
-Update news.md file
+#### checking win old devel
+
+`devtools::check_win_oldrelease()`
+
+#### check with rocker R in container
+
+-   use docker image with R Studio,
+-   clone repo, build, check package…
+
+### Update news.md file
+
+Explain the changes
 
 ### uploading the package archive to CRAN
 

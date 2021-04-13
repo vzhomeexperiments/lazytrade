@@ -1,5 +1,5 @@
-#' Function to read new data, transform, aggregate and save data for further retraining of regression model
-#' for a single currency pair
+#' Function to read, transform, aggregate and save data for further retraining
+#' of regression model for a single asset
 #'
 #' @description  Function is collecting data from the csv files
 #' Data objects are transformed to be suitable for Regression Modelling.
@@ -15,7 +15,7 @@
 #' This function is relying on the data collection from the dedicated data robot
 #' Other 'aml_*' functions will work based on the data processed by this function
 #'
-#' @author (C) 2020 Vladimir Zhbanko
+#' @author (C) 2020, 2021 Vladimir Zhbanko
 #'
 #' @param indicator_dataset   Dataset containing assets indicator which pattern will be used as predictor
 #' @param symbol              Character symbol of the asset for which to train the model
@@ -45,6 +45,13 @@
 #' # create temporary path (check output of tempdir() to check the result)
 #' path_data <- normalizePath(tempdir(),winslash = "/")
 #'
+#' # add tick data to the folder
+#' tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+#'                   package = "lazytrade") %>% read_csv(col_names = FALSE)
+#'
+#' write_csv(tick, file.path(path_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+#'
+#'
 #' # data transformation using the custom function for one symbol
 #' aml_collect_data(indicator_dataset = ind,
 #'                  symbol = 'USDJPY',
@@ -52,17 +59,41 @@
 #'                  path_data = path_data)
 #'
 #'
-aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data,
+aml_collect_data <- function(indicator_dataset, symbol,
+                             timeframe = 60,
+                             path_data,
                              max_nrows = 2500){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
 
+  # fail safe check of the indicator data set
+  if((sum(indicator_dataset[1:10, 2])==sum(indicator_dataset[1:10, 3]))&&
+     (mean(sum(indicator_dataset[1:10, 2]))==mean(sum(indicator_dataset[1:10, 3])))){
+    stop("Something is wrong in the provided input data, please check!",
+         call. = FALSE)
+  }
+
+  # read tick value to calculate LABEL in pips
+  # file name with the tick data
+  path_tick <- file.path(path_data, "TickSize_AI_RSIADX.csv")
+  # fail safe check if file is available
+  if(!file.exists(path_tick)){
+    stop("File with tick size data is not exist, add this file to path_data",
+         call. = FALSE)
+  }
+  #dataset with tick data
+  z <- readr::read_csv(path_tick, col_names = FALSE) %>%
+    #filter line with a symbol we need
+    dplyr::filter(X1 == symbol) %$%
+    #value z will contain tick value for this symbol
+    X2
+
   # create a new column 'LABEL'
   dat11 <- indicator_dataset %>%
-    # find the price difference between now and xx bars ago also consider JPY pairs...
-    dplyr::mutate(LABEL = ifelse(X2 < 10, 10000*(X3-X2), 100 * (X3-X2)))
+    # find the price difference between now and xx bars ago also consider tick size
+    dplyr::mutate(LABEL = (X3-X2)/(10*z))
 
   # dataset lagging will be performed before modelling
   # dat12 <- dat11 %>%
@@ -74,7 +105,9 @@ aml_collect_data <- function(indicator_dataset, symbol, timeframe, path_data,
   #   filter_all(any_vars(. != 0))
 
   # checking the data: summary(dat11) # too high values in the LABEL Column are non-sense! hist(dat11$LABEL)
-
+  if(max(abs(dat11$LABEL))>500){
+    warning("Calculated LABEL column values may be too high/low", call. = FALSE)
+  }
   ## ---------- Data Saving ---------------
 
   # generate a file name

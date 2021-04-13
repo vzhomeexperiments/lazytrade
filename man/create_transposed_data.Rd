@@ -34,6 +34,8 @@ Function works in combination with a function create_labelled_data
 
 
 library(dplyr)
+library(magrittr)
+library(lazytrade)
 
 # usind a sample data
 data(indicator_dataset)

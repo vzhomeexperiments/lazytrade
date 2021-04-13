@@ -57,6 +57,7 @@ library(dplyr)
 library(magrittr)
 library(readr)
 library(lazytrade)
+library(stats)
 
 testpath <- normalizePath(tempdir(),winslash = "/")
 path_model <- file.path(testpath, "_Model")

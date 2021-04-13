@@ -28,10 +28,6 @@ it will also discard bad result outputting -1 if it is the case
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
-\details{
-it is mandatory to switch on the virtual h2o machine with h2o.init()
-also to shut it down with h2o.shutdown(prompt = F)
-}
 \examples{
 
 \donttest{

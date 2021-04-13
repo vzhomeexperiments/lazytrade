@@ -367,6 +367,15 @@ and we check that there is nothing more remained:
 dir("/tmp/*.csv")
 ```
 
+### Delete deprecate functions
+
+To remove function from the package we can use:
+
+* Delete function from the folder (careful not to break other functions)
+* Build -> More -> Document
+* Build -> More -> Clean and Rebuild
+* Build -> Check
+
 ## CRAN Submission Tips and Tricks
 
 ### Many notes while using global variables:
@@ -471,10 +480,16 @@ It's important to avoid that function write to the directory other then `tempdir
 Construct file name must be done using `file.name()` function as follow:
 
 ```{r}
+# use plane temp directory
 dir_name <- normalizePath(tempdir(),winslash = "/")
 file_name <- paste0('my_file', 1, '.csv')
 # this needs to be used in the function
 full_path <- file.path(dir_name, file_name)
+
+# when using sub-directory
+sub_dir <- file.path(dir_name, "_SUB")
+if(!dir.exists(sub_dir)){dir.create(sub_dir)}
+
 ```
 
 
@@ -501,9 +516,11 @@ Clone package from GitHub and test check it in Docker Container
 
 `usethis::use_readme_rmd()`
 
-## Automatic check with Travis
+## Automatic check with GitHub Actions
 
-`usethis::use_travis()`
+`usethis::use_github_action()`
+
+To be elaborated
 
 ## Upload package to CRAN
 
@@ -520,38 +537,30 @@ then:
 `devtools::release()`
 
 ### before release checks
+
 spelling
 `devtools::spell_check()`
 
-checking on R hub
-`rhub::validate_email()`
-`rhub::check(
-  platform="windows-x86_64-devel",
-  env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always")
-)`
+#### checking on R hub
 
-```{r eval=FALSE, include=FALSE}
-rhub::check_on_fedora(show_status = FALSE,
-                      env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
-```
+https://builder.r-hub.io/ 
 
-
-`devtools::check_rhub(interactive = F)`
-
-checking with release
+#### checking with release
 `devtools::check_win_release()`
 
-checking win devel
+#### checking win devel
 `devtools::check_win_devel()`
 
-checking win old devel
+#### checking win old devel
 `devtools::check_win_oldrelease()`
 
-check with rocker R in container
+#### check with rocker R in container
 - use docker image with R Studio, 
 - clone repo, build, check package...
 
-Update news.md file
+### Update news.md file
+
+Explain the changes
 
 ### uploading the package archive to CRAN
 https://cran.r-project.org/submit.html

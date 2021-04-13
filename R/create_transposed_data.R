@@ -22,6 +22,8 @@
 #'
 #'
 #' library(dplyr)
+#' library(magrittr)
+#' library(lazytrade)
 #'
 #' # usind a sample data
 #' data(indicator_dataset)
