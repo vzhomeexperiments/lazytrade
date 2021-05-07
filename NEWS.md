@@ -2,8 +2,16 @@
 
 ## Planned Changes
 
-* cleanup of deprecated functions
 * setup github actions
+
+# lazytrade 0.5.2
+
+# Version 0.5.2
+
+## Changes
+
+* add second parameter to simulation function
+
 
 # lazytrade 0.5.1
 

@@ -5,14 +5,17 @@
 #' `r lifecycle::badge('experimental')`
 #'
 #' @details  Function is using several other functions to perform sets of operations
-#' designed to test several inputs. Designed to validate model settings
+#' designed to test several inputs. Designed to validate model settings.
+#'
+#' Update: New function structure to allow quicker simulation of parameters to find best performing input
 #'
 #' @author (C) 2021 Vladimir Zhbanko
 #'
 #' @param timeframe           Integer, Data timeframe e.g. 60 min. This will be equal to 1 bar
 #' @param path_sim_input      String, Path to the folder where csv files will be placed, typically AI_RSIADXAUDCAD60.csv
 #' @param path_sim_result     String, Path to the folder where all results from simulations shall be written
-#' @param par_simulate        Integer, Parameter that can be used in simulation
+#' @param par_simulate1       Integer, Parameter that can be used in simulation
+#' @param par_simulate2       Integer, Parameter that can be used in simulation
 #' @param demo_mode           Boolean, Simplify function test. When TRUE no simulation will be made
 #'
 #' @return Function is writing file into Decision Support System folders
@@ -48,8 +51,9 @@
 #' aml_simulation(timeframe = 60,
 #'                path_sim_input = path_sim_input,
 #'                path_sim_result = path_sim_result,
-#'                par_simulate = 3,
-#'                demo_mode = TRUE)
+#'                par_simulate1 = 10,
+#'                par_simulate2 = 10,
+#'                demo_mode = FALSE)
 #'
 #' Sys.sleep(5)
 #' # stop h2o engine
@@ -63,7 +67,9 @@
 #'
 #'
 aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
-                           par_simulate = 100, demo_mode = FALSE){
+                           par_simulate1 = 10,
+                           par_simulate2 = 16,
+                           demo_mode = FALSE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -142,26 +148,12 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                               path_data = path_sim_data,
                               force_update = TRUE,
                               objective_test = TRUE,
-                              num_nn_options = 48,
-                              num_epoch = par_simulate,
+                              num_nn_options = 0,
+                              fixed_nn_struct = c(100,100),
+                              num_epoch = par_simulate1,
                               num_bars_test = 600,
                               num_bars_ahead = 34,
-                              num_cols_used = 10)
-
-  }
-  # =================================
-  # test build test...
-  # =================================
-
-
-
-
-
-  # Performing Testing => Building -> Testing...
-  for (PAIR in mySymbols) {
-    ## PAIR <- mySymbols[1]
-
-    # repeat testing and training several times
+                              num_cols_used = par_simulate2)
 
     lazytrade::aml_test_model(symbol = PAIR,
                               num_bars = 600,
@@ -170,8 +162,8 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                               path_data = path_sim_data,
                               path_sbxm = path_sim_sbxm,
                               path_sbxs = path_sim_sbxs)
-
   }
+
 
   perf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
                                   used_symbols = mySymbols,
@@ -180,7 +172,8 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                   path_sbxs = path_sim_sbxs,
                                   min_quality = 0.8,
                                   get_quantile = TRUE)
-  # function to write log to the _LOG folder
+
+    # function to write log to the _LOG folder
   lazytrade::aml_consolidate_results(timeframe = timeframeHP,
                                      used_symbols = mySymbols,
                                      path_model = path_sim_models,
@@ -192,74 +185,6 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                      path_logs = path_sim_result)
 
 
-
-  for (PAIR in mySymbols) {
-    lazytrade::aml_make_model(symbol = PAIR,
-                   timeframe = timeframeHP,
-                   path_model = path_sim_models,
-                   path_data = path_sim_data,
-                   force_update=FALSE,
-                   objective_test = TRUE,
-                   min_perf = perf,
-                   num_nn_options = 24,
-                   num_epoch = par_simulate,
-                   num_bars_test = 600,
-                   num_bars_ahead = 34,
-                   num_cols_used = 10)
-
-    lazytrade::aml_test_model(symbol = PAIR,
-                   num_bars = 600,
-                   timeframe = timeframeHP,
-                   path_model = path_sim_models,
-                   path_data = path_sim_data,
-                   path_sbxm = path_sim_sbxm,
-                   path_sbxs = path_sim_sbxs)
-
-  }
-
-  perf <- lazytrade::aml_consolidate_results(timeframe = timeframeHP,
-                                  used_symbols = mySymbols,
-                                  path_model = path_sim_models,
-                                  path_sbxm = path_sim_sbxm,
-                                  path_sbxs = path_sim_sbxs,
-                                  min_quality = 0.5,
-                                  get_quantile = TRUE)
-  # function to write log to the _LOG folder
-  lazytrade::aml_consolidate_results(timeframe = timeframeHP,
-                                     used_symbols = mySymbols,
-                                     path_model = path_sim_models,
-                                     path_sbxm = path_sim_sbxm,
-                                     path_sbxs = path_sim_sbxs,
-                                     min_quality = 0.75,
-                                     get_quantile = FALSE,
-                                     log_results = TRUE,
-                                     path_logs = path_sim_result)
-
-
-
-  for (PAIR in mySymbols) {
-    lazytrade::aml_make_model(symbol = PAIR,
-                   timeframe = timeframeHP,
-                   path_model = path_sim_models,
-                   path_data = path_sim_data,
-                   force_update=FALSE,
-                   objective_test = TRUE,
-                   num_nn_options = 24,
-                   num_epoch = par_simulate,
-                   num_bars_test = 600,
-                   num_bars_ahead = 34,
-                   num_cols_used = 10,
-                   min_perf = perf)
-
-    lazytrade::aml_test_model(symbol = PAIR,
-                   num_bars = 600,
-                   timeframe = timeframeHP,
-                   path_model = path_sim_models,
-                   path_data = path_sim_data,
-                   path_sbxm = path_sim_sbxm,
-                   path_sbxs = path_sim_sbxs)
-
-  }
 
   # stop h2o engine
   #h2o.shutdown(prompt = F)
