@@ -11,6 +11,7 @@
 ## Changes
 
 * add second parameter to simulation function
+* option to use full columns for model training when selecting 0 as a parameter num_cols_used
 
 
 # lazytrade 0.5.1
