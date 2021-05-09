@@ -13,6 +13,7 @@
 * add second parameter to simulation function
 * option to use full columns for model training when selecting 0 as a parameter `num_cols_used`
 * add suppress messages option during `readr::read_csv()` function calls
+* option to use full columns for model training when selecting 0 as a parameter num_cols_used
 
 
 # lazytrade 0.5.1
