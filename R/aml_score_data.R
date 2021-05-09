@@ -106,7 +106,7 @@ aml_score_data <- function(symbol,
   f_name <- paste0("AI_RSIADX", symbol,timeframe, ".csv")
   full_path <- file.path(path_data,  f_name)
 
-  x <- readr::read_csv(full_path, col_names = F)
+  x <- readr::read_csv(full_path, col_names = F, col_types = readr::cols())
   #get latest data to predict
   x1 <- head(x, 1)[, -c(1:3)]
 

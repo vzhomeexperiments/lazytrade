@@ -178,7 +178,7 @@ aml_make_model <- function(symbol, timeframe = 60,
   ## read the file and the status of the model
   if(file.exists(dec_file_path) && force_update == FALSE){
     # read the file
-    model_status <- readr::read_csv(dec_file_path) %>% select(MaxPerf) %$% MaxPerf
+    model_status <- readr::read_csv(dec_file_path, col_types = readr::cols()) %>% select(MaxPerf) %$% MaxPerf
   } else if(force_update == TRUE) {
     # delete the model and previous test results
     #try(remove(dec_file_path), silent = TRUE)
@@ -274,7 +274,8 @@ aml_make_model <- function(symbol, timeframe = 60,
     distribution = "AUTO",
     stopping_metric = "MSE",
     #balance_classes = F,
-    epochs = num_epoch)
+    epochs = num_epoch,
+    diagnostics = FALSE)
 
   #ModelC
   #summary(ModelC)

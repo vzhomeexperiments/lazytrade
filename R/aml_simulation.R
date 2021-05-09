@@ -103,7 +103,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
 
   #copy file with tick size info
   tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
-                     package = "lazytrade") %>% read_csv(col_names = FALSE)
+                     package = "lazytrade") %>% read_csv(col_names = FALSE, col_types = readr::cols())
   write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 
@@ -112,7 +112,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
     # PAIR <- mySymbols[1]
     # performing data collection
     indHP = file.path(path_sim_input, paste0("AI_RSIADX",PAIR,timeframeHP,".csv")) %>%
-      readr::read_csv(col_names = FALSE)
+      readr::read_csv(col_names = FALSE, col_types = readr::cols())
 
     indHP$X1 <- lubridate::ymd_hms(indHP$X1)
 

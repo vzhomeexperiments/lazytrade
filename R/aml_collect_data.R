@@ -84,7 +84,7 @@ aml_collect_data <- function(indicator_dataset, symbol,
          call. = FALSE)
   }
   #dataset with tick data
-  z <- readr::read_csv(path_tick, col_names = FALSE) %>%
+  z <- readr::read_csv(path_tick, col_names = FALSE, col_types = readr::cols()) %>%
     #filter line with a symbol we need
     dplyr::filter(X1 == symbol) %$%
     #value z will contain tick value for this symbol
