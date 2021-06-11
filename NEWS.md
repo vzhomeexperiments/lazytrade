@@ -14,6 +14,9 @@
 * option to use full columns for model training when selecting 0 as a parameter `num_cols_used`
 * add suppress messages option during `readr::read_csv()` function calls
 * option to use full columns for model training when selecting 0 as a parameter num_cols_used
+* fail safe in `aml_collect_data` function will delete already recorded rds file if it has different
+amount of columns
+* add new function `util_find_pid` to find the PIDs of the terminal.exe application
 
 
 # lazytrade 0.5.1

@@ -24,7 +24,7 @@
         "CUMSUM_PNL", "DFR", "PairGain", "Symbol", "aes", "asset_name",
 
         "Hold_NB", "MaxPerf", "NB_hold", "PnL_NB", "TR_Level", "X2_NB",
-        "qrtl", "value","FrstQntlPerf",
+        "qrtl", "value","FrstQntlPerf", "col_number", "t_running",
 
 
         # sample function names
