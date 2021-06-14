@@ -17,6 +17,7 @@
 * fail safe in `aml_collect_data` function will delete already recorded rds file if it has different
 amount of columns
 * add new function `util_find_pid` to find the PIDs of the terminal.exe application
+* function mt_stat_transf is now using a rule to assing market type classes
 
 
 # lazytrade 0.5.1

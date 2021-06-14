@@ -11,7 +11,8 @@ mt_stat_transf(
   path_data,
   mt_classes,
   clust_method = "kmeans",
-  clust_opt = "complete"
+  clust_opt = "complete",
+  rule_opt = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ Each row is a time index, multiple columns are required but not strictly needed}
 
 \item{clust_opt}{Character, option to select how to perform h clustering
 "average", "single", "complete", "ward". Default value is 'complete'}
+
+\item{rule_opt}{Boolean, option to perform rule-based Market Type Assignment, defaults to TRUE}
 }
 \value{
 Dataframe with statistically transformed and classified dataset for classification modeling
@@ -64,17 +67,29 @@ data(price_dataset_big)
 
 #option
 #mt_classes = c('BUN', 'BEN', 'RAN','BUV', 'BEV', 'RAV')
+#mt_classes = c('BUN', 'BEN', 'RAN')
 #clust_method = 'hclust'
 #clust_opt = 'ward'
 
-mt_stat_transf(indicator_dataset = price_dataset_big,
-               num_bars = 64,
-               timeframe = 60,
-               path_data = path_data,
-               mt_classes = c('BUN', 'BEN', 'RAN'),
-               clust_method = 'kmeans',
-               clust_opt = 'complete')
+#build dataset for Market Type detection without rule based check
+ai_class_rand <- mt_stat_transf(indicator_dataset = price_dataset_big,
+                                num_bars = 64,
+                                timeframe = 60,
+                                path_data = path_data,
+                                mt_classes = c('BUN', 'BEN', 'RAN'),
+                                clust_method = 'kmeans',
+                                clust_opt = 'complete',
+                                rule_opt = FALSE)
 
+#use rule base check
+ai_class_rule <- mt_stat_transf(indicator_dataset = price_dataset_big,
+                                num_bars = 64,
+                                timeframe = 60,
+                                path_data = path_data,
+                                mt_classes = c('BUN', 'BEN', 'RAN'),
+                                clust_method = 'kmeans',
+                                clust_opt = 'complete',
+                                rule_opt = TRUE)
 
 
 }

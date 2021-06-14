@@ -25,6 +25,7 @@
 #'                            'kmeans' or 'hclust'. Default value is 'kmeans'
 #' @param clust_opt           Character, option to select how to perform h clustering
 #'                            "average", "single", "complete", "ward". Default value is 'complete'
+#' @param rule_opt            Boolean, option to perform rule-based Market Type Assignment, defaults to TRUE
 #'
 #' @return Dataframe with statistically transformed and classified dataset for classification modeling
 #' @export
@@ -44,17 +45,29 @@
 #'
 #' #option
 #' #mt_classes = c('BUN', 'BEN', 'RAN','BUV', 'BEV', 'RAV')
+#' #mt_classes = c('BUN', 'BEN', 'RAN')
 #' #clust_method = 'hclust'
 #' #clust_opt = 'ward'
+#' 
+#' #build dataset for Market Type detection without rule based check
+#' ai_class_rand <- mt_stat_transf(indicator_dataset = price_dataset_big,
+#'                                 num_bars = 64,
+#'                                 timeframe = 60,
+#'                                 path_data = path_data,
+#'                                 mt_classes = c('BUN', 'BEN', 'RAN'),
+#'                                 clust_method = 'kmeans',
+#'                                 clust_opt = 'complete',
+#'                                 rule_opt = FALSE)
 #'
-#' mt_stat_transf(indicator_dataset = price_dataset_big,
-#'                num_bars = 64,
-#'                timeframe = 60,
-#'                path_data = path_data,
-#'                mt_classes = c('BUN', 'BEN', 'RAN'),
-#'                clust_method = 'kmeans',
-#'                clust_opt = 'complete')
-#'
+#' #use rule base check
+#' ai_class_rule <- mt_stat_transf(indicator_dataset = price_dataset_big,
+#'                                 num_bars = 64,
+#'                                 timeframe = 60,
+#'                                 path_data = path_data,
+#'                                 mt_classes = c('BUN', 'BEN', 'RAN'),
+#'                                 clust_method = 'kmeans',
+#'                                 clust_opt = 'complete',
+#'                                 rule_opt = TRUE)
 #'
 #'
 mt_stat_transf <- function(indicator_dataset,
@@ -63,7 +76,8 @@ mt_stat_transf <- function(indicator_dataset,
                            path_data,
                            mt_classes,
                            clust_method = 'kmeans',
-                           clust_opt = 'complete'){
+                           clust_opt = 'complete',
+                           rule_opt = TRUE){
 
   requireNamespace("dplyr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -107,7 +121,11 @@ mt_stat_transf <- function(indicator_dataset,
 
       #Q3 vector with third quantile
       q3 <- apply(lg12, 2,stats::quantile, 0.75)
-
+      
+      #n1 vector with first element of selected row
+      n1 <- apply(dfr12, 2,head,1)
+      #n2 vector with last element of selected row
+      n2 <- apply(dfr12, 2, tail,1)
       # vector with kurtosis
       #k1 <- apply(lg12, 2,moments::kurtosis)
 
@@ -117,7 +135,9 @@ mt_stat_transf <- function(indicator_dataset,
       ## combine these vectors
       dfC <- data.frame(Q1 = q1,
                         Q2 = q2,
-                        Q3 = q3)
+                        Q3 = q3,
+                        N1 = n1,
+                        N2 = n2)
                         #K1 = k1,
                         #S1 = s1
                         #)
@@ -139,7 +159,10 @@ mt_stat_transf <- function(indicator_dataset,
 
       #Q3 vector with third quantile
       q3 <- apply(lg12, 2,stats::quantile, 0.75)
-
+      #n1 vector with first element of selected row
+      n1 <- apply(dfr12, 2,head,1)
+      #n2 vector with last element of selected row
+      n2 <- apply(dfr12, 2, tail,1)
       # vector with kurtosis
       #k1 <- apply(lg12, 2,moments::kurtosis)
 
@@ -147,9 +170,11 @@ mt_stat_transf <- function(indicator_dataset,
       # s1 <- apply(lg12, 2, moments::skewness)
 
       ## combine these vectors
-      dfC1  <- data.frame(Q1 = q1,
-                          Q2 = q2,
-                          Q3 = q3)
+      dfC1 <- data.frame(Q1 = q1,
+                        Q2 = q2,
+                        Q3 = q3,
+                        N1 = n1,
+                        N2 = n2)
       #K1 = k1,
       #S1 = s1
       #)
@@ -160,7 +185,11 @@ mt_stat_transf <- function(indicator_dataset,
     }
 
   } # end of the for loop
-
+  
+  # Create copies of the dataset for verification purposes
+  dfCa <- dfC
+  dfC <- dfC[, 1:3]
+  
   ## performing clustering algorithm to classify this dataset into N classes
   # scale data
   dfCsc <- scale(dfC)
@@ -187,14 +216,53 @@ mt_stat_transf <- function(indicator_dataset,
   }
 
 
-  ## TDL -> properly assign classes to labels
+  ## rule based assignment of classes to labels
+  if(rule_opt && N==3){  
+    ## derive which class is which!!!
+    # join columns with price values to the dataset
+    dfCa$M_T <- dfC$M_T
 
+    # calculate summary statistics for each class
+    dfC2 <- dfCa %>% 
+      dplyr::mutate(dN = 1000*(N2-N1)) %>% 
+      dplyr::group_by(M_T) %>% 
+      dplyr::summarise(Q1mean = mean(Q1),
+                       Q2mean = mean(Q2),
+                       Q3mean = mean(Q3),
+                       dNmean = mean(dN),
+                       Nobs = n()) 
+      # result of dN is probably biased 
 
-
+    # max dN && dN > 0 -> BUN
+        dfBUN <- dfC2 %>% 
+      dplyr::slice(which.max(dNmean)) %>% 
+      dplyr::select(M_T) %>% 
+      dplyr::mutate(MT_A = "BUN")
+        
+        # min dN && dN < 0 -> BEN
+    dfBEN <- dfC2 %>% 
+      dplyr::slice(which.min(dNmean)) %>% 
+      dplyr::select(M_T) %>% 
+      dplyr::mutate(MT_A = "BEN")
+    # keep them together
+    dfBUNBEN <- dplyr::bind_rows(dfBUN, dfBEN)
+    df_all <- dfBUNBEN %>% 
+      dplyr::full_join(dfC2) %>% 
+      dplyr::arrange(M_T)
+    
+    # remaining is RAN...
+    df_all$MT_A[is.na(df_all$MT_A)] <- "RAN"
+    
+    # relabel the column M_T
+    dfC$M_T <- factor(dfC$M_T, labels=df_all$MT_A)
+    # relabel for manual checking
+    dfCa$M_T <- factor(dfCa$M_T, labels = df_all$MT_A)
+    
+    }else{
   #rename clusters to be like desired (but classes will be unsupervised)
   dfC$M_T <- factor(dfC$M_T, labels=mt_classes)
   #plot(dfC, col = dfC$M_T)
-
+  }
   full_path <- file.path(path_data, paste0('auto_M_T', timeframe, '.rds'))
 
   readr::write_rds(dfC, full_path)
