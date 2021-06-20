@@ -55,6 +55,7 @@
 #'               path_data = path_data,
 #'               activate_balance = TRUE,
 #'               num_nn_options = 3,
+#'               num_epoch = 10,
 #'               is_cluster = TRUE)
 #'
 #'

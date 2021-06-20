@@ -22,7 +22,7 @@
         "rewardseq.OFF", "rewardseq.ON",
         "totreward", "trstate", "MarketType","predict_CMSUM", "LABEL_CMSUM",
         "CUMSUM_PNL", "DFR", "PairGain", "Symbol", "aes", "asset_name",
-
+        "M_T", "N1", "N2", "Q1", "Q2", "Q3", "dN", "dNmean",
         "Hold_NB", "MaxPerf", "NB_hold", "PnL_NB", "TR_Level", "X2_NB",
         "qrtl", "value","FrstQntlPerf", "col_number", "t_running",
 
