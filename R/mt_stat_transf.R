@@ -32,7 +32,6 @@
 #'
 #' @examples
 #'
-#'
 #' library(dplyr)
 #' library(stats)
 #' library(magrittr)

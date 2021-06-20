@@ -6,32 +6,46 @@
 \usage{
 mt_make_model(
   indicator_dataset,
-  num_bars,
+  num_bars = 64,
   timeframe = 60,
   path_model,
   path_data,
   activate_balance = TRUE,
   num_nn_options = 24,
+  fixed_nn_struct = c(100, 100),
+  num_epoch = 100,
   is_cluster = FALSE
 )
 }
 \arguments{
-\item{indicator_dataset}{Dataframe, Dataset containing indicator patterns to train the model}
+\item{indicator_dataset}{Data frame, Data set containing indicator patterns to train the model}
 
 \item{num_bars}{Integer, Number of bars used to detect pattern}
 
-\item{timeframe}{Integer, Data timeframe in Minutes.}
+\item{timeframe}{Integer, Data time frame in minutes.}
 
 \item{path_model}{String, Path where the models are be stored}
 
-\item{path_data}{String, Path where the aggregated historical data is stored, if exists in rds format}
+\item{path_data}{String, Path where the aggregated historical data is stored,
+if exists, in rds format}
 
-\item{activate_balance}{Boolean, option to choose if to balance market type classes or not, default TRUE}
+\item{activate_balance}{Boolean, option to choose to balance market type classes or not,
+default TRUE}
 
-\item{num_nn_options}{Integer, value from 3 to 24 or more. Used to change number of variants
-of the random neural network structures. Value 3 will mean that only one
-random structure will be used. To avoid warnings make sure to set this value
+\item{num_nn_options}{Integer, value from 0 to 24 or more as multiple of 3.
+Used to change number of variants for 3 hidden layer structure.
+Random neural network structures will be generated.
+When value 0 is set then a fixed structure will be used as
+defined by parameter fixed_nn_struct.
+To avoid warnings make sure to set this value as
 multiple of 3. Higher values will increase computation time.}
+
+\item{fixed_nn_struct}{Integer vector with numeric elements, see par hidden in ?h2o.deeplearning,
+default value is c(100,100).
+Note this will only work if num_nn_options is 0}
+
+\item{num_epoch}{Integer, see parameter epochs in ?h2o.deeplearning, default value is 100
+Higher number may lead to long code execution}
 
 \item{is_cluster}{Boolean, set TRUE to use automatically clustered data}
 }
@@ -39,12 +53,14 @@ multiple of 3. Higher values will increase computation time.}
 Function is writing file object with the model
 }
 \description{
-Function is training h2o deep learning model to match manually classified patterns of the financial
-indicator. Main idea is to be able to detect Market Type by solely relying on the current indicator pattern.
-This is in the attempt to evaluate current market type and to use proper trading strategy.
-Function will always try to gather mode data to update the model.
+Function is training h2o deep learning model to match
+classified patterns of the financial indicator.
+Main idea is to be able to detect Market Type by solely relying on the
+current indicator pattern.
+This is in the attempt to evaluate current market type for trading purposes.
 
-Selected Market Periods according to the theory from Van K. Tharp:
+Selected Market Periods could be manually classified
+according to the theory from Van K. Tharp:
 \enumerate{
 \item Bull normal, BUN
 \item Bull volatile, BUV
@@ -54,11 +70,16 @@ Selected Market Periods according to the theory from Van K. Tharp:
 \item Sideways volatile, RAV
 }
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+For automatic classification, could only be used: BUN, BEN, RAN market types
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
-Function is using manually prepared dataset and tries several different random neural network structures.
-Once the best neural network is found then the better model is trained and stored.
+Function is using labeled dataset and tries several different random
+neural network structures. Once the best neural network is found then the
+better model is selected and stored. Dataset can be either manually labelled
+or generated using function mt_stat_transf.R. In the latter case parameter
+is_cluster shall be set to TRUE.
 }
 \examples{
 
@@ -82,17 +103,18 @@ Sys.sleep(5)
 h2o.init(nthreads = 2)
 
 
-# performing Deep Learning Classification using the custom function manually prepared data
+# performing Deep Learning Classification using manually labelled data
 mt_make_model(indicator_dataset = macd_ML60M,
               num_bars = 64,
               timeframe = 60,
               path_model = path_model,
               path_data = path_data,
               activate_balance = TRUE,
-              num_nn_options = 3)
+              num_nn_options = 3,
+              num_epoch = 10)
 
 data(price_dataset_big)
-data <- head(price_dataset_big, 500) #reduce computational time
+data <- head(price_dataset_big, 5000) #reduce computational time
 
 ai_class <- mt_stat_transf(indicator_dataset = data,
                       num_bars = 64,
@@ -107,10 +129,23 @@ mt_make_model(indicator_dataset = ai_class,
               path_model = path_model,
               path_data = path_data,
               activate_balance = TRUE,
-              num_nn_options = 3,
+              num_nn_options = 6,
+              num_epoch = 10,
               is_cluster = TRUE)
 
-
+# performing Deep Learning Classification using the custom function auto clustered data
+# and fixed nn structure
+mt_make_model(indicator_dataset = ai_class,
+              num_bars = 64,
+              timeframe = 60,
+              path_model = path_model,
+              path_data = path_data,
+              activate_balance = TRUE,
+              num_nn_options = 0,
+              fixed_nn_struct = c(10, 10),
+              num_epoch = 10,
+              is_cluster = TRUE)
+              
 # stop h2o engine
 h2o.shutdown(prompt = FALSE)
 

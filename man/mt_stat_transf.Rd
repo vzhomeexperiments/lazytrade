@@ -54,7 +54,6 @@ automated way of doing such data classification
 }
 \examples{
 
-
 library(dplyr)
 library(stats)
 library(magrittr)
