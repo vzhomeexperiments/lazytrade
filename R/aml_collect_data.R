@@ -68,9 +68,10 @@ aml_collect_data <- function(indicator_dataset, symbol,
   requireNamespace("readr", quietly = TRUE)
   requireNamespace("lubridate", quietly = TRUE)
 
-  # fail safe check of the indicator data set
-  if((sum(indicator_dataset[1:10, 2])==sum(indicator_dataset[1:10, 3]))&&
-     (mean(sum(indicator_dataset[1:10, 2]))==mean(sum(indicator_dataset[1:10, 3])))){
+  ## fail safe check of the indicator data set
+  # check if data columns are not constant
+  if((sum(indicator_dataset[1:50, 2])==sum(indicator_dataset[1:50, 3]))&&
+     (mean(sum(indicator_dataset[1:50, 2]))==mean(sum(indicator_dataset[1:50, 3])))){
     stop("Something is wrong in the provided input data, please check!",
          call. = FALSE)
   }
@@ -84,7 +85,7 @@ aml_collect_data <- function(indicator_dataset, symbol,
          call. = FALSE)
   }
   #dataset with tick data
-  z <- readr::read_csv(path_tick, col_names = FALSE) %>%
+  z <- readr::read_csv(path_tick, col_names = FALSE, col_types = readr::cols()) %>%
     #filter line with a symbol we need
     dplyr::filter(X1 == symbol) %$%
     #value z will contain tick value for this symbol
@@ -114,6 +115,17 @@ aml_collect_data <- function(indicator_dataset, symbol,
   f_name <- paste0("AI_RSIADX", symbol,timeframe, ".rds")
   full_path <- file.path(path_data,  f_name)
 
+  # if data already exists but it has wrong number of columns ...
+  # we have to delete previously saved rds file
+  # test: dat11[ ,3]<- NULL
+  if(file.exists(full_path)){
+    col_number <- readr::read_rds(full_path) %>% ncol()
+  }
+  if(file.exists(full_path) && ncol(dat11) != col_number){
+    file.remove(full_path)
+  }
+
+
   # check that old data in the file name is exist or not...
 
   # retrieve already recorded data >> add only the new data >> write to the data folder
@@ -124,7 +136,7 @@ aml_collect_data <- function(indicator_dataset, symbol,
     readr::write_rds(dat11, full_path)
   } else if(exists("dat11") && file.exists(full_path)) {
     # read previous file and aggregate
-    readr::read_rds(full_path) %>%
+      readr::read_rds(full_path) %>%
       # join obtained data below! existing one
       dplyr::bind_rows(dat11) %>%
       # check that data does not have double rows that are exactly same...

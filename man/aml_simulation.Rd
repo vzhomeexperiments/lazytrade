@@ -8,7 +8,8 @@ aml_simulation(
   timeframe = 60,
   path_sim_input,
   path_sim_result,
-  par_simulate = 100,
+  par_simulate1 = 10,
+  par_simulate2 = 16,
   demo_mode = FALSE
 )
 }
@@ -19,7 +20,9 @@ aml_simulation(
 
 \item{path_sim_result}{String, Path to the folder where all results from simulations shall be written}
 
-\item{par_simulate}{Integer, Parameter that can be used in simulation}
+\item{par_simulate1}{Integer, Parameter that can be used in simulation}
+
+\item{par_simulate2}{Integer, Parameter that can be used in simulation}
 
 \item{demo_mode}{Boolean, Simplify function test. When TRUE no simulation will be made}
 }
@@ -33,7 +36,9 @@ Function is designed to evaluate several different inputs.
 }
 \details{
 Function is using several other functions to perform sets of operations
-designed to test several inputs. Designed to validate model settings
+designed to test several inputs. Designed to validate model settings.
+
+Update: New function structure to allow quicker simulation of parameters to find best performing input
 }
 \examples{
 
@@ -65,8 +70,9 @@ h2o.init(nthreads = 2)
 aml_simulation(timeframe = 60,
                path_sim_input = path_sim_input,
                path_sim_result = path_sim_result,
-               par_simulate = 3,
-               demo_mode = TRUE)
+               par_simulate1 = 10,
+               par_simulate2 = 10,
+               demo_mode = FALSE)
 
 Sys.sleep(5)
 # stop h2o engine

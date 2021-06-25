@@ -99,6 +99,22 @@
 #'                num_bars_ahead = 34,
 #'                num_cols_used = 16)
 #'
+#' # performing DL Regression using 2 random neural network structures
+#' # with objective test, all columns
+#' aml_make_model(symbol = 'USDJPY',
+#'                timeframe = 60,
+#'                path_model = path_model,
+#'                path_data = path_data,
+#'                force_update=FALSE,
+#'                objective_test = TRUE,
+#'                num_nn_options = 6,
+#'                num_epoch = 10,
+#'                min_perf = 0,
+#'                num_bars_test = 600,
+#'                num_bars_ahead = 34,
+#'                num_cols_used = 0)
+#'
+#'
 #' # performing Deep Learning Regression using the custom function
 #' aml_make_model(symbol = 'USDJPY',
 #'                timeframe = 60,
@@ -162,7 +178,7 @@ aml_make_model <- function(symbol, timeframe = 60,
   ## read the file and the status of the model
   if(file.exists(dec_file_path) && force_update == FALSE){
     # read the file
-    model_status <- readr::read_csv(dec_file_path) %>% select(MaxPerf) %$% MaxPerf
+    model_status <- readr::read_csv(dec_file_path, col_types = readr::cols()) %>% select(MaxPerf) %$% MaxPerf
   } else if(force_update == TRUE) {
     # delete the model and previous test results
     #try(remove(dec_file_path), silent = TRUE)
@@ -203,12 +219,19 @@ aml_make_model <- function(symbol, timeframe = 60,
   dat21 <- dat12[test_ind, ]    #dataset to test the model using 30% of data
   dat22 <- dat12[-test_ind, ]   #dataset to train the model
 
+
   # find number of columns
   dat22_ncol <- ncol(dat22)-1
 
   # fail safe: check number of columns with parameter num_cols_used
   if(num_cols_used > dat22_ncol){stop("Parameter num_cols_used is greater than what is in the available data",
                                       call. = FALSE)}
+
+  # use full set of columns
+  if(num_cols_used == 0){
+    num_cols_used = dat22_ncol
+  }
+
   ## ---------- Data Modelling  ---------------
   #h2o.init()
 
@@ -251,7 +274,8 @@ aml_make_model <- function(symbol, timeframe = 60,
     distribution = "AUTO",
     stopping_metric = "MSE",
     #balance_classes = F,
-    epochs = num_epoch)
+    epochs = num_epoch,
+    diagnostics = FALSE)
 
   #ModelC
   #summary(ModelC)

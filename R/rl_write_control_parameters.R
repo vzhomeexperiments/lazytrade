@@ -59,7 +59,7 @@ actions <- c("ON", "OFF") # 'ON' and 'OFF' are referring to decision to trade wi
 #control <- list(alpha = 0.3, gamma = 0.6, epsilon = 0.1)
 
 # Create RL models for all the space
-Alpha <- seq(from = 0.1, to = 0.9, by = 0.4)
+Alpha <- seq(from = 0.5, to = 0.9, by = 0.4)
 Gamma <- seq(from = 0.1, to = 0.9, by = 0.4)
 Epsyl <- seq(from = 0.1, to = 0.9, by = 0.4)
 
