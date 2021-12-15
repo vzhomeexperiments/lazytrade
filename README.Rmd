@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # lazytrade
 
 <!-- badges: start -->
-[![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
+[![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://app.codecov.io/gh/vzhomeexperiments/lazytrade)
 [![CRAN status](https://www.r-pkg.org/badges/version/lazytrade)](https://CRAN.R-project.org/package=lazytrade)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/vzhomeexperiments/lazytrade/workflows/R-CMD-check/badge.svg)](https://github.com/vzhomeexperiments/lazytrade/actions)
@@ -113,7 +113,7 @@ rl_generate_policy(data_trades, states, actions, control)
 
 ## Example - generating passwords for trading platforms login
 
-Multiple trading accounts require passwords, package contains function that may easily generate random passwords:
+Multiple trading accounts require passwords, package contains function that may easily generate random passwords: 
 
 ```{r message=FALSE, warning=FALSE}
 library(lazytrade)

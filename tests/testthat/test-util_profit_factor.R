@@ -1,3 +1,4 @@
+library(lazytrade)
 library(testthat)
 library(magrittr)
 library(dplyr)
@@ -15,7 +16,6 @@ test_that("test value of the calculation", {
               PrFact = util_profit_factor(X5)) %>%
     select(PrFact) %>%
     head(1) %>%
-    as.vector() %>%
     round(3)
 
   expect_equal(DF_Stats$PrFact, 0.68)

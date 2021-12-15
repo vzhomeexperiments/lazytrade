@@ -5,6 +5,15 @@
 * setup github actions
 * add fail safe for function input parameters
 
+# lazytrade 0.5.3
+
+# Version 0.5.3
+
+## Changes
+
+* removed as.vector from example code to fix error in R-devel builds
+* increased min R version to 3.6.0
+
 # lazytrade 0.5.2
 
 # Version 0.5.2

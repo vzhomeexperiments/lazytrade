@@ -1,15 +1,13 @@
 ## Test environments
-* Docker Container, R 4.1.0 (2021-05-18) -- "Camp Pontanezen"
-Platform: x86_64-pc-linux-gnu (64-bit)
 * R-hub builder 
-Platform:	Debian Linux, R-devel, GCC
+Platform:	Windows Server 2022, R-devel, 64 bit
 * Winbuilder
-* R version 4.1.0 (2021-05-18)
-* R Under development (unstable) (2021-06-18 r80528)
+* R version 4.1.2 (2021-11-01)
+* R Under development (unstable) (2021-12-14 r81376 ucrt)
 
 ## R CMD check results
 Status: OK
-R version R 4.1.0 (2021-05-18)
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
 
 There were no ERRORs or WARNINGs or NOTEs
 
