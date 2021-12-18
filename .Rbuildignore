@@ -9,3 +9,4 @@ cran-comments.md
 RunRStudio
 ^codecov\.yml$
 ^\.github$
+^CRAN-SUBMISSION$
