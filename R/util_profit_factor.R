@@ -23,7 +23,7 @@
 #'    summarise(PnL = sum(X5),
 #'              NumTrades = n(),
 #'              PrFact = util_profit_factor(X5)) %>%
-#'    select(PrFact) %>% head(1) %>% as.vector() %>% round(3)
+#'    select(PrFact) %>% head(1) %>% round(3)
 #'
 #'
 util_profit_factor <- function(x){

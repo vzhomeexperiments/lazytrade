@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://codecov.io/gh/vzhomeexperiments/lazytrade)
+[![codecov](https://codecov.io/gh/vzhomeexperiments/lazytrade/branch/master/graph/badge.svg)](https://app.codecov.io/gh/vzhomeexperiments/lazytrade)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/lazytrade)](https://CRAN.R-project.org/package=lazytrade)
 [![Lifecycle:
@@ -159,7 +159,7 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 8a289ED5
+#> 1 58e23E45
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -307,6 +307,9 @@ library(testthat)
 #> The following object is masked from 'package:dplyr':
 #> 
 #>     matches
+#> The following objects are masked from 'package:readr':
+#> 
+#>     edition_get, local_edition
 #> The following objects are masked from 'package:magrittr':
 #> 
 #>     equals, is_less_than, not
