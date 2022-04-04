@@ -5,6 +5,14 @@
 * setup github actions
 * add fail safe for function input parameters
 
+# lazytrade 0.5.4
+
+# Version 0.5.4
+
+## Changes
+
+* documentation update
+
 # lazytrade 0.5.3
 
 # Version 0.5.3
