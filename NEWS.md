@@ -4,6 +4,7 @@
 
 * setup github actions
 * add fail safe for function input parameters
+* add feature to automatically remove zeroes in the input data file
 
 # lazytrade 0.5.4
 
@@ -12,6 +13,7 @@
 ## Changes
 
 * documentation update
+* fix a bug in a aml_simulation function to make it work with symbol independent data
 
 # lazytrade 0.5.3
 

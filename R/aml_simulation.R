@@ -43,7 +43,9 @@
 #'           to = file.path(path_sim_input, "AI_RSIADXCADCHF60.csv"), overwrite = TRUE)
 #' file.copy(from = system.file("extdata", "AI_RSIADXEURNZD60.csv", package = "lazytrade"),
 #'           to = file.path(path_sim_input, "AI_RSIADXEURNZD60.csv"), overwrite = TRUE)
-#'
+#' file.copy(from = system.file("extdata", "TickSize_AI_RSIADX.csv", package = "lazytrade"),
+#'           to = file.path(path_sim_input, "TickSize_AI_RSIADX.csv"), overwrite = TRUE)
+#' 
 #' # start h2o engine
 #' h2o.init(nthreads = 2)
 #'
@@ -93,7 +95,7 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
   # =================================
   #### Read inputs ==========================================
   # read files for which symbols are actually placed to the folder path_sim_input
-  myFiles <- list.files(path_sim_input,pattern = "AI_RSIADX", all.files = TRUE)
+  myFiles <- list.files(path_sim_input,pattern = "^AI_RSIADX", all.files = TRUE)
   mySymbols <- stringr::str_remove(myFiles, pattern = "AI_RSIADX")
   mySymbols <- stringr::str_remove(mySymbols, pattern = as.character(timeframe))
   mySymbols <- stringr::str_remove(mySymbols, pattern = ".csv")
@@ -102,9 +104,12 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
   timeframeHP <- timeframe
 
   #copy file with tick size info
-  tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
-                     package = "lazytrade") %>% read_csv(col_names = FALSE, col_types = readr::cols())
-  write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
+  file.copy(from = file.path(path_sim_input, "TickSize_AI_RSIADX.csv"),
+            to = file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), overwrite = TRUE)
+  
+  # tick = system.file("extdata", "TickSize_AI_RSIADX.csv",
+  #                     package = "lazytrade") %>% read_csv(col_names = FALSE, col_types = readr::cols())
+  # write_csv(tick, file.path(path_sim_data, "TickSize_AI_RSIADX.csv"), col_names = FALSE)
 
 
   # Writing indicator and price change to the file
@@ -124,9 +129,9 @@ aml_simulation <- function(timeframe = 60, path_sim_input, path_sim_result,
                                 path_data = path_sim_data,
                                 max_nrows = 15000)
 
-    #full_path <- file.path(path_data, 'AI_RSIADXEURUSD60.rds')
+    #full_path <- file.path(path_sim_data, 'AI_RSIADXEURUSD60.rds')
 
-    #x1 <- read_rds(full_path)
+    #x1 <- readr::read_rds(full_path)
 
   }
 

@@ -62,6 +62,8 @@ file.copy(from = system.file("extdata", "AI_RSIADXCADCHF60.csv", package = "lazy
           to = file.path(path_sim_input, "AI_RSIADXCADCHF60.csv"), overwrite = TRUE)
 file.copy(from = system.file("extdata", "AI_RSIADXEURNZD60.csv", package = "lazytrade"),
           to = file.path(path_sim_input, "AI_RSIADXEURNZD60.csv"), overwrite = TRUE)
+file.copy(from = system.file("extdata", "TickSize_AI_RSIADX.csv", package = "lazytrade"),
+          to = file.path(path_sim_input, "TickSize_AI_RSIADX.csv"), overwrite = TRUE)
 
 # start h2o engine
 h2o.init(nthreads = 2)
