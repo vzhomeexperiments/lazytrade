@@ -42,7 +42,7 @@ Update: New function structure to allow quicker simulation of parameters to find
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(dplyr)
 library(magrittr)

@@ -30,7 +30,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' library(dplyr)
 #' library(magrittr)

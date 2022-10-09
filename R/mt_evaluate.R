@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' library(h2o)
 #' library(magrittr)

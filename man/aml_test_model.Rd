@@ -51,7 +51,7 @@ Such file will be used by the function aml_make_model.R to decide whether model 
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(dplyr)
 library(magrittr)

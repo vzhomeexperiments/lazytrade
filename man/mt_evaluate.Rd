@@ -32,7 +32,7 @@ also to shut it down with h2o.shutdown(prompt = F)
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(h2o)
 library(magrittr)

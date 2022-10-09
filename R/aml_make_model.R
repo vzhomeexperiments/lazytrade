@@ -50,7 +50,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #'
 #' library(dplyr)
@@ -80,8 +80,12 @@
 #'                  path_data = path_data)
 #'
 #' # dataset will be written to the temp directory
-#'
-#' # start h2o engine
+#' 
+#' # -WIP-WIP- Test that java environment is not running
+#' #task <- shell('tasklist /fi "imagename eq java.exe" /nh /fo csv', intern = TRUE)
+#' #is_java <- grepl("java.exe", task) # returns TRUE if java running; else FALSE
+#' 
+#' # start h2o engine 
 #' h2o.init(nthreads = 2)
 #'
 #'
@@ -142,7 +146,7 @@
 #'
 #' # stop h2o engine
 #' h2o.shutdown(prompt = FALSE)
-#'
+#' 
 #' #set delay to insure h2o unit closes properly before the next test
 #' Sys.sleep(5)
 #'

@@ -81,7 +81,7 @@ than 1000 rows in the dataset
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 
 library(dplyr)
@@ -112,7 +112,11 @@ aml_collect_data(indicator_dataset = ind,
 
 # dataset will be written to the temp directory
 
-# start h2o engine
+# -WIP-WIP- Test that java environment is not running
+#task <- shell('tasklist /fi "imagename eq java.exe" /nh /fo csv', intern = TRUE)
+#is_java <- grepl("java.exe", task) # returns TRUE if java running; else FALSE
+
+# start h2o engine 
 h2o.init(nthreads = 2)
 
 

@@ -83,7 +83,7 @@ is_cluster shall be set to TRUE.
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(dplyr)
 library(magrittr)

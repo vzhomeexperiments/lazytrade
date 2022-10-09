@@ -14,6 +14,7 @@
 
 * documentation update
 * fix a bug in a aml_simulation function to make it work with symbol independent data
+* detecting java process to make more robust package checks
 
 # lazytrade 0.5.3
 

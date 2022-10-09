@@ -23,7 +23,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' # test of function aml_make_model is duplicated here
 #' library(dplyr)

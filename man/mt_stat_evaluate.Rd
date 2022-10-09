@@ -30,7 +30,7 @@ it will also discard bad result outputting -1 if it is the case
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(h2o)
 library(magrittr)
