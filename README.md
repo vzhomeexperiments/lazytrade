@@ -38,21 +38,20 @@ devtools::install_github("vzhomeexperiments/lazytrade")
 
 ## Several ideas explored in this package
 
--   Data manipulation and analysis of performed trades results
--   Reinforcement Learning for Automated Trading Risk Management
--   Data manipulation and preparation for Machine Learning (transposing,
-    aggregation, lagging, etc)
--   Using Deep Learning for prediction of Market Types (Classification)
--   Using Deep Learning for prediction of future price change
-    (Regression)
--   Strategy Tests simulations
--   Utility functions to generate passwords, initialization files,
-    encryption of passwords, etc
--   Explored idea of building a model using random structures combined
-    with an automated functional (strategy) test to improve model
-    performance
--   Overall, all functions have working examples with relevant
-    documented sample data included in the package
+- Data manipulation and analysis of performed trades results
+- Reinforcement Learning for Automated Trading Risk Management
+- Data manipulation and preparation for Machine Learning (transposing,
+  aggregation, lagging, etc)
+- Using Deep Learning for prediction of Market Types (Classification)
+- Using Deep Learning for prediction of future price change (Regression)
+- Strategy Tests simulations
+- Utility functions to generate passwords, initialization files,
+  encryption of passwords, etc
+- Explored idea of building a model using random structures combined
+  with an automated functional (strategy) test to improve model
+  performance
+- Overall, all functions have working examples with relevant documented
+  sample data included in the package
 
 ## Example - prepare data for machine learning
 
@@ -159,7 +158,7 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 58e23E45
+#> 1 958fEE2F
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -202,7 +201,7 @@ summary(cars)
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date.
 
-taken from <https://r-pkgs.org/intro.html>
+taken from <https://r-pkgs.org/>
 
 ## Communicate about lifecycle changes
 
@@ -257,11 +256,15 @@ Document dataset using the R script `R/datasets.R`
 
 Use data in the function with `data(x)`
 
+## Adding files to the package
+
+Place data like small files to the folder: `inst/extdata`
+
 ## Adding examples to test package function
 
 ### Tests setup first time
 
-Run this command to setup tests ‘usethis::use\_testthat()’
+Run this command to setup tests ‘usethis::use_testthat()’
 
 This will create a folder with the name `tests`
 
@@ -295,7 +298,7 @@ Details:
 
 1.  add libraries used for test
 2.  add function `context("profit_factor")`
-3.  add function test\_that(“test description”, {test process})
+3.  add function test_that(“test description”, {test process})
 4.  load data using function `data(named_data_object)`
 
 Example:
@@ -315,6 +318,7 @@ library(testthat)
 #>     equals, is_less_than, not
 library(dplyr)
 library(magrittr)
+
 context("profit_factor")
 
 test_that("test value of the calculation", {
@@ -328,19 +332,19 @@ test_that("test value of the calculation", {
               PrFact = util_profit_factor(X5)) %>%
     select(PrFact) %>%
     head(1) %>%
-    as.vector() %>%
+    pull(PrFact) %>%
     round(3)
 
-  expect_equal(DF_Stats$PrFact, 0.68)
+  expect_equal(DF_Stats, 0.68)
 
 })
-#> Test passed
+#> Test passed 😸
 ```
 
 ### Test of the coverage for the script
 
 Test coverage shows you what you’ve tested
-devtools::test\_coverage\_file()
+devtools::test_coverage_file()
 
 `devtools::test_coverage_file()`
 
@@ -374,12 +378,12 @@ whenever a quick check is required:
 In case functions are writing files there are few considerations to take
 into account:
 
--   examples section must contain working example of code that writes
-    files
--   example code must write to the temporary directory defined by
-    `tempdir()` function
--   after package check performed with `devtools::check()` there should
-    nothing remain in the ‘tmp/’ directory
+- examples section must contain working example of code that writes
+  files
+- example code must write to the temporary directory defined by
+  `tempdir()` function
+- after package check performed with `devtools::check()` there should
+  nothing remain in the ‘tmp/’ directory
 
 ### Considerations
 
@@ -432,11 +436,10 @@ dir("/tmp/*.csv")
 
 To remove function from the package we can use:
 
--   Delete function from the folder (careful not to break other
-    functions)
--   Build -&gt; More -&gt; Document
--   Build -&gt; More -&gt; Clean and Rebuild
--   Build -&gt; Check
+- Delete function from the folder (careful not to break other functions)
+- Build -\> More -\> Document
+- Build -\> More -\> Clean and Rebuild
+- Build -\> Check
 
 ## CRAN Submission Tips and Tricks
 
@@ -456,6 +459,7 @@ This question was addressed here but yet it’s not answered:
 To search for specific function in the scripts one can do the following:
 
 ``` r
+
 list_of_functions <- c(
   "drop_na",
   "fill",
@@ -507,10 +511,10 @@ if(!dir.exists(sub_dir)){dir.create(sub_dir)}
 
 Clone package from GitHub and test check it in Docker Container
 
--   started docker container vladdsm/docker-r-studio
--   new project package
--   clone from vzhomeexperiments/lazytrade.git
--   use check button to pass the test
+- started docker container vladdsm/docker-r-studio
+- new project package
+- clone from vzhomeexperiments/lazytrade.git
+- use check button to pass the test
 
 ## Build package
 
@@ -546,7 +550,7 @@ spelling `devtools::spell_check()`
 
 #### checking on R hub
 
-<https://builder.r-hub.io/>
+See `?rhubv2`
 
 #### checking with release
 
@@ -562,8 +566,8 @@ spelling `devtools::spell_check()`
 
 #### check with rocker R in container
 
--   use docker image with R Studio,
--   clone repo, build, check package…
+- use docker image with R Studio,
+- clone repo, build, check package…
 
 ### Update news.md file
 

@@ -5,6 +5,15 @@
 * setup github actions
 * add fail safe for function input parameters
 
+# lazytrade 0.5.4
+
+# Version 0.5.4
+
+## Changes
+
+* added function to find a file path based on code and replace parameters
+* updated web links
+
 # lazytrade 0.5.3
 
 # Version 0.5.3

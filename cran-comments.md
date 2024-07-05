@@ -1,13 +1,15 @@
 ## Test environments
-* R-hub builder 
-Platform:	Windows Server 2022, R-devel, 64 bit
+* R-hub builder - not tested
+
 * Winbuilder
-* R version 4.1.2 (2021-11-01)
-* R Under development (unstable) (2021-12-14 r81376 ucrt)
+x86_64-w64-mingw32 (64-bit)
+* R version 4.3.3 (2024-02-29 ucrt) 
+Windows Server 2022 x64 (build 20348)
+* R Under development (unstable) (2024-07-03 r86870 ucrt) 
 
 ## R CMD check results
 Status: OK
-R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+R version 4.3.3 (2024-02-29 ucrt) -- "Angel Food Cake"
 
 There were no ERRORs or WARNINGs or NOTEs
 

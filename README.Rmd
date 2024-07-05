@@ -157,7 +157,7 @@ summary(cars)
 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-taken from https://r-pkgs.org/intro.html
+taken from https://r-pkgs.org/
 
 ## Communicate about lifecycle changes
 
@@ -214,6 +214,11 @@ Document dataset using the R script `R/datasets.R`
 
 Use data in the function with `data(x)`
 
+## Adding files to the package
+
+Place data like small files to the folder:
+`inst/extdata`
+
 ## Adding examples to test package function
 
 ### Tests setup first time
@@ -262,6 +267,7 @@ Example:
 library(testthat)
 library(dplyr)
 library(magrittr)
+
 context("profit_factor")
 
 test_that("test value of the calculation", {
@@ -275,10 +281,10 @@ test_that("test value of the calculation", {
               PrFact = util_profit_factor(X5)) %>%
     select(PrFact) %>%
     head(1) %>%
-    as.vector() %>%
+    pull(PrFact) %>%
     round(3)
 
-  expect_equal(DF_Stats$PrFact, 0.68)
+  expect_equal(DF_Stats, 0.68)
 
 })
 
@@ -543,7 +549,7 @@ spelling
 
 #### checking on R hub
 
-https://builder.r-hub.io/ 
+See `?rhubv2`
 
 #### checking with release
 `devtools::check_win_release()`
