@@ -158,7 +158,7 @@ library(readr)
 #generate 8digit password for trading platform
 util_generate_password(salt = 'random text')
 #>          .
-#> 1 958fEE2F
+#> 1 ac5cE049
 ```
 
 ## Example - generate initialization files for MT4 platform
@@ -338,7 +338,7 @@ test_that("test value of the calculation", {
   expect_equal(DF_Stats, 0.68)
 
 })
-#> Test passed 😸
+#> Test passed 🎊
 ```
 
 ### Test of the coverage for the script

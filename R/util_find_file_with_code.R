@@ -90,6 +90,11 @@ util_find_file_with_code <- function(files, code_to_find,
   for (file in files) {
     #file = files[6]
     #file = files[1]
+    # fail safe check if file is available
+    if(!file.exists(file)){
+      stop("File with data does not exist",
+           call. = FALSE)
+    }
     # Read the file lines into a character vector
     lines <- readr::read_lines(file)
     

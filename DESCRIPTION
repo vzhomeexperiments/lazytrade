@@ -17,7 +17,7 @@ BugReports: https://github.com/vzhomeexperiments/lazytrade/issues
 Encoding: UTF-8
 LazyData: true
 Language: en-US
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports:
     readr,
     stringr,
