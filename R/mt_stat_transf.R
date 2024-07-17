@@ -53,7 +53,7 @@
 #'                                 num_bars = 64,
 #'                                 timeframe = 60,
 #'                                 path_data = path_data,
-#'                                 mt_classes = c('BUN', 'BEN', 'RAN'),
+#'                                 mt_classes = c('BUN', 'BEN'),
 #'                                 clust_method = 'kmeans',
 #'                                 clust_opt = 'complete',
 #'                                 rule_opt = FALSE)
@@ -63,7 +63,7 @@
 #'                                 num_bars = 64,
 #'                                 timeframe = 60,
 #'                                 path_data = path_data,
-#'                                 mt_classes = c('BUN', 'BEN', 'RAN'),
+#'                                 mt_classes = c('BUN', 'BEN'),
 #'                                 clust_method = 'kmeans',
 #'                                 clust_opt = 'complete',
 #'                                 rule_opt = TRUE)

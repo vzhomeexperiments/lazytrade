@@ -30,10 +30,10 @@
         # sample function names
         ".", "%>%", "%$%", "group_by",  "arrange", "desc",
         "filter", "ungroup", "select", "mutate", "inner_join",
-        "read_csv", "write_csv", "as_tibble", "ReinforcementLearning", "na.omit",
+        "read_csv", "write_csv", "write_lines", "as_tibble", "ReinforcementLearning", "na.omit",
         "h2o.deeplearning", "h2o.loadModel", "h2o.predict", "h2o.saveModel", "head", "tail",
         "if_else", "lag", "mutate_all", "mutate_if", "slice", "str_detect",
-        "predict", "read_rds", "summarise", "write.csv", "write_rds", "ymd_hms",
+        "predict", "read_rds", "read_lines", "summarise", "write.csv", "write_rds", "ymd_hms",
         "filter_all", "full_join", "bind_rows",  "as.h2o", "bind_cols", "testdir",
         "h2o.performance", "distinct", "dev.off", "geom_bar", "geom_line", "ggplot", "ggtitle", "pdf",
         "sha512", "write_tsv", "encrypt_envelope", "mutate_at", "across", "rename"

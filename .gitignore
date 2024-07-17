@@ -6,3 +6,4 @@ lazytrade.Rproj
 r-studio.Rproj
 Run_RStudio
 .DS_Store
+*.chr

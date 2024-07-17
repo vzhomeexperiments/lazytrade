@@ -9,7 +9,7 @@
 #' @details Make sure to clean the history of the R session
 #'
 #' @references for more info on how to use RSA cryptography in R check my course
-#' https://www.udemy.com/course/keep-your-secrets-under-control/?referralCode=5B78D58E7C06AFFD80AE
+#' on Udemy
 #'
 #' @param api_key String with API key
 #' @param path_ssh String with path to the file with rsa keys. Same place will be used to store encrypted data

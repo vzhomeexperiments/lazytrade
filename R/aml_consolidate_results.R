@@ -50,13 +50,10 @@
 #' file.copy(from = system.file("extdata", "StrTest-EURJPYM15.csv", package = "lazytrade"),
 #'           to = file.path(path_model, "StrTest-EURJPYM15.csv"), overwrite = TRUE)
 #'
-#' file.copy(from = system.file("extdata", "StrTest-EURNZDM15.csv", package = "lazytrade"),
-#'           to = file.path(path_model, "StrTest-EURNZDM15.csv"), overwrite = TRUE)
-#'
 #' file.copy(from = system.file("extdata", "StrTest-EURUSDM15.csv", package = "lazytrade"),
 #'           to = file.path(path_model, "StrTest-EURUSDM15.csv"), overwrite = TRUE)
 #'
-#' Pairs <- c("EURGBP","EURJPY","EURNZD","EURUSD")
+#' Pairs <- c("EURGBP","EURJPY", "EURUSD")
 #'
 #' aml_consolidate_results(timeframe = 15,
 #'                         used_symbols = Pairs,
@@ -66,14 +63,6 @@
 #'                         min_quality = 0.75,
 #'                         get_quantile = FALSE)
 #'
-#'
-#' aml_consolidate_results(timeframe = 15,
-#'                         used_symbols = Pairs,
-#'                         path_model = path_model,
-#'                         path_sbxm = path_sbxm,
-#'                         path_sbxs = path_sbxs,
-#'                         min_quality = 0.75,
-#'                         get_quantile = TRUE)
 #'
 #'
 #' aml_consolidate_results(timeframe = 15,
